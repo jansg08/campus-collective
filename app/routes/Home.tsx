@@ -6,6 +6,19 @@ import MortarBoard from "~/svgs/MortarboardMassive.svg?react";
 import { getUniversities } from "~/data/";
 import type { Route } from "./+types/Home";
 
+export function meta() {
+  return [
+    {
+      title: "Campus Collective: Your Student Event Platform",
+    },
+    {
+      name: "description",
+      content:
+        "A place for students to showcase their talent or support others. Explore all the events your uni has to offer.",
+    },
+  ];
+}
+
 export function loader() {
   const universities = getUniversities();
   return { universities };
