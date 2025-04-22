@@ -1,16 +1,14 @@
-import type { FC } from "react";
-
 interface WideButtonProps {
   children: React.ReactNode;
   colour?: "primary" | "secondary";
   isThin?: boolean;
 }
 
-const WideButton: FC<WideButtonProps> = ({
+const WideButton = ({
   children,
   colour = "primary",
   isThin = false,
-}) => {
+}: WideButtonProps) => {
   return (
     <button
       className={`w-full leading-none font-bold transition-all ${
