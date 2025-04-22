@@ -55,8 +55,9 @@ const Home: FC<Route.ComponentProps> = ({ loaderData }) => {
       <div className="grid grid-cols-(--home-logo-cols) gap-2">
         {universities.map(({ slug, logo_url }) => (
           <Link
-            to={`/${slug}`}
+            to={`/${slug}/events`}
             className="px-8 py-6 hover:bg-[#E9E6DC] flex items-center justify-center rounded-lg transition-all"
+            key={slug}
           >
             <img className="w-full" src={logo_url} />
           </Link>
