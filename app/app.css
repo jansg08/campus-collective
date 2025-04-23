@@ -45,6 +45,7 @@
   --text-3xl: 2rem;
 
   --shadow-below: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-above: 0 -4px 8px rgba(0, 0, 0, 0.1);
 
   --home-logo-cols: repeat(auto-fit, minmax(225px, 1fr));
 }
