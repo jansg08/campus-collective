@@ -1,15 +1,33 @@
+import { Link } from "react-router";
+
 interface SquareButtonProps {
   children: React.ReactNode;
   type: "primary" | "secondary";
 }
 
-const SquareButton = ({ children, type }: SquareButtonProps) => {
-  return (
-    <button
-      className={`bg-${type} p-1.5 rounded-lg shadow-lg hover:brightness-110 transition-all`}
-    >
+interface LinkProps extends SquareButtonProps {
+  isLink: true;
+  path: string;
+}
+
+interface NonLinkProps extends SquareButtonProps {
+  isLink?: false;
+  path?: never;
+}
+
+const SquareButton = ({
+  children,
+  type,
+  isLink = false,
+  path,
+}: LinkProps | NonLinkProps) => {
+  const classes = `bg-${type} p-1.5 rounded-lg shadow-lg hover:brightness-110 transition-all`;
+  return isLink ? (
+    <Link to={path as string} className={classes}>
       {children}
-    </button>
+    </Link>
+  ) : (
+    <button className={classes}>{children}</button>
   );
 };
 

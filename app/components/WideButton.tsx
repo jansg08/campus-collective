@@ -1,4 +1,5 @@
-interface WideButtonProps {
+interface WideButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   colour?: "primary" | "secondary";
   isThin?: boolean;
@@ -8,9 +9,11 @@ const WideButton = ({
   children,
   colour = "primary",
   isThin = false,
+  type,
 }: WideButtonProps) => {
   return (
     <button
+      type={type}
       className={`w-full leading-none font-bold transition-all ${
         isThin ? "py-2 rounded-sm" : "py-3 rounded-lg"
       } bg-${colour} ${
