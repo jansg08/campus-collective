@@ -41,7 +41,7 @@ const Home: FC<Route.ComponentProps> = ({ loaderData }) => {
           by getting started below.
         </p>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full">
         <Link to="/log-in">
           <WideButton>Log In</WideButton>
         </Link>
