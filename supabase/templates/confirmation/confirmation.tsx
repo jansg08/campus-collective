@@ -9,7 +9,7 @@ const Confirmation = ({}: ConfirmationProps) => {
     <EmailTemplate>
       <main className="flex items-center justify-center w-screen h-screen">
         <div className="flex flex-col gap-28 w-80 bg-secondary p-8 rounded-2xl shadow-xl">
-          <Img src="../../../app/svgs/Logo.svg" width="100%" />
+          <Img src="../../../public/Logo.png" width="100%" />
           <div className="flex flex-col gap-5">
             <p>Please click the button below to confirm your email address.</p>
             <a
