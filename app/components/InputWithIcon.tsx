@@ -10,6 +10,7 @@ const InputWithIcon = ({
   name,
   type,
   placeholder,
+  required,
 }: InputWithIconProps) => {
   return (
     <div className="bg-background-light rounded-lg w-full h-10 shadow-md py-1 pr-1 pl-4 flex justify-end items-center">
@@ -18,6 +19,7 @@ const InputWithIcon = ({
         name={name}
         placeholder={placeholder}
         type={type}
+        required={required}
       />
       <div className="rounded-sm p-1.5 bg-secondary">{icon}</div>
     </div>
