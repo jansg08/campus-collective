@@ -6,11 +6,16 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "gen-confirmation": "npx tsx supabase/templates/confirmation/generateConf.tsx"
   },
   "dependencies": {
+    "@react-email/components": "0.0.36",
+    "@react-email/render": "1.0.6",
     "@react-router/node": "^7.5.0",
     "@react-router/serve": "^7.5.0",
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.49.4",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.42.0",
     "isbot": "^5.1.17",
@@ -28,6 +33,7 @@
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
     "drizzle-kit": "^0.31.0",
+    "react-email": "4.0.7",
     "react-router-devtools": "^1.1.0",
     "supabase": "^2.22.4",
     "tailwindcss": "^4.1.4",

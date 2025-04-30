@@ -8,11 +8,11 @@ const Header = () => {
   return (
     <header className="w-full h-20 px-5 bg-background-light shadow-below flex items-center justify-between fixed z-10">
       <SquareButton type="primary">
-        <Menu />
+        <Menu stroke="#f7f4e9" />
       </SquareButton>
       <Logo />
-      <SquareButton type="primary">
-        <LogIn />
+      <SquareButton type="primary" isLink={true} path="/log-in">
+        <LogIn stroke="#f7f4e9" />
       </SquareButton>
     </header>
   );

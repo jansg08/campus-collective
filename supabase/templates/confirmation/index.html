@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
+  <head>
+    <link rel="preload" as="image" href="../../../public/Logo.png" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <style>
+      @font-face {
+        font-family: 'Source Serif 4';
+        font-style: normal;
+        font-weight: 360;
+        mso-font-alt: 'Times New Roman';
+        src: url(https://fonts.gstatic.com/s/sourceserif4/v13/vEFI2_tTDB4M7-auWDN0ahZJW1gb8te1Xb7G.woff2) format('woff2');
+      }
+
+      * {
+        font-family: 'Source Serif 4', Times New Roman;
+      }
+    </style>
+    <style>
+      button { border: none; } p { margin: 0 } body { color: #044c3b; background-color: #f7f4e9 }
+    </style>
+  </head>
+  <body>
+    <!--$-->
+    <main
+      style="display:flex;align-items:center;justify-content:center;width:100vw;height:100vh">
+      <div
+        style="display:flex;flex-direction:column;gap:112px;width:320px;background-color:rgb(216,212,249);padding:32px;border-radius:1rem;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), 0 20px 25px -5px rgb(0,0,0,0.1), 0 8px 10px -6px rgb(0,0,0,0.1)">
+        <img
+          src="../../../public/Logo.png"
+          style="display:block;outline:none;border:none;text-decoration:none"
+          width="100%" />
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <p>Please click the button below to confirm your email address.</p>
+          <a
+            href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&amp;type=email&amp;next={{ .RedirectTo }}"
+            target="_blank"
+            style="width:100%;line-height:1;font-weight:700;transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms;padding-top:12px;padding-bottom:12px;border-radius:0.5rem;background-color:rgb(245,105,96);color:rgb(247,244,233);text-decoration-line:none;display:flex;align-items:center;justify-content:center;box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), 0 10px 15px -3px rgb(0,0,0,0.1), 0 4px 6px -4px rgb(0,0,0,0.1)"
+            ><span style="width:min-content;text-wrap:nowrap"
+              >Confirm Email</span
+            ></a
+          >
+          <p style="color:rgb(75,165,144);font-size:14px;line-height:20px">
+            If you did not recently sign up for a Campus Collective account,
+            please ignore this email.
+          </p>
+        </div>
+      </div>
+    </main>
+    <!--7--><!--/$-->
+  </body>
+</html>
