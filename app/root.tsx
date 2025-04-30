@@ -43,12 +43,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <>
-    <Header />
-    <main>
-      <Outlet />
-    </main>
-  </>;
+  return (
+    <>
+      <Header />
+      <main className="pt-20">
+        <Outlet />
+      </main>
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
