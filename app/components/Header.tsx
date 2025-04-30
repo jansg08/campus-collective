@@ -11,7 +11,7 @@ const Header = () => {
         <Menu stroke="#f7f4e9" />
       </SquareButton>
       <Logo />
-      <SquareButton type="primary" isLink={true} path="/sign-up">
+      <SquareButton type="primary" isLink={true} path="/log-in">
         <LogIn stroke="#f7f4e9" />
       </SquareButton>
     </header>
