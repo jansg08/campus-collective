@@ -21,7 +21,7 @@ const SquareButton = ({
   isLink = false,
   path,
 }: LinkProps | NonLinkProps) => {
-  const classes = `bg-${type} p-1.5 rounded-lg shadow-lg hover:brightness-110 transition-all`;
+  const classes = `bg-${type} p-1.5 rounded-lg shadow-lg hover:brightness-110 transition-all cursor-pointer`;
   return isLink ? (
     <Link to={path as string} className={classes}>
       {children}

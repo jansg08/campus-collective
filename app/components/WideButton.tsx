@@ -14,7 +14,7 @@ const WideButton = ({
   return (
     <button
       type={type}
-      className={`w-full leading-none font-bold transition-all ${
+      className={`w-full leading-none font-bold transition-all cursor-pointer ${
         isThin ? "py-2 rounded-sm" : "py-3 rounded-lg"
       } bg-${colour} ${
         colour === "primary"
