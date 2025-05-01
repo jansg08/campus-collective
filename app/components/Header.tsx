@@ -4,21 +4,26 @@ import User from "../svgs/User.svg?react";
 import LogIn from "../svgs/LogIn.svg?react";
 import SquareButton from "./SquareButton";
 import { Link } from "react-router";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface HeaderProps {
   authenticated: boolean;
   avatar_url?: string;
+  client: SupabaseClient;
 }
 
-const Header = ({ authenticated, avatar_url }: HeaderProps) => {
+const Header = ({ authenticated, avatar_url, client }: HeaderProps) => {
+  const handleSignOut = async () => {
+    const { error } = await client.auth.signOut();
+  };
   const authButtons = {
     logIn: (
-      <SquareButton type="primary" isLink={true} path="/log-in">
+      <SquareButton colour="primary" isLink={true} path="/log-in">
         <LogIn stroke="#f7f4e9" />
       </SquareButton>
     ),
     noAvatar: (
-      <SquareButton type="primary" isLink={true} path="/account">
+      <SquareButton colour="primary" isLink={false} onClick={handleSignOut}>
         <User stroke="#f7f4e9" />
       </SquareButton>
     ),
@@ -40,7 +45,7 @@ const Header = ({ authenticated, avatar_url }: HeaderProps) => {
 
   return (
     <header className="w-full h-20 px-5 bg-background-light shadow-below flex items-center justify-between fixed z-10">
-      <SquareButton type="primary">
+      <SquareButton colour="primary">
         <Menu stroke="#f7f4e9" />
       </SquareButton>
       <Link to="/">
