@@ -10,7 +10,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
   const email = String(formData.get("email"));
   const password = String(formData.get("password"));
-  const supabase = getSupabaseClient(request);
+  const { supabase, headers } = getSupabaseClient(request);
 
   // !implement data validation here
 
@@ -26,10 +26,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
     return { error };
   }
 
-  return redirect(`/sign-up/confirm?email=${email}`);
+  return redirect(`/sign-up/confirm?email=${email}`, { headers });
 };
 
-const SignUp = ({}: SignUpProps) => {
+const SignUp = ({ actionData }: Route.ComponentProps) => {
   return (
     <FullPaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/4">
