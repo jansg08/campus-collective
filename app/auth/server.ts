@@ -3,6 +3,7 @@ import {
   parseCookieHeader,
   serializeCookieHeader,
 } from "@supabase/ssr";
+import { createClient } from "@supabase/supabase-js";
 
 export const getSupabaseClient = (request: Request) => {
   const headers = new Headers();
@@ -29,5 +30,19 @@ export const getSupabaseClient = (request: Request) => {
     }
   );
 
-  return supabase;
+  return { supabase, headers };
+};
+
+export const getSupabaseAdminClient = () => {
+  const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+  return supabase.auth.admin;
 };
