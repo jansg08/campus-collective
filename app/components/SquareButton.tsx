@@ -1,8 +1,9 @@
 import { Link } from "react-router";
 
-interface SquareButtonProps {
+interface SquareButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  type: "primary" | "secondary";
+  colour: "primary" | "secondary";
 }
 
 interface LinkProps extends SquareButtonProps {
@@ -17,17 +18,20 @@ interface NonLinkProps extends SquareButtonProps {
 
 const SquareButton = ({
   children,
-  type,
+  colour,
   isLink = false,
   path,
+  onClick,
 }: LinkProps | NonLinkProps) => {
-  const classes = `bg-${type} p-1.5 rounded-lg shadow-lg hover:brightness-110 transition-all cursor-pointer`;
+  const classes = `bg-${colour} p-1.5 rounded-lg shadow-lg hover:brightness-110 transition-all cursor-pointer`;
   return isLink ? (
     <Link to={path as string} className={classes}>
       {children}
     </Link>
   ) : (
-    <button className={classes}>{children}</button>
+    <button className={classes} onClick={onClick}>
+      {children}
+    </button>
   );
 };
 
