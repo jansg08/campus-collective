@@ -12,7 +12,7 @@ import {
   handleInvalid,
 } from "~/utils/formValidation";
 import type { Route } from "./+types/LogIn";
-import { getSupabaseClient } from "~/auth/server";
+import { getSupabaseClient } from "~/auth/supabase.server";
 import { eq } from "drizzle-orm";
 import { profilesTable } from "src/db/schema/profiles";
 import { db } from "src/db";

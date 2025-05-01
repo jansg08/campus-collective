@@ -2,7 +2,7 @@ import { Outlet, redirect } from "react-router";
 import FullPaddedContainer from "~/components/FullPaddedContainer";
 
 import type { Route } from "./+types/SignUp";
-import { getSupabaseClient } from "~/auth/server";
+import { getSupabaseClient } from "~/auth/supabase.server";
 
 interface SignUpProps {}
 

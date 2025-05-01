@@ -1,13 +1,13 @@
 import { Form, useSearchParams } from "react-router";
 import WideButton from "~/components/WideButton";
 import type { Route } from "./+types/ConfirmEmail";
-import { getSupabaseClient } from "~/auth/server";
+import { getSupabaseClient } from "~/auth/supabase.server";
 import { useState } from "react";
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
   const email = String(formData.get("email"));
-  const supabase = getSupabaseClient(request);
+  const { supabase } = getSupabaseClient(request);
 
   const { error } = await supabase.auth.resend({
     type: "signup",
