@@ -24,7 +24,7 @@ export function loader() {
   return { universities };
 }
 
-const Home: FC<Route.ComponentProps> = ({ loaderData }) => {
+const Home = ({ loaderData }: Route.ComponentProps) => {
   const { universities } = loaderData;
   return (
     <FullPaddedContainer flexGap="gap-9">
