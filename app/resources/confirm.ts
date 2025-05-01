@@ -1,6 +1,6 @@
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { redirect, type LoaderFunctionArgs } from "react-router";
-import { getSupabaseClient } from "~/auth/server";
+import { getSupabaseClient } from "~/auth/supabase.server";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const requestUrl = new URL(request.url);
@@ -9,7 +9,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const next = requestUrl.searchParams.get("next") || "/";
   const headers = new Headers();
   if (token_hash && type) {
-    const supabase = getSupabaseClient(request);
+    const { supabase } = getSupabaseClient(request);
     const { error } = await supabase.auth.verifyOtp({
       type,
       token_hash,
@@ -18,6 +18,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       return redirect(next, { headers });
     }
   }
-  // !remember to change this to an actual error page
-  return redirect("/", { headers });
+
+  // ! Should redirect to page to retry sending of confirmation email
+  return redirect(`/log-in`, { headers });
 }

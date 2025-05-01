@@ -12,22 +12,20 @@ import {
   handleInvalid,
 } from "~/utils/formValidation";
 import type { Route } from "./+types/LogIn";
-import { getSupabaseClient } from "~/auth/server";
+import { getSupabaseClient } from "~/auth/supabase.server";
 import { eq } from "drizzle-orm";
 import { profilesTable } from "src/db/schema/profiles";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
 
-interface LogInProps {}
-
 export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
   const email = String(formData.get("email"));
   const password = String(formData.get("password"));
-  const supabase = getSupabaseClient(request);
+  const { supabase, headers } = getSupabaseClient(request);
 
   const {
-    data: { user, session },
+    data: { user },
     error,
   } = await supabase.auth.signInWithPassword({
     email: email,
@@ -39,28 +37,31 @@ export const action = async ({ request }: Route.ActionArgs) => {
   }
 
   if (user) {
-    const result = await db
-      .select({ slug: universitiesTable.slug })
-      .from(profilesTable)
-      .leftJoin(
-        universitiesTable,
-        eq(profilesTable.universityId, universitiesTable.id)
-      )
-      .where(eq(profilesTable.id, user.id));
+    try {
+      const [result] = await db
+        .select({
+          universitySlug: universitiesTable.slug,
+          avatarUrl: profilesTable.avatarUrl,
+        })
+        .from(profilesTable)
+        .leftJoin(
+          universitiesTable,
+          eq(profilesTable.universityId, universitiesTable.id)
+        )
+        .where(eq(profilesTable.id, user.id));
 
-    if (result[0]?.slug) {
-      const { data, error } = await supabase.auth.admin.updateUserById(
-        user.id,
-        { user_metadata: { universitySlug: result[0].slug } }
+      return redirect(
+        result.universitySlug ? `/${result.universitySlug}/events` : "/",
+        { headers }
       );
-
-      return redirect(`/${result[0].slug}/events`);
+    } catch (err) {
+      return { err };
     }
-    return redirect("/");
   }
 };
 
-const LogIn = ({}: LogInProps) => {
+const LogIn = ({ actionData }: Route.ComponentProps) => {
+  console.log(actionData);
   const [clientErrors, setClientErrors] = useState<formErrors>({});
 
   return (
