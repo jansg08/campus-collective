@@ -5,8 +5,43 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1745415484921,
-      "tag": "0000_foamy_loa",
+      "when": 1746104540325,
+      "tag": "0000_funny_darkstar",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1746104639805,
+      "tag": "0001_past_moon_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1746104781843,
+      "tag": "0002_square_punisher",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1746105645061,
+      "tag": "0003_magenta_pixie",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1746105937177,
+      "tag": "0004_aberrant_venom",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1746108120673,
+      "tag": "0005_goofy_glorian",
       "breakpoints": true
     }
   ]
