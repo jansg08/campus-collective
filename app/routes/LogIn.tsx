@@ -14,7 +14,6 @@ import {
 import type { Route } from "./+types/LogIn";
 import { getSupabaseClient } from "~/auth/supabase.server";
 import { eq } from "drizzle-orm";
-import { profilesTable } from "src/db/schema/profiles";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
 
@@ -41,14 +40,9 @@ export const action = async ({ request }: Route.ActionArgs) => {
       const [result] = await db
         .select({
           universitySlug: universitiesTable.slug,
-          avatarUrl: profilesTable.avatarUrl,
         })
-        .from(profilesTable)
-        .leftJoin(
-          universitiesTable,
-          eq(profilesTable.universityId, universitiesTable.id)
-        )
-        .where(eq(profilesTable.id, user.id));
+        .from(universitiesTable)
+        .where(eq(universitiesTable.id, user.user_metadata.university));
 
       return redirect(
         result.universitySlug ? `/${result.universitySlug}/events` : "/",
@@ -61,7 +55,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 };
 
 const LogIn = ({ actionData }: Route.ComponentProps) => {
-  console.log(actionData);
   const [clientErrors, setClientErrors] = useState<formErrors>({});
 
   return (
