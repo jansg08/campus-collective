@@ -13,7 +13,7 @@ import Header from "./components/Header";
 import { db } from "src/db";
 import { profilesTable } from "src/db/schema/profiles";
 import { eq } from "drizzle-orm";
-import { useSupabase } from "./auth/supabase";
+import { getSupabaseClientWithSession } from "./auth/supabase.server";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,12 +47,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-  const { getSupabaseClientWithSession, getSupabaseEnv } = await import(
-    "./auth/supabase.server"
-  );
-  const { supabase, headers, serverSession } =
-    await getSupabaseClientWithSession(request);
-  const env = getSupabaseEnv();
+  const { supabase, headers } = await getSupabaseClientWithSession(request);
   const userResponse = await supabase.auth.getUser();
 
   if (!userResponse.error && userResponse.data.user) {
@@ -70,8 +65,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
             ...userResponse.data.user,
             avatarUrl: result.avatarUrl || "",
           },
-          env,
-          serverSession,
         }),
         {
           headers,
@@ -82,19 +75,14 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     }
   }
 
-  return new Response(JSON.stringify({ env, serverSession }), { headers });
+  return new Response(JSON.stringify({}), { headers });
 };
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const { user, env, serverSession } = JSON.parse(loaderData);
-  const { supabase } = useSupabase({ env, serverSession });
+  const { user = null } = JSON.parse(loaderData);
   return (
     <>
-      <Header
-        authenticated={user}
-        avatar_url={user?.avatarUrl}
-        client={supabase}
-      />
+      <Header authenticated={user} avatar_url={user?.avatarUrl} />
       <main className="pt-20">
         <Outlet />
       </main>
