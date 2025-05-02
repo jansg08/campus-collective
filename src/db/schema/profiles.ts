@@ -20,5 +20,5 @@ export const profilesTable = pgTable("profiles", {
     .references(() => users.id),
   avatarUrl: varchar("avatar_url"),
   universityId: integer("university_id").references(() => universitiesTable.id),
-  isStaff: boolean("is_staff").notNull(),
+  isStaff: boolean("is_staff").notNull().default(false),
 });
