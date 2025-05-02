@@ -1,0 +1,1 @@
+ALTER TABLE "categories" ADD COLUMN "cover_photo_url" varchar NOT NULL;
