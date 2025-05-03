@@ -4,6 +4,7 @@ import MapPin from "~/svgs/MapPinSmall.svg?react";
 import WideButton from "./WideButton";
 
 import { format } from "date-fns";
+import { Outlet } from "react-router";
 
 interface EventCardProps {
   photoUrl: string;
@@ -26,12 +27,12 @@ const EventCard = ({
     <div className="w-full rounded-lg shadow-lg">
       <div
         style={{ backgroundImage: `url(${photoUrl})` }}
-        className={`aspect-video flex justify-between items-start py-4 pr-4 rounded-t-lg bg-cover bg-center bg-[url(--bg-url)]`}
+        className={`aspect-video flex justify-between gap-4 items-start py-4 pr-4 rounded-t-lg bg-cover bg-center bg-[url(--bg-url)]`}
       >
         <div className="h-full flex flex-col justify-end">
-          <span className="text-background bg-[rgba(4,76,59,0.8)] leading-none font-bold p-4 text-2xl max-w-56">
+          <h3 className="text-background bg-[rgba(4,76,59,0.8)] leading-none font-bold p-4 max-w-80">
             {title}
-          </span>
+          </h3>
         </div>
         <span className="text-sm text-background bg-accent px-2 py-0.5 font-bold leading-none rounded-xs">
           {price > 0 ? `£${price % 1 ? price.toPrecision(3) : price}` : "Free"}
