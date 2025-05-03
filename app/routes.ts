@@ -13,6 +13,6 @@ export default [
     index("routes/SignUpForm.tsx"),
     route("confirm", "routes/ConfirmEmail.tsx"),
   ]),
-  route(":university_slug/events", "routes/Events.tsx"),
+  route(":universitySlug/events", "routes/Events.tsx"),
   ...prefix("auth", [route("confirm", "resources/confirm.ts")]),
 ] satisfies RouteConfig;
