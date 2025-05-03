@@ -4,7 +4,6 @@ import {
   varchar,
   text,
   timestamp,
-  numeric,
   uuid,
   boolean,
   integer,
@@ -22,7 +21,7 @@ export const eventsTable = pgTable("events", {
   venueId: integer("venue_id")
     .notNull()
     .references(() => venuesTable.id),
-  ticketPrice: numeric("ticket_price").notNull(),
+  ticketPrice: integer("ticket_price").notNull(), // ticket price stored in pence
   coverPhotoUrl: varchar("cover_photo_url"),
   host: uuid("host")
     .notNull()
