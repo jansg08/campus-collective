@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { useRef, useState } from "react";
-import { data, Form, NavLink } from "react-router";
+import { data, Form, NavLink, useSubmit } from "react-router";
 import { db } from "src/db";
 import { categoriesTable } from "src/db/schema/categories";
 import { eventsTable } from "src/db/schema/events";
@@ -17,6 +17,7 @@ import "ldrs/react/Squircle.css";
 import type { Route } from "./+types/Events";
 import { universitiesTable } from "src/db/schema/universities";
 import useOutsideClick from "~/utils/useOutSideClick";
+import Modal from "~/components/Modal";
 
 interface University {
   id: number;
@@ -63,7 +64,25 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
     .from(universitiesTable)
     .orderBy(universitiesTable.slug);
 
-  const [eventResults, uniResults] = await Promise.all([eventsQuery, uniQuery]);
+  const categoriesQuery = db
+    .select({
+      name: categoriesTable.name,
+      id: categoriesTable.id,
+    })
+    .from(categoriesTable)
+    .orderBy(categoriesTable.id);
+
+  const venuesQuery = db
+    .select({ name: venuesTable.name, id: venuesTable.id })
+    .from(venuesTable)
+    .innerJoin(
+      universitiesTable,
+      eq(venuesTable.universityId, universitiesTable.id)
+    )
+    .where(eq(universitiesTable.slug, universitySlug));
+
+  const [eventResults, uniResults, categoriesResult, venuesResult] =
+    await Promise.all([eventsQuery, uniQuery, categoriesQuery, venuesQuery]);
 
   const events = eventResults.map(
     ({ eventPhotoUrl, defaultPhotoUrl, price, ...rest }) => ({
@@ -84,6 +103,8 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 
   return data({
     events,
+    categories: categoriesResult,
+    venues: venuesResult,
     universities,
     selectedUni,
   });
@@ -104,7 +125,7 @@ const UniversitiesDropdown = ({
   });
   return (
     <div
-      className={`flex items-center gap-1 relative w-fit transition-all ml-4 px-1 ${
+      className={`flex items-center gap-1 relative w-fit transition-all ml-4 pl-1 mr-5 ${
         isOpen ? "bg-gray-200" : "hover:bg-gray-200"
       } rounded-sm`}
     >
@@ -150,9 +171,118 @@ const UniversitiesDropdown = ({
 };
 
 const Events = ({ loaderData }: Route.ComponentProps) => {
-  const { events, universities, selectedUni } = loaderData;
+  const { events, universities, categories, venues, selectedUni } = loaderData;
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const submit = useSubmit();
+
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col relative">
+      {isOptionsOpen && (
+        <Modal visibilitySetter={setIsOptionsOpen}>
+          <Form
+            className="flex flex-col gap-4"
+            onChange={(e) => submit(e.currentTarget)}
+          >
+            <h4>Filter by</h4>
+            <select
+              name="category"
+              id="category"
+              className="bg-background-light py-2 rounded-sm"
+            >
+              <option value="what">What?</option>
+              {categories.map(({ id, name }) => (
+                <option value={id}>{name}</option>
+              ))}
+            </select>
+            <input
+              type="date"
+              placeholder="When?"
+              name="date"
+              className="bg-background-light py-2 rounded-sm"
+            />
+            <select
+              name="venue"
+              id="venue"
+              className=" bg-background-light py-2 rounded-sm"
+            >
+              <option value="where">Where?</option>
+              {venues.map(({ name, id }) => (
+                <option value={id}>{name}</option>
+              ))}
+            </select>
+            <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
+              <span>Free?</span>
+              <label htmlFor="yes" className="flex items-center gap-1.5">
+                Yes
+                <input name="free" type="radio" id="yes" value="yes" />
+              </label>
+              <label htmlFor="no" className="flex items-center gap-1.5">
+                No
+                <input name="free" type="radio" id="no" value="no" />
+              </label>
+              <label htmlFor="dontMind" className="flex items-center gap-1.5">
+                Don't Mind
+                <input
+                  name="free"
+                  type="radio"
+                  id="dontMind"
+                  value="dontMind"
+                />
+              </label>
+            </div>
+            <h4>Sort by</h4>
+            <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
+              <label
+                htmlFor="date"
+                className="flex items-center gap-1.5 justify-center w-full"
+              >
+                Date
+                <input name="sortBy" type="radio" id="date" value="date" />
+              </label>
+              <label
+                htmlFor="price"
+                className="flex items-center gap-1.5 justify-center w-full"
+              >
+                Price
+                <input name="sortBy" type="radio" id="price" value="price" />
+              </label>
+              <label
+                htmlFor="duration"
+                className="flex items-center gap-1.5 justify-center w-full"
+              >
+                Duration
+                <input
+                  name="sortBy"
+                  type="radio"
+                  id="duration"
+                  value="duration"
+                />
+              </label>
+            </div>
+            <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
+              <label
+                htmlFor="asc"
+                className="flex items-center gap-1.5 justify-center w-full"
+              >
+                Ascending
+                <input name="sortDirection" type="radio" id="asc" value="asc" />
+              </label>
+              <label
+                htmlFor="desc"
+                className="flex items-center gap-1.5 justify-center w-full"
+              >
+                Descending
+                <input
+                  name="sortDirection"
+                  type="radio"
+                  id="desc"
+                  value="desc"
+                />
+              </label>
+            </div>
+          </Form>
+        </Modal>
+      )}
       <div className="w-full pt-5">
         <p className="text-sm text-text-dim px-5">Viewing events for</p>
         <UniversitiesDropdown
@@ -161,7 +291,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
         />
       </div>
       <div className="flex gap-3 w-full sticky top-20 p-5 blur-down">
-        <SquareButton colour="secondary">
+        <SquareButton colour="secondary" onClick={() => setIsOptionsOpen(true)}>
           <Filter stroke="#044c3b" />
         </SquareButton>
         <Form className="w-full">
