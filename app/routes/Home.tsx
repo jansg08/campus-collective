@@ -1,5 +1,5 @@
 import { data, Link } from "react-router";
-import FullPaddedContainer from "~/components/FullPaddedContainer";
+import PaddedContainer from "~/components/PaddedContainer";
 import WideButton from "~/components/WideButton";
 import MortarBoard from "~/svgs/MortarboardMassive.svg?react";
 import { getUniversities } from "~/data/";
@@ -95,7 +95,7 @@ const WelcomeBack = () => {
 const Home = ({ loaderData }: Route.ComponentProps) => {
   const { universities, user } = loaderData;
   return (
-    <FullPaddedContainer flexGap="gap-9">
+    <PaddedContainer flexGap="gap-9">
       {user ? <WelcomeBack /> : <NewUser />}
       <div className="w-full grid grid-cols-(--home-logo-cols) gap-2">
         {universities?.map(({ slug, logoUrl }) => (
@@ -108,7 +108,7 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
           </Link>
         ))}
       </div>
-    </FullPaddedContainer>
+    </PaddedContainer>
   );
 };
 

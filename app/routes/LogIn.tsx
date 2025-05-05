@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Link, redirect } from "react-router";
-import FullPaddedContainer from "~/components/FullPaddedContainer";
+import PaddedContainer from "~/components/PaddedContainer";
 import InputWithIcon from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
 
@@ -58,7 +58,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
   const [clientErrors, setClientErrors] = useState<formErrors>({});
 
   return (
-    <FullPaddedContainer padding="thick" fullPage>
+    <PaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/4">
         <Form
           onSubmit={handleFormSubmit(setClientErrors)}
@@ -102,7 +102,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
           </p>
         </Form>
       </section>
-    </FullPaddedContainer>
+    </PaddedContainer>
   );
 };
 

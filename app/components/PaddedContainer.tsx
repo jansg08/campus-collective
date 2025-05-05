@@ -1,16 +1,16 @@
-interface FullPaddedContainerProps {
+interface PaddedContainerProps {
   children: React.ReactNode;
   flexGap?: `gap-${number}`;
   padding?: "normal" | "thick";
   fullPage?: boolean;
 }
 
-const FullPaddedContainer = ({
+const PaddedContainer = ({
   children,
   flexGap = "gap-5",
   padding = "normal",
   fullPage = false,
-}: FullPaddedContainerProps) => {
+}: PaddedContainerProps) => {
   return (
     <div
       className={`w-full ${padding === "normal" ? "p-5" : "p-10"} ${
@@ -22,4 +22,4 @@ const FullPaddedContainer = ({
   );
 };
 
-export default FullPaddedContainer;
+export default PaddedContainer;
