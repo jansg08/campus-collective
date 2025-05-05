@@ -304,11 +304,18 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
         </Form>
       </div>
       <ul className="grid grid-cols-(--event-card-cols) gap-5 px-5">
-        {events.map(({ id, ...rest }) => (
-          <li key={id}>
-            <EventCard {...rest} />
-          </li>
-        ))}
+        {events.map(({ id, ...rest }) => {
+          const props = {
+            ...rest,
+            id,
+            uniSlug: universities[selectedUni].slug,
+          };
+          return (
+            <li key={id}>
+              <EventCard {...props} />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
