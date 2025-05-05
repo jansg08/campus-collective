@@ -2,20 +2,26 @@ interface PaddedContainerProps {
   children: React.ReactNode;
   flexGap?: `gap-${number}`;
   padding?: "normal" | "thick";
+  margin?: string;
   fullPage?: boolean;
+  background?: `bg-${string}`;
+  shadow?: `shadow-${string}`;
 }
 
 const PaddedContainer = ({
   children,
   flexGap = "gap-5",
   padding = "normal",
+  margin,
   fullPage = false,
+  background,
+  shadow,
 }: PaddedContainerProps) => {
   return (
     <div
       className={`w-full ${padding === "normal" ? "p-5" : "p-10"} ${
         fullPage && "h-[calc(100vh_-_5rem)]"
-      } relative flex flex-col items-center justify-center box-border ${flexGap}`}
+      } ${margin} ${background} ${shadow} relative flex flex-col items-center justify-center box-border ${flexGap}`}
     >
       {children}
     </div>
