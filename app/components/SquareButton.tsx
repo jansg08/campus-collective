@@ -4,7 +4,7 @@ interface SquareButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   colour: "primary" | "secondary";
-  size?: "normal" | "small";
+  size?: "normal" | "smaller" | "small";
   position?: "static" | "relative" | "absolute";
   top?: `top-${string}`;
   left?: `left-${string}`;
@@ -37,6 +37,8 @@ const SquareButton = ({
 }: LinkProps | NonLinkProps) => {
   const classes = `bg-${colour} ${
     size === "normal" ? "p-1.5 rounded-lg" : "rounded-sm"
+  } ${
+    size === "smaller" && "p-1"
   } ${position} ${top} ${left} ${bottom} ${right} shadow-lg transition-all cursor-pointer ${
     colour === "primary"
       ? "text-background hover:brightness-110"
