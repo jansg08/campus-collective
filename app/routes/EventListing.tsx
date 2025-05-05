@@ -16,10 +16,18 @@ import { data } from "react-router";
 import formatPrice from "~/utils/formatPrice";
 import EventDetails, { LinkedVenue } from "~/components/EventDetails";
 import WideButton from "~/components/WideButton";
+import { getSupabaseClient } from "~/auth/supabase.server";
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
+  const { supabase, headers } = getSupabaseClient(request);
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+  const eventId = Number(params.eventId);
   const [eventResult] = await db
     .select({
+      id: eventsTable.id,
       img: eventsTable.coverPhotoUrl,
       defaultImg: categoriesTable.coverPhotoUrl,
       title: eventsTable.title,
@@ -41,7 +49,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       universitiesTable,
       eq(venuesTable.universityId, universitiesTable.id)
     )
-    .where(eq(eventsTable.id, 1));
+    .where(eq(eventsTable.id, eventId));
 
   const {
     categoryName,
@@ -57,6 +65,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
   } = eventResult;
 
   const responseBody = {
+    user,
     category: {
       name: categoryName,
       id: categoryId,
@@ -76,11 +85,12 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     responseBody.event.img = defaultImg;
   }
 
-  return data(responseBody);
+  return data(responseBody, { headers });
 };
 
 const EventListing = ({ loaderData }: Route.ComponentProps) => {
   const {
+    user,
     event,
     category,
     university,
@@ -138,7 +148,12 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
             {formatPrice(event.price)}
           </h3>
         </div>
-        <WideButton>Book Now</WideButton>
+        <WideButton
+          isLink
+          path={`/${university.slug}/events/${event.id}/confirm`}
+        >
+          {user ? "Book Now" : "Log in to book"}
+        </WideButton>
         <div className="text-sm w-full">
           <p>{event.description}</p>
         </div>
