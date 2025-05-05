@@ -6,6 +6,7 @@ interface SquareButtonProps
   colour: "primary" | "secondary";
   size?: "normal" | "smaller" | "small";
   position?: "static" | "relative" | "absolute";
+  zIndex?: `z-${string}`;
   top?: `top-${string}`;
   left?: `left-${string}`;
   bottom?: `bottom-${string}`;
@@ -29,6 +30,7 @@ const SquareButton = ({
   path,
   size = "normal",
   position = "static",
+  zIndex,
   top,
   left,
   bottom,
@@ -39,7 +41,7 @@ const SquareButton = ({
     size === "normal" ? "p-1.5 rounded-lg" : "rounded-sm"
   } ${
     size === "smaller" && "p-1"
-  } ${position} ${top} ${left} ${bottom} ${right} shadow-lg transition-all cursor-pointer ${
+  } ${position} ${top} ${left} ${bottom} ${right} ${zIndex} shadow-lg transition-all cursor-pointer ${
     colour === "primary"
       ? "text-background hover:brightness-110"
       : "hover:brightness-105"
