@@ -14,6 +14,8 @@ export default [
     route("confirm", "routes/ConfirmEmail.tsx"),
   ]),
   route(":universitySlug/events", "routes/Events.tsx"),
-  route(":universitySlug/events/:eventId", "routes/EventListing.tsx"),
+  route(":universitySlug/events/:eventId", "routes/EventListing.tsx", [
+    route("confirm", "routes/ConfirmBooking.tsx"),
+  ]),
   ...prefix("auth", [route("confirm", "resources/confirm.ts")]),
 ] satisfies RouteConfig;
