@@ -1,5 +1,6 @@
 import PaddedContainer from "~/components/PaddedContainer";
 import Chevron from "~/svgs/ChevronSmall.svg?react";
+import Minimise from "~/svgs/Minimise.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { Grid } from "ldrs/react";
 import "ldrs/react/Grid.css";
@@ -9,7 +10,7 @@ import { db } from "src/db";
 import { eventsTable } from "src/db/schema/events";
 import { venuesTable } from "src/db/schema/venues";
 import { categoriesTable } from "src/db/schema/categories";
-import { Link } from "react-router";
+import { Link, Outlet } from "react-router";
 import { eq } from "drizzle-orm";
 import { universitiesTable } from "src/db/schema/universities";
 import { data } from "react-router";
@@ -17,6 +18,7 @@ import formatPrice from "~/utils/formatPrice";
 import EventDetails, { LinkedVenue } from "~/components/EventDetails";
 import WideButton from "~/components/WideButton";
 import { getSupabaseClient } from "~/auth/supabase.server";
+import SquareButton from "~/components/SquareButton";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const { supabase, headers } = getSupabaseClient(request);
@@ -127,6 +129,7 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
         shadow="shadow-above"
         flexGap="gap-6"
       >
+        <Outlet context={{ event: { ...event, venueName } }} />
         <div className="w-full flex items-center justify-start gap-1 text-text-dim text-sm">
           <Link
             to={`/${university.slug}/events`}
@@ -150,7 +153,9 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
         </div>
         <WideButton
           isLink
-          path={`/${university.slug}/events/${event.id}/confirm`}
+          path={
+            user ? `/${university.slug}/events/${event.id}/confirm` : "/log-in"
+          }
         >
           {user ? "Book Now" : "Log in to book"}
         </WideButton>
@@ -169,7 +174,16 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
             mapExpanded || "expand-map"
           }`}
           ref={mapRef}
-          onClick={() => setMapExpanded(true)}
+          onClick={({ target }) => {
+            if (target instanceof HTMLElement) {
+              if (
+                !(target.tagName === "svg") &&
+                !(target.tagName === "BUTTON")
+              ) {
+                setMapExpanded(true);
+              }
+            }
+          }}
         >
           {venueCoords && MapComponent ? (
             <MapComponent
@@ -182,6 +196,19 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
             />
           ) : (
             <Grid color="#4BA590" size={72} />
+          )}
+          {mapExpanded && (
+            <SquareButton
+              colour="primary"
+              size="smaller"
+              position="absolute"
+              top="top-5"
+              right="right-5"
+              zIndex="z-400"
+              onClick={() => setMapExpanded(false)}
+            >
+              <Minimise stroke="#f7f4e9" />
+            </SquareButton>
           )}
         </div>
       </PaddedContainer>
