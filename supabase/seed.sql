@@ -687,3 +687,6 @@ INSERT INTO events (title, description, start_time, end_time, venue_id, ticket_p
     '2025-09-30 18:30:00+01:00',
     16, 400, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 3
 );
+
+UPDATE public.events
+SET ticket_price = 0;
