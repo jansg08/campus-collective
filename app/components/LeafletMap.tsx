@@ -25,18 +25,10 @@ const createDynamicMarker = (variant: string) =>
     popupAnchor: [0, -55],
   });
 
-const ChangeLocation = ({
-  location,
-  expanded,
-}: {
-  location: [number, number];
-  expanded: boolean;
-}) => {
+const ChangeLocation = ({ expanded }: { expanded: boolean }) => {
   const map = useMap();
   useEffect(() => {
-    if (expanded) {
-      map.invalidateSize(true);
-    }
+    map.invalidateSize(true);
   }, [expanded, map]);
 
   return null;
@@ -70,7 +62,7 @@ export const LeafletMap = ({
       <Marker position={markerPosition} icon={createDynamicMarker(variant)}>
         {popUpContent && <Popup>{popUpContent}</Popup>}
       </Marker>
-      <ChangeLocation location={center} expanded={expanded} />
+      <ChangeLocation expanded={expanded} />
     </MapContainer>
   );
 };
