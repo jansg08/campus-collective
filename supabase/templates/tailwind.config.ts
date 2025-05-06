@@ -2,9 +2,6 @@ import type { TailwindConfig } from "@react-email/tailwind";
 /**
  * This overrides the default tailwind config
  * to make it compatible with react-email
- *
- * Check out the documentation for more info
- * https://react.email/docs/components/tailwind
  */
 export default {
   theme: {
