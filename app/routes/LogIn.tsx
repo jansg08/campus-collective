@@ -42,7 +42,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
           universitySlug: universitiesTable.slug,
         })
         .from(universitiesTable)
-        .where(eq(universitiesTable.id, user.user_metadata.university));
+        .where(eq(universitiesTable.id, user.user_metadata?.university));
 
       return redirect(
         result.universitySlug ? `/${result.universitySlug}/events` : "/",
@@ -56,7 +56,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 const LogIn = ({ actionData }: Route.ComponentProps) => {
   const [clientErrors, setClientErrors] = useState<formErrors>({});
-
+  console.log(actionData);
   return (
     <PaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/4">
