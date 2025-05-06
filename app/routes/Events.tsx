@@ -178,7 +178,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
   return (
     <div className="flex flex-col relative">
       {isOptionsOpen && (
-        <Modal visibilitySetter={setIsOptionsOpen}>
+        <Modal closeModal={() => setIsOptionsOpen(false)}>
           <Form
             className="flex flex-col gap-4"
             onChange={(e) => submit(e.currentTarget)}
