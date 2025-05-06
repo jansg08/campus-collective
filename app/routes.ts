@@ -20,5 +20,6 @@ export default [
       route("success", "routes/BookingSuccess.tsx"),
     ]),
   ]),
+  route("create-event", "routes/CreateEvent.tsx"),
   ...prefix("auth", [route("confirm", "resources/confirm.ts")]),
 ] satisfies RouteConfig;
