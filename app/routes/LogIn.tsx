@@ -37,17 +37,16 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
   if (user) {
     try {
-      const [result] = await db
-        .select({
-          universitySlug: universitiesTable.slug,
-        })
-        .from(universitiesTable)
-        .where(eq(universitiesTable.id, user.user_metadata?.university));
-
-      return redirect(
-        result.universitySlug ? `/${result.universitySlug}/events` : "/",
-        { headers }
-      );
+      if (user.user_metadata?.universitySlug) {
+        const [result] = await db
+          .select({
+            universitySlug: universitiesTable.slug,
+          })
+          .from(universitiesTable)
+          .where(eq(universitiesTable.id, user.user_metadata?.university));
+        redirect(`/${result.universitySlug}/events`, { headers });
+      }
+      return redirect("/", { headers });
     } catch (err) {
       return { err };
     }
@@ -56,7 +55,6 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 const LogIn = ({ actionData }: Route.ComponentProps) => {
   const [clientErrors, setClientErrors] = useState<formErrors>({});
-  console.log(actionData);
   return (
     <PaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/4">
