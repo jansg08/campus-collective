@@ -13,7 +13,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
     type: "signup",
     email: email,
     options: {
-      emailRedirectTo: "http://localhost:5173/log-in",
+      emailRedirectTo: `${process.env.BASE_URL}/log-in`,
     },
   });
 
