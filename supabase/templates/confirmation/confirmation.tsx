@@ -1,15 +1,18 @@
-import { Button, Img } from "@react-email/components";
+import { Img } from "@react-email/components";
 import EmailTemplate from "../emailTemplate";
-import WideButton from "~/components/WideButton";
+import { config } from "dotenv";
+const __dirname = import.meta.dirname;
+config({ path: `${process.cwd()}/.env.local` });
 
-interface ConfirmationProps {}
-
-const Confirmation = ({}: ConfirmationProps) => {
+const Confirmation = () => {
   return (
     <EmailTemplate>
       <main className="flex items-center justify-center w-screen h-screen">
         <div className="flex flex-col gap-28 w-80 bg-secondary p-8 rounded-2xl shadow-xl">
-          <Img src="../../../public/Logo.png" width="100%" />
+          <Img
+            src={`${process.env.S3_STORAGE_URL}/storage/v1/object/public/assets/cc-logos/Logo.png`}
+            width="100%"
+          />
           <div className="flex flex-col gap-5">
             <p>Please click the button below to confirm your email address.</p>
             <a
