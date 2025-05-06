@@ -1,6 +1,7 @@
 import PaddedContainer from "~/components/PaddedContainer";
 import Chevron from "~/svgs/ChevronSmall.svg?react";
 import Minimise from "~/svgs/Minimise.svg?react";
+import PlusCircle from "~/svgs/PlusCircle.svg?react";
 import { useEffect, useRef, useState } from "react";
 import { Grid } from "ldrs/react";
 import "ldrs/react/Grid.css";
@@ -11,7 +12,7 @@ import { eventsTable } from "src/db/schema/events";
 import { venuesTable } from "src/db/schema/venues";
 import { categoriesTable } from "src/db/schema/categories";
 import { Link, Outlet } from "react-router";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { universitiesTable } from "src/db/schema/universities";
 import { data } from "react-router";
 import formatPrice from "~/utils/formatPrice";
@@ -19,6 +20,8 @@ import EventDetails, { LinkedVenue } from "~/components/EventDetails";
 import WideButton from "~/components/WideButton";
 import { getSupabaseClient } from "~/auth/supabase.server";
 import SquareButton from "~/components/SquareButton";
+import { bookingsTable } from "src/db/schema/bookings";
+import { generateIcsFile } from "~/utils/generateIcsFile";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const { supabase, headers } = getSupabaseClient(request);
@@ -27,7 +30,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
     error,
   } = await supabase.auth.getUser();
   const eventId = Number(params.eventId);
-  const [eventResult] = await db
+  const eventQuery = db
     .select({
       id: eventsTable.id,
       img: eventsTable.coverPhotoUrl,
@@ -52,6 +55,27 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       eq(venuesTable.universityId, universitiesTable.id)
     )
     .where(eq(eventsTable.id, eventId));
+
+  const bookingQuery = user
+    ? db
+        .select({
+          eventId: bookingsTable.eventId,
+          userId: bookingsTable.userId,
+          dateBooked: bookingsTable.dateBooked,
+        })
+        .from(bookingsTable)
+        .where(
+          and(
+            eq(bookingsTable.eventId, eventId),
+            eq(bookingsTable.userId, user?.id)
+          )
+        )
+    : null;
+
+  const [[eventResult], bookingResult = null] = (await Promise.all([
+    eventQuery,
+    ...(bookingQuery ? [bookingQuery] : []),
+  ])) as [Awaited<typeof eventQuery>, Awaited<typeof bookingQuery> | null];
 
   const {
     categoryName,
@@ -81,6 +105,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
       coords: venueCoordinates,
     },
     event: { img, price: price / 100, ...rest },
+    dateBooked: bookingResult?.length ? bookingResult[0].dateBooked : null,
   };
 
   if (!img) {
@@ -97,6 +122,8 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
     category,
     university,
     venue: { name: venueName, coords: venueCoords },
+    venue,
+    dateBooked,
   } = loaderData;
 
   const [MapComponent, setMapComponent] =
@@ -129,7 +156,7 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
         shadow="shadow-above"
         flexGap="gap-6"
       >
-        <Outlet context={{ event: { ...event, venueName } }} />
+        <Outlet context={{ event: { ...event, venue } }} />
         <div className="w-full flex items-center justify-start gap-1 text-text-dim text-sm">
           <Link
             to={`/${university.slug}/events`}
@@ -152,12 +179,30 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
           </h3>
         </div>
         <WideButton
-          isLink
+          isLink={!dateBooked}
           path={
             user ? `/${university.slug}/events/${event.id}/confirm` : "/log-in"
           }
+          colour={dateBooked ? "secondary" : "primary"}
+          onClick={
+            dateBooked
+              ? () =>
+                  generateIcsFile({
+                    title: event.title,
+                    description: event.description,
+                    venue,
+                    startTime: event.startTime,
+                    endTime: event.endTime,
+                  })
+              : undefined
+          }
         >
-          {user ? "Book Now" : "Log in to book"}
+          {dateBooked && <PlusCircle stroke="#044c3b" />}
+          {user
+            ? dateBooked
+              ? "Add to Calendar"
+              : "Book Now"
+            : "Log in to book"}
         </WideButton>
         <div className="text-sm w-full">
           <p>{event.description}</p>
