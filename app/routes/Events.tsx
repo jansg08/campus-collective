@@ -97,7 +97,7 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
   );
 
   const universities = uniResults.map(({ crestUrl, ...rest }) => ({
-    crestUrl: `http://127.0.0.1:54321/storage/v1/object/public${crestUrl}`,
+    crestUrl: `${process.env.S3_STORAGE_URL}/storage/v1/object/public${crestUrl}`,
     ...rest,
   }));
 

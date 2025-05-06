@@ -45,7 +45,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   const universities = result.map((uni) => ({
     ...uni,
-    logoUrl: `http://127.0.0.1:54321/storage/v1/object/public${uni.logoUrl}`,
+    logoUrl: `${process.env.S3_STORAGE_URL}/storage/v1/object/public${uni.logoUrl}`,
   }));
 
   return data({ universities, user }, { headers });
