@@ -5,14 +5,14 @@ import useOutsideClick from "~/utils/useOutSideClick";
 
 interface ModalProps {
   children: React.ReactNode;
-  visibilitySetter: (arg0: boolean) => void;
+  closeModal: (...args: any[]) => void;
 }
 
-const Modal = ({ children, visibilitySetter }: ModalProps) => {
+const Modal = ({ children, closeModal }: ModalProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null!);
   useOutsideClick({
     ref: dropdownRef,
-    handler: () => visibilitySetter(false),
+    handler: closeModal,
   });
   return (
     <div
@@ -25,7 +25,7 @@ const Modal = ({ children, visibilitySetter }: ModalProps) => {
         size="small"
         top="top-5"
         right="right-5"
-        onClick={() => visibilitySetter(false)}
+        onClick={closeModal}
       >
         <X stroke="#f7f4e9" />
       </SquareButton>
