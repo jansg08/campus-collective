@@ -22,7 +22,7 @@ Authenticated users can always view any events they've signed up for by using th
 
 # Running Locally
 
-This project runs across two distinct applications and therefore has two distinct parts to setting it up:
+This project relies on two applications to function, each has it's own setup:
 
 ## React Router v7
 
