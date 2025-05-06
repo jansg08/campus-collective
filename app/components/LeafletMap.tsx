@@ -29,6 +29,11 @@ const ChangeLocation = ({ expanded }: { expanded: boolean }) => {
   const map = useMap();
   useEffect(() => {
     map.invalidateSize(true);
+    if (expanded) {
+      map.zoomControl?.addTo(map);
+    } else {
+      map.zoomControl?.remove();
+    }
   }, [expanded, map]);
 
   return null;
@@ -48,7 +53,7 @@ export const LeafletMap = ({
     <MapContainer
       center={center}
       zoom={zoom}
-      zoomControl={expanded && zoomControl}
+      zoomControl={zoomControl}
       style={{
         height: "100%",
         width: "100%",
