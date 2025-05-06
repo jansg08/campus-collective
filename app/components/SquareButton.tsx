@@ -4,6 +4,13 @@ interface SquareButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   colour: "primary" | "secondary";
+  size?: "normal" | "smaller" | "small";
+  position?: "static" | "relative" | "absolute";
+  zIndex?: `z-${string}`;
+  top?: `top-${string}`;
+  left?: `left-${string}`;
+  bottom?: `bottom-${string}`;
+  right?: `right-${string}`;
 }
 
 interface LinkProps extends SquareButtonProps {
@@ -21,9 +28,20 @@ const SquareButton = ({
   colour,
   isLink = false,
   path,
+  size = "normal",
+  position = "static",
+  zIndex,
+  top,
+  left,
+  bottom,
+  right,
   onClick,
 }: LinkProps | NonLinkProps) => {
-  const classes = `bg-${colour} p-1.5 rounded-lg shadow-lg transition-all cursor-pointer ${
+  const classes = `bg-${colour} ${
+    size === "normal" ? "p-1.5 rounded-lg" : "rounded-sm"
+  } ${
+    size === "smaller" && "p-1"
+  } ${position} ${top} ${left} ${bottom} ${right} ${zIndex} shadow-lg transition-all cursor-pointer ${
     colour === "primary"
       ? "text-background hover:brightness-110"
       : "hover:brightness-105"

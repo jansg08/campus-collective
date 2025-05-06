@@ -74,14 +74,14 @@ INSERT INTO
       auth.users
   );
 
-INSERT INTO public.categories (id, name, cover_photo_url) VALUES
-  (1, 'Music', 'https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
-  (2, 'Comedy', 'https://images.pexels.com/photos/144429/pexels-photo-144429.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
-  (3, 'Sports and Exercise', 'https://images.pexels.com/photos/2526878/pexels-photo-2526878.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
-  (4, 'Talks', 'https://images.pexels.com/photos/3321791/pexels-photo-3321791.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
-  (5, 'Tech', 'https://images.pexels.com/photos/17260648/pexels-photo-17260648/free-photo-of-robotics-event-for-children.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
-  (6, 'Drama and Dance', 'https://images.pexels.com/photos/2736742/pexels-photo-2736742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
-  (7, 'Art and Design', 'https://images.pexels.com/photos/4219152/pexels-photo-4219152.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+INSERT INTO public.categories (name, cover_photo_url) VALUES
+  ('Music', 'https://images.pexels.com/photos/995301/pexels-photo-995301.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
+  ('Comedy', 'https://images.pexels.com/photos/144429/pexels-photo-144429.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
+  ('Sports and Exercise', 'https://images.pexels.com/photos/2526878/pexels-photo-2526878.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
+  ('Talks', 'https://images.pexels.com/photos/3321791/pexels-photo-3321791.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
+  ('Tech', 'https://images.pexels.com/photos/17260648/pexels-photo-17260648/free-photo-of-robotics-event-for-children.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
+  ('Drama and Dance', 'https://images.pexels.com/photos/2736742/pexels-photo-2736742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'),
+  ('Art and Design', 'https://images.pexels.com/photos/4219152/pexels-photo-4219152.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
 
 INSERT INTO public.venues (university_id, location, name, max_capacity) VALUES
 -- University of Exeter
@@ -126,32 +126,32 @@ INSERT INTO public.venue_authorities (user_id, venue_id) VALUES
   ('00000000-0000-0000-0000-000000000009', 12);
 
 -- University of Exeter Events
-INSERT INTO public.events (id, title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id)
+INSERT INTO public.events (title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id)
 VALUES
-  (1, 'Exeter Battle of the Bands', 'Student bands compete for the crown.', '2025-06-10 18:00:00+00', '2025-06-10 21:00:00+00', 1, 500, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000006', true, true, 1),
-  (2, 'Exeter Open Mic Comedy', 'A night of laughter at Lemon Grove.', '2025-06-12 19:00:00+00', '2025-06-12 22:00:00+00', 2, 300, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000006', true, true, 2),
-  (3, 'Exeter Fitness Bootcamp', 'Outdoor group workout at Streatham.', '2025-06-15 07:00:00+00', '2025-06-15 08:30:00+00', 3, 0, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000006', true, false, 3),
-  (4, 'Exeter AI Talk', 'Panel with AI researchers.', '2025-06-20 17:00:00+00', '2025-06-20 19:00:00+00', 4, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000006', true, true, 5),
-  (5, 'Exeter Art Showcase', 'Fine arts and digital works display.', '2025-06-21 13:00:00+00', '2025-06-21 17:00:00+00', 1, 200, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000006', true, true, 7),
-  (6, 'Exeter Jazz Night', 'Live jazz in the Great Hall.', '2025-06-22 20:00:00+00', '2025-06-22 23:00:00+00', 1, 400, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000006', true, true, 1),
-  (7, 'Exeter Tech Workshop', 'Intro to web development.', '2025-06-23 15:00:00+00', '2025-06-23 18:00:00+00', 4, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000006', true, true, 5),
-  (8, 'Exeter Drama Rehearsal', 'Open rehearsal session.', '2025-06-24 16:00:00+00', '2025-06-24 18:00:00+00', 1, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000006', true, false, 6),
-  (9, 'Exeter Science Talks', 'Student-led presentations.', '2025-06-25 10:00:00+00', '2025-06-25 12:00:00+00', 4, 0, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000006', true, true, 4),
-  (10, 'Exeter Design Sprint', 'Creative collaboration challenge.', '2025-06-26 09:00:00+00', '2025-06-26 17:00:00+00', 4, 100, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000006', true, true, 7);
+  ('Exeter Battle of the Bands', 'Student bands compete for the crown.', '2025-06-10 18:00:00+00', '2025-06-10 21:00:00+00', 1, 500, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000006', true, true, 1),
+  ('Exeter Open Mic Comedy', 'A night of laughter at Lemon Grove.', '2025-06-12 19:00:00+00', '2025-06-12 22:00:00+00', 2, 300, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000006', true, true, 2),
+  ('Exeter Fitness Bootcamp', 'Outdoor group workout at Streatham.', '2025-06-15 07:00:00+00', '2025-06-15 08:30:00+00', 3, 0, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000006', true, false, 3),
+  ('Exeter AI Talk', 'Panel with AI researchers.', '2025-06-20 17:00:00+00', '2025-06-20 19:00:00+00', 2, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000006', true, true, 5),
+  ('Exeter Art Showcase', 'Fine arts and digital works display.', '2025-06-21 13:00:00+00', '2025-06-21 17:00:00+00', 1, 200, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000006', true, true, 7),
+  ('Exeter Jazz Night', 'Live jazz in the Great Hall.', '2025-06-22 20:00:00+00', '2025-06-22 23:00:00+00', 1, 400, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000006', true, true, 1),
+  ('Exeter Tech Workshop', 'Intro to web development.', '2025-06-23 15:00:00+00', '2025-06-23 18:00:00+00', 3, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000006', true, true, 5),
+  ('Exeter Drama Rehearsal', 'Open rehearsal session.', '2025-06-24 16:00:00+00', '2025-06-24 18:00:00+00', 1, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000006', true, false, 6),
+  ('Exeter Science Talks', 'Student-led presentations.', '2025-06-25 10:00:00+00', '2025-06-25 12:00:00+00', 3, 0, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000006', true, true, 4),
+  ('Exeter Design Sprint', 'Creative collaboration challenge.', '2025-06-26 09:00:00+00', '2025-06-26 17:00:00+00', 2, 100, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000006', true, true, 7);
 
 -- Imperial College London Events
-INSERT INTO public.events (id, title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id)
+INSERT INTO public.events (title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id)
 VALUES
-  (11, 'Imperial Coding Jam', 'Speed coding challenge for teams.', '2025-07-01 14:00:00+00', '2025-07-01 18:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000007', true, true, 5),
-  (12, 'Imperial Music Showcase', 'Instrumental and vocal talent.', '2025-07-02 19:00:00+00', '2025-07-02 22:00:00+00', 5, 500, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000007', true, true, 1),
-  (13, 'Imperial Laugh Lounge', 'Student comedy performances.', '2025-07-03 18:00:00+00', '2025-07-03 21:00:00+00', 5, 200, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000007', true, true, 2),
-  (14, 'Imperial Gym Bash', 'Fitness and wellness event.', '2025-07-04 09:00:00+00', '2025-07-04 11:00:00+00', 7, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000007', true, false, 3),
-  (15, 'Imperial Future Tech Talk', 'Emerging technologies and careers.', '2025-07-05 15:00:00+00', '2025-07-05 17:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000007', true, true, 5),
-  (16, 'Imperial Drama Night', 'A night of short plays.', '2025-07-06 20:00:00+00', '2025-07-06 22:00:00+00', 5, 300, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000007', true, true, 6),
-  (17, 'Imperial Creative Fest', 'Student creative fair.', '2025-07-07 11:00:00+00', '2025-07-07 15:00:00+00', 5, 100, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000007', true, true, 7),
-  (18, 'Imperial Engineering Panel', 'Engineering leaders Q&A.', '2025-07-08 14:00:00+00', '2025-07-08 16:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000007', true, true, 4),
-  (19, 'Imperial Startups Meetup', 'Founders present their projects.', '2025-07-09 10:00:00+00', '2025-07-09 12:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000007', true, true, 5),
-  (20, 'Imperial Late Night Beats', 'Campus DJ night.', '2025-07-10 21:00:00+00', '2025-07-11 01:00:00+00', 5, 700, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000007', true, true, 1);
+  ('Imperial Coding Jam', 'Speed coding challenge for teams.', '2025-07-01 14:00:00+00', '2025-07-01 18:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000007', true, true, 5),
+  ('Imperial Music Showcase', 'Instrumental and vocal talent.', '2025-07-02 19:00:00+00', '2025-07-02 22:00:00+00', 5, 500, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000007', true, true, 1),
+  ('Imperial Laugh Lounge', 'Student comedy performances.', '2025-07-03 18:00:00+00', '2025-07-03 21:00:00+00', 5, 200, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000007', true, true, 2),
+  ('Imperial Gym Bash', 'Fitness and wellness event.', '2025-07-04 09:00:00+00', '2025-07-04 11:00:00+00', 7, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000007', true, false, 3),
+  ('Imperial Future Tech Talk', 'Emerging technologies and careers.', '2025-07-05 15:00:00+00', '2025-07-05 17:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000007', true, true, 5),
+  ('Imperial Drama Night', 'A night of short plays.', '2025-07-06 20:00:00+00', '2025-07-06 22:00:00+00', 5, 300, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000007', true, true, 6),
+  ('Imperial Creative Fest', 'Student creative fair.', '2025-07-07 11:00:00+00', '2025-07-07 15:00:00+00', 5, 100, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000007', true, true, 7),
+  ('Imperial Engineering Panel', 'Engineering leaders Q&A.', '2025-07-08 14:00:00+00', '2025-07-08 16:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000007', true, true, 4),
+  ('Imperial Startups Meetup', 'Founders present their projects.', '2025-07-09 10:00:00+00', '2025-07-09 12:00:00+00', 6, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000007', true, true, 5),
+  ('Imperial Late Night Beats', 'Campus DJ night.', '2025-07-10 21:00:00+00', '2025-07-11 01:00:00+00', 5, 700, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000007', true, true, 1);
 
 -- Existing inserts for universities, categories, and users omitted for brevity
 
@@ -188,30 +188,30 @@ INSERT INTO public.venue_authorities (user_id, venue_id) VALUES
 ('00000000-0000-0000-0000-000000000008', 22);
 
 -- Oxford Events
-INSERT INTO public.events (id, title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id) VALUES
-(21, 'Debate Night at the Union', 'A lively debate featuring leading thinkers.', '2025-06-10T18:00:00Z', '2025-06-10T20:00:00Z', 10, 500, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', true, true, 4),
-(22, 'Classical Concert', 'Enjoy a night of classical music at the Sheldonian.', '2025-06-12T19:00:00Z', '2025-06-12T21:30:00Z', 13, 850, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', true, true, 1),
-(23, 'Art Exhibition', 'Student art showcase at the Exam Schools.', '2025-06-14T10:00:00Z', '2025-06-14T16:00:00Z', 14, 0, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', true, false, 7),
-(24, 'Tech Talk: AI in Medicine', 'Exploring the future of AI in healthcare.', '2025-06-16T15:00:00Z', '2025-06-16T17:00:00Z', 15, 250, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', true, true, 5),
-(25, 'Student Theatre Showcase', 'Performances by Oxford Drama Society.', '2025-06-18T19:30:00Z', '2025-06-18T21:00:00Z', 16, 300, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', true, true, 6),
-(31, 'Oxford Stand-Up Night', 'An evening of student comedy at Keble College Hall.', '2025-06-20T19:00:00Z', '2025-06-20T21:00:00Z', 15, 200, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', true, true, 2),
-(32, 'Oxford Tech Expo', 'Tech society expo showcasing new projects.', '2025-06-22T12:00:00Z', '2025-06-22T17:00:00Z', 13, 0, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', true, true, 5),
-(33, 'Design Fair', 'Design students show off their final projects.', '2025-06-23T10:00:00Z', '2025-06-23T15:00:00Z', 17, 0, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', true, false, 7),
-(34, 'Public Lecture on Ethics', 'Guest speaker from the philosophy faculty.', '2025-06-24T17:00:00Z', '2025-06-24T18:30:00Z', 11, 0, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', true, true, 4),
-(35, 'Oxford Freshers'' Showcase', 'Music, drama, and more from first-years.', '2025-06-26T18:00:00Z', '2025-06-26T21:00:00Z', 16, 350, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', true, true, 1);
+INSERT INTO public.events (title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id) VALUES
+('Debate Night at the Union', 'A lively debate featuring leading thinkers.', '2025-06-10T18:00:00Z', '2025-06-10T20:00:00Z', 10, 500, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', true, true, 4),
+('Classical Concert', 'Enjoy a night of classical music at the Sheldonian.', '2025-06-12T19:00:00Z', '2025-06-12T21:30:00Z', 13, 850, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', true, true, 1),
+('Art Exhibition', 'Student art showcase at the Exam Schools.', '2025-06-14T10:00:00Z', '2025-06-14T16:00:00Z', 14, 0, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', true, false, 7),
+('Tech Talk: AI in Medicine', 'Exploring the future of AI in healthcare.', '2025-06-16T15:00:00Z', '2025-06-16T17:00:00Z', 15, 250, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', true, true, 5),
+('Student Theatre Showcase', 'Performances by Oxford Drama Society.', '2025-06-18T19:30:00Z', '2025-06-18T21:00:00Z', 16, 300, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', true, true, 6),
+('Oxford Stand-Up Night', 'An evening of student comedy at Keble College Hall.', '2025-06-20T19:00:00Z', '2025-06-20T21:00:00Z', 15, 200, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', true, true, 2),
+('Oxford Tech Expo', 'Tech society expo showcasing new projects.', '2025-06-22T12:00:00Z', '2025-06-22T17:00:00Z', 13, 0, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', true, true, 5),
+('Design Fair', 'Design students show off their final projects.', '2025-06-23T10:00:00Z', '2025-06-23T15:00:00Z', 17, 0, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', true, false, 7),
+('Public Lecture on Ethics', 'Guest speaker from the philosophy faculty.', '2025-06-24T17:00:00Z', '2025-06-24T18:30:00Z', 11, 0, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', true, true, 4),
+('Oxford Freshers'' Showcase', 'Music, drama, and more from first-years.', '2025-06-26T18:00:00Z', '2025-06-26T21:00:00Z', 16, 350, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', true, true, 1);
 
 -- Loughborough Events
-INSERT INTO public.events (id, title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id) VALUES
-(26, 'Varsity Sports Finals', 'Watch the best of university sports.', '2025-06-10T13:00:00Z', '2025-06-10T18:00:00Z', 17, 600, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000008', true, true, 3),
-(27, 'Student Open Mic Night', 'Showcase your talent at the SU.', '2025-06-11T20:00:00Z', '2025-06-11T22:30:00Z', 8, 300, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000008', true, true, 2),
-(28, 'TEDx Talks', 'Ideas worth spreading by Lboro students.', '2025-06-13T10:00:00Z', '2025-06-13T13:00:00Z', 19, 500, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000008', true, false, 4),
-(29, 'Hackathon', '24h coding challenge in the EH building.', '2025-06-15T09:00:00Z', '2025-06-16T09:00:00Z', 18, 0, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000008', true, true, 5),
-(30, 'Drama Night', 'An evening of student theatre.', '2025-06-17T19:00:00Z', '2025-06-17T21:30:00Z', 20, 200, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000008', true, true, 6),
-(36, 'Lboro Laughs', 'Comedy society''s term-end standup show.', '2025-06-19T19:00:00Z', '2025-06-19T21:00:00Z', 19, 250, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000008', true, true, 2),
-(37, 'Sports Science Panel', 'Talks from elite athletes and coaches.', '2025-06-20T14:00:00Z', '2025-06-20T16:00:00Z', 7, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000008', true, true, 4),
-(38, 'Tech Demo Day', 'Final year projects from computing students.', '2025-06-22T10:00:00Z', '2025-06-22T14:00:00Z', 18, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000008', true, false, 5),
-(39, 'Art & Design Market', 'Stalls from students selling prints, posters and more.', '2025-06-24T11:00:00Z', '2025-06-24T15:00:00Z', 22, 100, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000008', true, true, 7),
-(40, 'Film Screening Night', 'End of year film society selection.', '2025-06-25T19:00:00Z', '2025-06-25T21:30:00Z', 9, 200, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000008', true, true, 6);
+INSERT INTO public.events (title, description, start_time, end_time, venue_id, ticket_price, host, creator, is_listed, is_public, category_id) VALUES
+('Varsity Sports Finals', 'Watch the best of university sports.', '2025-06-10T13:00:00Z', '2025-06-10T18:00:00Z', 17, 600, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000008', true, true, 3),
+('Student Open Mic Night', 'Showcase your talent at the SU.', '2025-06-11T20:00:00Z', '2025-06-11T22:30:00Z', 8, 300, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000008', true, true, 2),
+('TEDx Talks', 'Ideas worth spreading by Lboro students.', '2025-06-13T10:00:00Z', '2025-06-13T13:00:00Z', 19, 500, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000008', true, false, 4),
+('Hackathon', '24h coding challenge in the EH building.', '2025-06-15T09:00:00Z', '2025-06-16T09:00:00Z', 18, 0, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000008', true, true, 5),
+('Drama Night', 'An evening of student theatre.', '2025-06-17T19:00:00Z', '2025-06-17T21:30:00Z', 20, 200, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000008', true, true, 6),
+('Lboro Laughs', 'Comedy society''s term-end standup show.', '2025-06-19T19:00:00Z', '2025-06-19T21:00:00Z', 19, 250, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000008', true, true, 2),
+('Sports Science Panel', 'Talks from elite athletes and coaches.', '2025-06-20T14:00:00Z', '2025-06-20T16:00:00Z', 7, 0, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000008', true, true, 4),
+('Tech Demo Day', 'Final year projects from computing students.', '2025-06-22T10:00:00Z', '2025-06-22T14:00:00Z', 18, 0, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000008', true, false, 5),
+('Art & Design Market', 'Stalls from students selling prints, posters and more.', '2025-06-24T11:00:00Z', '2025-06-24T15:00:00Z', 22, 100, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000008', true, true, 7),
+('Film Screening Night', 'End of year film society selection.', '2025-06-25T19:00:00Z', '2025-06-25T21:30:00Z', 9, 200, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000008', true, true, 6);
 
 -- Exeter Bookings (Event IDs 1-10)
 INSERT INTO public.bookings (user_id, event_id, payment_ref, date_booked, ics_url) VALUES
@@ -341,3 +341,352 @@ INSERT INTO public.bookings (user_id, event_id, payment_ref, date_booked, ics_ur
 ('00000000-0000-0000-0000-000000000003', 30, 'PAY048', '2025-06-17T20:00:00Z', '/ics/drama_lboro_3.ics'),
 ('00000000-0000-0000-0000-000000000004', 30, 'PAY049', '2025-06-17T21:00:00Z', '/ics/drama_lboro_4.ics'),
 ('00000000-0000-0000-0000-000000000005', 30, 'PAY050', '2025-06-17T22:00:00Z', '/ics/drama_lboro_5.ics');
+
+INSERT INTO events (title, description, start_time, end_time, venue_id, ticket_price, cover_photo_url, host, creator, is_listed, is_public, category_id) VALUES
+
+(
+    'Public Talk: Quantum Computing Horizons',
+    'Join Professor Davies for an insightful talk on the future potential and current challenges of quantum computing. Suitable for a general academic audience.',
+    '2025-05-15 18:00:00+01:00', -- BST
+    '2025-05-15 19:30:00+01:00',
+    11, 0, 'https://picsum.photos/seed/quantum_ox/1000/300', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 5
+),
+(
+    'St John''s College Chapel Choir Evensong',
+    'Join the renowned St John''s College Choir for a service of Choral Evensong, featuring works by Tallis and Byrd. Open to all.',
+    '2025-05-22 17:30:00+01:00', -- BST
+    '2025-05-22 18:30:00+01:00',
+    10, 0, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'Oxford Union Debate: AI Regulation',
+    'A formal debate addressing the motion "This House believes urgent global regulation of AI is paramount". Featuring student speakers and guest experts. Union members only.',
+    '2025-05-29 20:00:00+01:00', -- BST
+    '2025-05-29 22:00:00+01:00',
+    14, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 4
+),
+(
+    'Tech Talk: Introduction to Machine Learning',
+    'An introductory session covering the fundamentals of machine learning algorithms and their applications. Aimed at students from all disciplines.',
+    '2025-06-05 14:00:00+01:00', -- BST
+    '2025-06-05 15:30:00+01:00',
+    11, 0, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 5
+),
+(
+    'Lunchtime Organ Recital',
+    'Enjoy a selection of classical pieces performed on the historic Sheldonian Theatre organ by university organ scholar, Kenji Tanaka.',
+    '2025-06-12 13:10:00+01:00', -- BST
+    '2025-06-12 13:50:00+01:00',
+    13, 800, 'https://picsum.photos/seed/organ_recital_alt/1000/300', '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'OUDS Presents: Rosencrantz and Guildenstern Are Dead',
+    'The Oxford University Dramatic Society stages Tom Stoppard''s witty exploration of fate and free will at the Oxford Playhouse.',
+    '2025-06-18 19:30:00+01:00', -- BST
+    '2025-06-18 22:15:00+01:00',
+    17, 1650, NULL, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 6
+),
+(
+    'Ruskin School Final Year Show: Private View',
+    'An exclusive first look at the degree show from graduating students of the Ruskin School of Art. Drinks reception included.',
+    '2025-06-23 18:00:00+01:00', -- BST
+    '2025-06-23 20:30:00+01:00',
+    15, 0, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', FALSE, FALSE, 7
+),
+(
+    'Inter-Collegiate Rowing Regatta Finals',
+    'Watch the culmination of the college rowing season. Finals races held throughout the afternoon. Spectators welcome along the towpath.',
+    '2025-06-28 13:00:00+01:00', -- BST
+    '2025-06-28 17:00:00+01:00',
+    15, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 3
+),
+(
+    'Oxford Revue Stand-up Night',
+    'An evening of hilarious stand-up comedy featuring members of the renowned Oxford Revue troupe.',
+    '2025-07-01 20:00:00+01:00', -- BST
+    '2025-07-01 22:00:00+01:00',
+    17, 1000, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 2
+),
+(
+    'Life Drawing Workshop (Untutored)',
+    'Practice your drawing skills in a relaxed, untutored life drawing session. Basic materials provided, or bring your own.',
+    '2025-07-03 14:00:00+01:00', -- BST
+    '2025-07-03 16:00:00+01:00',
+    10, 500, NULL, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 7
+),
+(
+    'Chancellor''s Lecture: Geopolitics in the 21st Century',
+    'A prestigious lecture delivered by a leading international figure on contemporary global politics. Admission free, booking required.',
+    '2025-07-05 17:30:00+01:00', -- BST
+    '2025-07-05 19:00:00+01:00',
+    13, 0, 'https://picsum.photos/seed/chancellor_lecture/1000/300', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 4
+),
+(
+    'Jazz Night ft. University Big Band',
+    'An evening of swinging tunes from the Oxford University Jazz Orchestra (OUJO) Big Band. Licensed bar available.',
+    '2025-07-08 20:30:00+01:00', -- BST
+    '2025-07-08 23:00:00+01:00',
+    16, 750, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'Physics Dept Seminar: Dark Matter Detection',
+    'Weekly departmental seminar featuring Dr. Eleanor Vance presenting recent results from the LUX-ZEPLIN experiment.',
+    '2025-07-10 16:00:00+01:00', -- BST
+    '2025-07-10 17:00:00+01:00',
+    11, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', FALSE, FALSE, 5
+),
+(
+    'Contemporary Dance Showcase',
+    'Experience innovative choreography and powerful performances from the Oxford University Contemporary Dance group.',
+    '2025-07-12 19:30:00+01:00', -- BST
+    '2025-07-12 21:00:00+01:00',
+    12, 1200, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 6
+),
+(
+    'University Fencing Championships',
+    'Watch the Varsity fencing team compete in the annual University Championships. Foil, Epee, and Sabre categories.',
+    '2025-07-15 10:00:00+01:00', -- BST
+    '2025-07-15 17:00:00+01:00',
+    15, 0, NULL, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 3
+),
+(
+    'Poetry Reading: New Voices',
+    'An evening showcasing talented student poets from across the university. Open mic slots available.',
+    '2025-07-17 19:00:00+01:00', -- BST
+    '2025-07-17 20:30:00+01:00',
+    10, 300, 'https://picsum.photos/seed/poetry_ox/1000/300', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 4
+),
+(
+    'Postgraduate Welcome Drinks',
+    'An informal drinks reception for new postgraduate students starting Michaelmas term early.',
+    '2025-07-19 18:00:00+01:00', -- BST
+    '2025-07-19 20:00:00+01:00',
+    16, 0, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', FALSE, FALSE, 4
+),
+(
+    'Robotics Workshop: Build a Bot',
+    'Hands-on workshop introducing basic robotics principles. Build and program a simple line-following robot. Materials included.',
+    '2025-07-22 10:00:00+01:00', -- BST
+    '2025-07-22 16:00:00+01:00',
+    11, 2500, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 5
+),
+(
+    'Outdoor Theatre: Twelfth Night',
+    'Enjoy Shakespeare''s classic comedy performed outdoors in the college gardens (Meeting point: Keble College Hall). Bring a picnic!',
+    '2025-07-24 18:30:00+01:00', -- BST
+    '2025-07-24 21:00:00+01:00',
+    12, 1500, 'https://picsum.photos/seed/twelfth_night_ox/1000/300', '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 6
+),
+(
+    'Oxford Philharmonic Orchestra Concert',
+    'The renowned Oxford Philharmonic performs Beethoven Symphony No. 5 and Mozart Piano Concerto No. 21.',
+    '2025-07-26 19:30:00+01:00', -- BST
+    '2025-07-26 21:30:00+01:00',
+    13, 3000, 'https://picsum.photos/seed/oxford_phil/1000/300', '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'Yoga in the Park (University Parks)',
+    'Start your day with a refreshing outdoor yoga session suitable for all levels. Meet near Keble College entrance.',
+    '2025-07-29 08:00:00+01:00', -- BST
+    '2025-07-29 09:00:00+01:00',
+    12, 500, NULL, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 3
+),
+(
+    'Improv Comedy Night',
+    'Watch skilled improvisers create hilarious scenes based on audience suggestions. Unpredictable fun guaranteed!',
+    '2025-07-31 20:00:00+01:00', -- BST
+    '2025-07-31 21:30:00+01:00',
+    17, 800, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 2
+),
+(
+    'History Faculty Seminar: The English Reformation',
+    'Professor Catherine Armstrong discusses new perspectives on the social impact of the English Reformation.',
+    '2025-08-02 14:00:00+01:00', -- BST
+    '2025-08-02 15:30:00+01:00',
+    10, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', FALSE, FALSE, 4
+),
+(
+    'Digital Photography Workshop',
+    'Learn the basics of composition, lighting, and camera settings in this introductory digital photography workshop.',
+    '2025-08-05 11:00:00+01:00', -- BST
+    '2025-08-05 14:00:00+01:00',
+    15, 1500, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 7
+),
+(
+    'Astrophysics Public Lecture: Exoplanets',
+    'Explore the fascinating world of planets beyond our solar system with Dr. Ben Carter. Suitable for all.',
+    '2025-08-07 18:30:00+01:00', -- BST
+    '2025-08-07 19:45:00+01:00',
+    11, 0, 'https://picsum.photos/seed/exoplanets_ox/1000/300', '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 5
+),
+(
+    'Oxford University Orchestra Summer Concert',
+    'The premier student orchestra performs works by Sibelius and Dvorak in the magnificent Sheldonian Theatre.',
+    '2025-08-09 19:30:00+01:00', -- BST
+    '2025-08-09 21:45:00+01:00',
+    13, 1800, NULL, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'OU Contemporary Dance Company Auditions',
+    'Auditions for the Oxford University Contemporary Dance Company. Open to all university members with dance experience.',
+    '2025-08-12 17:00:00+01:00', -- BST
+    '2025-08-12 19:00:00+01:00',
+    17, 0, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', FALSE, FALSE, 6
+),
+(
+    '5-a-side Football Tournament (Grad vs Undergrad)',
+    'Friendly inter-faculty 5-a-side football tournament. Sign up your team or come along to support.',
+    '2025-08-14 14:00:00+01:00', -- BST
+    '2025-08-14 18:00:00+01:00',
+    15, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 3
+),
+(
+    'Philosophy Society Guest Lecture',
+    'Professor Simon Blackburn discusses "Truth, Lies, and Bullshit". Q&A session to follow.',
+    '2025-08-16 17:00:00+01:00', -- BST
+    '2025-08-16 18:30:00+01:00',
+    10, 0, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 4
+),
+(
+    'Screen Printing Taster Session',
+    'Try your hand at screen printing! Learn the basics and print your own design onto a tote bag (provided).',
+    '2025-08-19 13:00:00+01:00', -- BST
+    '2025-08-19 15:00:00+01:00',
+    16, 1000, NULL, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 7
+),
+(
+    'BioTech Start-up Pitch Event',
+    'Watch Oxford''s budding biotech entrepreneurs pitch their innovative ideas to a panel of investors and experts.',
+    '2025-08-21 18:00:00+01:00', -- BST
+    '2025-08-21 20:00:00+01:00',
+    11, 500, NULL, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 5
+),
+(
+    'Keble College Chapel Choir Performance',
+    'An evening concert by the Keble College Chapel Choir, featuring sacred and secular works spanning five centuries.',
+    '2025-08-23 19:00:00+01:00', -- BST
+    '2025-08-23 20:30:00+01:00',
+    12, 1000, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'Careers Service: CV Writing Workshop',
+    'Learn how to craft an effective CV for academic or industry applications. Essential for finalists and postgraduates.',
+    '2025-08-26 14:00:00+01:00', -- BST
+    '2025-08-26 15:30:00+01:00',
+    10, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 4
+),
+(
+    'Film Screening: "Blade Runner" (Director''s Cut)',
+    'University Film Society screening of the sci-fi classic. Introduction and post-film discussion.',
+    '2025-08-28 19:30:00+01:00', -- BST
+    '2025-08-28 22:00:00+01:00',
+    17, 600, 'https://picsum.photos/seed/blade_runner_ox/1000/300', '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 5
+),
+(
+    'University Basketball Club Trials',
+    'Trials for the Oxford University Men''s and Women''s Basketball teams. Open to all skilled players.',
+    '2025-08-30 10:00:00+01:00', -- BST
+    '2025-08-30 13:00:00+01:00',
+    15, 0, NULL, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', FALSE, FALSE, 3
+),
+(
+    'Sheldonian Theatre Guided Tour',
+    'Discover the history and architecture of Sir Christopher Wren''s masterpiece. Includes access to the cupola for panoramic views.',
+    '2025-09-01 11:00:00+01:00', -- BST
+    '2025-09-01 12:00:00+01:00',
+    13, 500, 'https://picsum.photos/seed/sheldonian_tour/1000/300', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 4
+),
+(
+    'Introduction to Ballroom Dancing Class',
+    'Learn the basic steps of Waltz and Quickstep in this fun, introductory class. No partner needed.',
+    '2025-09-03 19:00:00+01:00', -- BST
+    '2025-09-03 20:30:00+01:00',
+    16, 800, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 6
+),
+(
+    'AI Ethics Discussion Panel',
+    'Experts from philosophy, law, and computer science discuss the ethical challenges posed by advancing artificial intelligence.',
+    '2025-09-05 17:00:00+01:00', -- BST
+    '2025-09-05 18:30:00+01:00',
+    14, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 5
+),
+(
+    'Oxford Gargoyles A Cappella Concert',
+    'Enjoy tight harmonies and smooth jazz sounds from Oxford''s famous all-male a cappella group.',
+    '2025-09-07 20:00:00+01:00', -- BST
+    '2025-09-07 21:30:00+01:00',
+    12, 1200, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'Watercolour Painting Outdoors',
+    'Capture the beauty of Oxford''s architecture in this outdoor watercolour painting session (weather permitting). Meet at Exam Schools.',
+    '2025-09-10 10:30:00+01:00', -- BST
+    '2025-09-10 13:00:00+01:00',
+    15, 700, NULL, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 7
+),
+(
+    'Stand-up Comedy Open Mic Night',
+    'Try out your material or enjoy fresh comedic talent at this supportive open mic night.',
+    '2025-09-12 19:30:00+01:00', -- BST
+    '2025-09-12 21:30:00+01:00',
+    10, 400, NULL, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 2
+),
+(
+    'Mindfulness and Meditation Session',
+    'A guided session to help reduce stress and improve focus. Suitable for beginners.',
+    '2025-09-15 13:00:00+01:00', -- BST
+    '2025-09-15 13:45:00+01:00',
+    11, 0, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 3
+),
+(
+    'Play Reading: "Waiting for Godot"',
+    'Join the drama society for an informal reading of Samuel Beckett''s absurdist masterpiece. Participation encouraged.',
+    '2025-09-17 18:00:00+01:00', -- BST
+    '2025-09-17 20:00:00+01:00',
+    17, 0, NULL, '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', FALSE, FALSE, 6
+),
+(
+    'Climate Change Solutions: A Student Forum',
+    'A student-led forum presenting and debating innovative solutions to the climate crisis. Open to all.',
+    '2025-09-19 16:00:00+01:00', -- BST
+    '2025-09-19 18:00:00+01:00',
+    14, 0, 'https://picsum.photos/seed/climate_forum_ox/1000/300', '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 4
+),
+(
+    'Late Night Jazz Jam Session',
+    'Bring your instrument or just come to listen at this informal late-night jazz jam session.',
+    '2025-09-22 21:00:00+01:00', -- BST
+    '2025-09-22 23:30:00+01:00',
+    12, 300, NULL, '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 1
+),
+(
+    'Introduction to Coding (Python)',
+    'Absolute beginners coding workshop focused on the Python language. No prior experience needed. Laptops required.',
+    '2025-09-24 10:00:00+01:00', -- BST
+    '2025-09-24 13:00:00+01:00',
+    11, 500, NULL, '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 5
+),
+(
+    'Sculpture Park Visit & Sketching',
+    'Organised trip to a local sculpture park (transport included). Opportunity for sketching and appreciation. Meet at Exam Schools.',
+    '2025-09-26 09:30:00+01:00', -- BST
+    '2025-09-26 16:00:00+01:00',
+    15, 2000, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 7
+),
+(
+    'Guest Comedy Night: Phil Wang (Preview)',
+    'Catch acclaimed comedian Phil Wang previewing his new tour show at the Oxford Playhouse.',
+    '2025-09-28 19:30:00+01:00', -- BST
+    '2025-09-28 21:00:00+01:00',
+    17, 1800, 'https://picsum.photos/seed/phil_wang_ox/1000/300', '00000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000009', TRUE, TRUE, 2
+),
+(
+    'Circuit Training Session',
+    'High-intensity interval training session suitable for improving overall fitness. All levels welcome.',
+    '2025-09-30 17:30:00+01:00', -- BST
+    '2025-09-30 18:30:00+01:00',
+    16, 400, NULL, '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000009', TRUE, FALSE, 3
+);
+
+UPDATE public.events
+SET ticket_price = 0;

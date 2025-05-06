@@ -1,5 +1,5 @@
 import { Outlet, redirect } from "react-router";
-import FullPaddedContainer from "~/components/FullPaddedContainer";
+import PaddedContainer from "~/components/PaddedContainer";
 
 import type { Route } from "./+types/SignUp";
 import { getSupabaseClient } from "~/auth/supabase.server";
@@ -31,11 +31,11 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
 const SignUp = ({ actionData }: Route.ComponentProps) => {
   return (
-    <FullPaddedContainer padding="thick" fullPage>
+    <PaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/4">
         <Outlet />
       </section>
-    </FullPaddedContainer>
+    </PaddedContainer>
   );
 };
 

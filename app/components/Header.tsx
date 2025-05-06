@@ -42,7 +42,7 @@ const Header = ({ authenticated, avatar_url }: HeaderProps) => {
   }
 
   return (
-    <header className="w-full h-20 px-5 bg-background-light shadow-below flex items-center justify-between fixed z-10">
+    <header className="w-full h-20 px-5 bg-background-light shadow-below flex items-center justify-between fixed z-40">
       <SquareButton colour="primary">
         <Menu stroke="#f7f4e9" />
       </SquareButton>

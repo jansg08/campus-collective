@@ -13,7 +13,7 @@ const InputWithIcon = ({
   required,
 }: InputWithIconProps) => {
   return (
-    <div className="bg-background-light rounded-lg w-full h-10 shadow-md py-1 pr-1 pl-4 flex justify-end items-center">
+    <div className="bg-background-light relative rounded-lg w-full h-10 shadow-md py-1 pr-1 pl-4 flex justify-end gap-1.5 items-center input-border transition-all">
       <input
         className="w-full outline-0"
         name={name}
