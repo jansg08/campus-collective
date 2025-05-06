@@ -2,12 +2,10 @@ import { data, Link } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
 import WideButton from "~/components/WideButton";
 import MortarBoard from "~/svgs/MortarboardMassive.svg?react";
-import { getUniversities } from "~/data/";
 import type { Route } from "./+types/Home";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
 import { getSupabaseClient } from "~/auth/supabase.server";
-import { asc, desc } from "drizzle-orm";
 
 export function meta() {
   return [
