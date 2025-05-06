@@ -18,6 +18,9 @@ export const action = async ({ request }: Route.ActionArgs) => {
     email: email,
     password: password,
     options: {
+      data: {
+        is_staff: false,
+      },
       emailRedirectTo: `${process.env.BASE_URL}/log-in`,
     },
   });
