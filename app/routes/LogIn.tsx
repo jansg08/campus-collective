@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Link, redirect } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
-import InputWithIcon from "~/components/InputWithIcon";
+import { InputWithIcon } from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
 
 import Email from "~/svgs/EmailBig.svg?react";
