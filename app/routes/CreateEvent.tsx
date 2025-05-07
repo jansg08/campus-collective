@@ -1,4 +1,8 @@
-import InputWithIcon from "~/components/InputWithIcon";
+import {
+  SelectWithIcon,
+  InputWithIcon,
+  TextareaWithIcon,
+} from "~/components/InputWithIcon";
 import PaddedContainer from "~/components/PaddedContainer";
 import MortarBoard from "~/svgs/MortarboardBig.svg?react";
 import MapPin from "~/svgs/MapPinBig.svg?react";
@@ -11,15 +15,13 @@ import CreditCard from "~/svgs/CreditCardBig.svg?react";
 import type { Route } from "./+types/CreateEvent";
 import { getSupabaseClient } from "~/auth/supabase.server";
 import { data, Form, redirect } from "react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { db } from "src/db";
 import { venueAuthoritiesTable } from "src/db/schema/venueAuthorities";
 import { venuesTable } from "src/db/schema/venues";
 import { universitiesTable } from "src/db/schema/universities";
 import { eq } from "drizzle-orm";
 import WideButton from "~/components/WideButton";
-
-interface CreateEventProps {}
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { supabase, headers } = getSupabaseClient(request);
@@ -46,7 +48,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     .innerJoin(
       universitiesTable,
       eq(venuesTable.universityId, universitiesTable.id)
-    );
+    )
+    .where(eq(venueAuthoritiesTable.userId, user.id));
 
   const responseBody = {
     universities: uniAndVenuesResult
@@ -86,32 +89,56 @@ export const action = async ({ request }: Route.ActionArgs) => {
 const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
   const { universities, venues } = loaderData;
   const [photoName, setPhotoName] = useState("");
+  const [isUniversitySelected, setIsUniversitySelected] = useState(
+    universities.length === 1
+  );
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleDescriptionHeight = () => {
+    const el = descriptionRef.current;
+    if (el) {
+      el.style.height = "";
+      el.style.height = el.scrollHeight + "px";
+    }
+  };
+
   return (
     <PaddedContainer>
       <Form method="post" className="flex flex-col gap-5 items-center">
         <h2 className="font-bold">Create an Event</h2>
-        <InputWithIcon
+        <SelectWithIcon
+          key="universitySelect"
           icon={<MortarBoard stroke="#044c3b" />}
           iconSize="large"
-          isSelect
           name="university"
+          id="universitySelect"
+          onChange={(e) =>
+            e.target.value !== "-1" && setIsUniversitySelected(true)
+          }
         >
-          <option disabled>Select University</option>
+          <option value={-1} selected={universities.length !== 1} disabled>
+            Select University
+          </option>
           {universities.map((uni) => (
             <option value={uni.id}>{uni.name}</option>
           ))}
-        </InputWithIcon>
-        <InputWithIcon
+        </SelectWithIcon>
+        <SelectWithIcon
+          key="venueSelect"
           icon={<MapPin stroke="#044c3b" />}
           iconSize="normal"
-          isSelect
           name="venue"
+          disabled={!isUniversitySelected}
         >
-          <option disabled>Select Venue</option>
+          <option disabled selected={universities.length !== 1}>
+            Select Venue
+          </option>
           {venues.map((venue) => (
             <option value={venue.id}>{venue.name}</option>
           ))}
-        </InputWithIcon>
+        </SelectWithIcon>
         {/* Cover Image File Upload
           <label
           htmlFor="photoUpload"
@@ -139,28 +166,39 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           placeholder="Title"
           required
         />
-        <InputWithIcon
-          isTextArea
+        <TextareaWithIcon
           icon={<Description stroke="#044c3b" />}
           name="description"
           placeholder="Description"
+          cannotResize
+          rows={3}
           required
+          ref={descriptionRef}
+          onInput={handleDescriptionHeight}
         />
         <InputWithIcon
           icon={<DateFrom stroke="#044c3b" />}
           name="startDate"
           type="text"
           placeholder="Event starts..."
-          onFocus={(e) => (e.target.type = "date")}
-          onBlur={(e) => (e.target.type = "text")}
+          onFocus={(e) => {
+            e.target.type = "date";
+          }}
+          onBlur={function (this: HTMLInputElement) {
+            this.type = "text";
+          }}
         />
         <InputWithIcon
           icon={<DateTo stroke="#044c3b" />}
           name="endDate"
           type="text"
           placeholder="Event ends..."
-          onFocus={(e) => (e.target.type = "date")}
-          onBlur={(e) => (e.target.type = "text")}
+          onFocus={function (this: HTMLInputElement) {
+            this.type = "date";
+          }}
+          onBlur={function (this: HTMLInputElement) {
+            this.type = "text";
+          }}
         />
         <InputWithIcon
           icon={<CreditCard stroke="#044c3b" />}
