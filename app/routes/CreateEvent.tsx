@@ -2,6 +2,7 @@ import {
   SelectWithIcon,
   InputWithIcon,
   TextareaWithIcon,
+  DatePickerWithIcon,
 } from "~/components/InputWithIcon";
 import PaddedContainer from "~/components/PaddedContainer";
 import MortarBoard from "~/svgs/MortarboardBig.svg?react";
@@ -122,7 +123,9 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
             Select University
           </option>
           {universities.map((uni) => (
-            <option value={uni.id}>{uni.name}</option>
+            <option value={uni.id} key={uni.id}>
+              {uni.name}
+            </option>
           ))}
         </SelectWithIcon>
         <SelectWithIcon
@@ -132,11 +135,13 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           name="venue"
           disabled={!isUniversitySelected}
         >
-          <option disabled selected={universities.length !== 1}>
+          <option disabled selected={venues.length !== 1}>
             Select Venue
           </option>
           {venues.map((venue) => (
-            <option value={venue.id}>{venue.name}</option>
+            <option value={venue.id} key={venue.id}>
+              {venue.name}
+            </option>
           ))}
         </SelectWithIcon>
         {/* Cover Image File Upload
@@ -176,29 +181,31 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           ref={descriptionRef}
           onInput={handleDescriptionHeight}
         />
-        <InputWithIcon
+        <DatePickerWithIcon
           icon={<DateFrom stroke="#044c3b" />}
-          name="startDate"
-          type="text"
-          placeholder="Event starts..."
-          onFocus={(e) => {
-            e.target.type = "date";
-          }}
-          onBlur={function (this: HTMLInputElement) {
-            this.type = "text";
-          }}
+          selected={startDate}
+          onChange={(date: Date) => setStartDate(date)}
+          placeholderText="Start date and time"
+          dateFormat="iiii do MMMM y"
+          id="startDatePicker"
         />
-        <InputWithIcon
-          icon={<DateTo stroke="#044c3b" />}
+        <input
+          name="startDate"
+          type="hidden"
+          value={startDate ? startDate.toISOString() : ""}
+        />
+        <DatePickerWithIcon
+          icon={<DateFrom stroke="#044c3b" />}
+          selected={endDate}
+          onChange={(date: Date) => setEndDate(date)}
+          placeholderText="End date and time"
+          dateFormat="iiii do MMMM y"
+          id="endDatePicker"
+        />
+        <input
           name="endDate"
-          type="text"
-          placeholder="Event ends..."
-          onFocus={function (this: HTMLInputElement) {
-            this.type = "date";
-          }}
-          onBlur={function (this: HTMLInputElement) {
-            this.type = "text";
-          }}
+          type="hidden"
+          value={endDate ? endDate.toISOString() : ""}
         />
         <InputWithIcon
           icon={<CreditCard stroke="#044c3b" />}
