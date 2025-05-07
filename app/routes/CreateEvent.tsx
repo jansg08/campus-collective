@@ -186,7 +186,10 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           selected={startDate}
           onChange={(date: Date) => setStartDate(date)}
           placeholderText="Start date and time"
-          dateFormat="iiii do MMMM y"
+          minDate={new Date()}
+          showTimeSelect
+          dateFormat="iiii do MMMM y @ hh:mm aa"
+          timeIntervals={5}
           id="startDatePicker"
         />
         <input
@@ -195,11 +198,14 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           value={startDate ? startDate.toISOString() : ""}
         />
         <DatePickerWithIcon
-          icon={<DateFrom stroke="#044c3b" />}
+          icon={<DateTo stroke="#044c3b" />}
           selected={endDate}
           onChange={(date: Date) => setEndDate(date)}
           placeholderText="End date and time"
-          dateFormat="iiii do MMMM y"
+          minDate={startDate || new Date()}
+          showTimeSelect
+          dateFormat="iiii do MMMM y @ hh:mm aa"
+          timeIntervals={5}
           id="endDatePicker"
         />
         <input
