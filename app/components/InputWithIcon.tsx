@@ -27,8 +27,14 @@ interface DatePickerWithIconProps extends IconProps {
   selected: Date | null;
   onChange?: (...args: any[]) => void;
   placeholderText?: string;
+  timeInputLabel?: string;
+  timeCaption?: string;
   hideYearDropdown?: boolean;
+  showTimeInput?: boolean;
+  showTimeSelect?: boolean;
   dateFormat: string;
+  minDate?: Date;
+  timeIntervals?: number;
   id?: string;
 }
 
@@ -156,8 +162,14 @@ export const DatePickerWithIcon = ({
   selected,
   onChange,
   dateFormat,
+  minDate,
   placeholderText,
+  timeInputLabel,
+  timeCaption,
   hideYearDropdown = false,
+  showTimeInput = false,
+  showTimeSelect = false,
+  timeIntervals,
   id,
 }: DatePickerWithIconProps) => (
   <ElementWithIcon icon={icon} iconSize={iconSize}>
@@ -166,8 +178,14 @@ export const DatePickerWithIcon = ({
         selected={selected}
         onChange={onChange}
         placeholderText={placeholderText}
+        timeInputLabel={timeInputLabel}
+        timeCaption={timeCaption}
         showYearDropdown={!hideYearDropdown}
+        showTimeInput={showTimeInput}
+        showTimeSelect={showTimeSelect}
         dateFormat={dateFormat}
+        minDate={minDate}
+        timeIntervals={timeIntervals}
         id={id}
         className="w-full outline-none"
       />
