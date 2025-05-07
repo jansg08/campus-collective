@@ -1,3 +1,6 @@
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 interface IconProps {
   iconSize?: "normal" | "large";
   icon: React.ReactNode;
@@ -18,6 +21,15 @@ interface TextareaWithIconProps
     React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   cannotResize?: boolean;
   ref?: React.RefObject<HTMLTextAreaElement | null>;
+}
+
+interface DatePickerWithIconProps extends IconProps {
+  selected: Date | null;
+  onChange?: (...args: any[]) => void;
+  placeholderText?: string;
+  hideYearDropdown?: boolean;
+  dateFormat: string;
+  id?: string;
 }
 
 const ElementWithIcon = ({
@@ -135,6 +147,31 @@ export const TextareaWithIcon = ({
       onMouseOver={onMouseOver}
       onInput={onInput}
     />
+  </ElementWithIcon>
+);
+
+export const DatePickerWithIcon = ({
+  icon,
+  iconSize,
+  selected,
+  onChange,
+  dateFormat,
+  placeholderText,
+  hideYearDropdown = false,
+  id,
+}: DatePickerWithIconProps) => (
+  <ElementWithIcon icon={icon} iconSize={iconSize}>
+    <div className="w-full">
+      <DatePicker
+        selected={selected}
+        onChange={onChange}
+        placeholderText={placeholderText}
+        showYearDropdown={!hideYearDropdown}
+        dateFormat={dateFormat}
+        id={id}
+        className="w-full outline-none"
+      />
+    </div>
   </ElementWithIcon>
 );
 
