@@ -5,12 +5,6 @@ interface formatErrorParams {
   formData: FormData;
 }
 
-export interface formErrors {
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
-
 export const formatError = ({ input, formData }: formatErrorParams) => {
   switch (input.name) {
     case "email":
@@ -32,12 +26,20 @@ export const formatError = ({ input, formData }: formatErrorParams) => {
         return "Passwords do not match";
       }
       break;
+    default:
+      if (input.validity.valueMissing) {
+        return `${input.name[0].toUpperCase + input.name.slice(1)} is required`;
+      } else if (input.validity.typeMismatch) {
+        return `${input.name[0].toUpperCase + input.name.slice(1)} is invalid`;
+      }
   }
   return "";
 };
 
 export const handleFormSubmit =
-  (setClientErrors: React.Dispatch<React.SetStateAction<formErrors>>) =>
+  <FormErrors extends Record<string, string>>(
+    setClientErrors: React.Dispatch<React.SetStateAction<FormErrors>>
+  ) =>
   (event: FormEvent<HTMLFormElement>) => {
     const form = event.currentTarget;
     const formData = new FormData(form);
