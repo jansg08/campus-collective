@@ -6,19 +6,25 @@ import WideButton from "~/components/WideButton";
 import Email from "~/svgs/EmailBig.svg?react";
 import Mortarboard from "~/svgs/MortarboardBig.svg?react";
 import Password from "~/svgs/PasswordBig.svg?react";
-import {
-  handleFormSubmit,
-  handleInvalid,
-  type formErrors,
-} from "~/utils/formValidation";
-interface SignUpFormProps {}
+import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
 
-const SignUpForm = ({}: SignUpFormProps) => {
-  const [clientErrors, setClientErrors] = useState<formErrors>({});
+interface SignUpFormErrors {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  [key: string]: string;
+}
+
+const SignUpForm = () => {
+  const [clientErrors, setClientErrors] = useState<SignUpFormErrors>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   return (
     <Form
-      onSubmit={handleFormSubmit(setClientErrors)}
+      onSubmit={handleFormSubmit<SignUpFormErrors>(setClientErrors)}
       onInvalid={handleInvalid}
       className="flex flex-col gap-8 items-center"
       noValidate

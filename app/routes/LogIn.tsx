@@ -6,16 +6,18 @@ import WideButton from "~/components/WideButton";
 
 import Email from "~/svgs/EmailBig.svg?react";
 import Password from "~/svgs/PasswordBig.svg?react";
-import {
-  type formErrors,
-  handleFormSubmit,
-  handleInvalid,
-} from "~/utils/formValidation";
+import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
 import type { Route } from "./+types/LogIn";
 import { getSupabaseClient } from "~/auth/supabase.server";
 import { eq } from "drizzle-orm";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
+
+interface LogInFormErrors {
+  email: string;
+  password: string;
+  [key: string]: string;
+}
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
@@ -54,12 +56,15 @@ export const action = async ({ request }: Route.ActionArgs) => {
 };
 
 const LogIn = ({ actionData }: Route.ComponentProps) => {
-  const [clientErrors, setClientErrors] = useState<formErrors>({});
+  const [clientErrors, setClientErrors] = useState<LogInFormErrors>({
+    email: "",
+    password: "",
+  });
   return (
     <PaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/4">
         <Form
-          onSubmit={handleFormSubmit(setClientErrors)}
+          onSubmit={handleFormSubmit<LogInFormErrors>(setClientErrors)}
           onInvalid={handleInvalid}
           className="flex flex-col gap-8 items-center"
           noValidate
