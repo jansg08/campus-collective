@@ -68,28 +68,22 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
         >
           <h2 className="font-bold">Log In</h2>
           <div className="flex flex-col gap-5 w-full">
-            <div>
-              <InputWithIcon
-                icon={<Email stroke="#044c3b" />}
-                name="email"
-                type="email"
-                placeholder="Email address"
-                required
-              />
-              <p>{clientErrors.email}</p>
-            </div>
-            <div>
-              <InputWithIcon
-                icon={<Password stroke="#044c3b" />}
-                name="password"
-                type="password"
-                placeholder="Password"
-                required
-              />
-              <p className="text-primary text-xs mt-1">
-                {clientErrors.password}
-              </p>
-            </div>
+            <InputWithIcon
+              icon={<Email stroke="#044c3b" />}
+              name="email"
+              type="email"
+              placeholder="Email address"
+              required
+              error={clientErrors.email}
+            />
+            <InputWithIcon
+              icon={<Password stroke="#044c3b" />}
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+              error={clientErrors.password}
+            />
           </div>
           <WideButton type="submit">Log In</WideButton>
           <p className="text-sm">

@@ -1,29 +1,30 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface IconProps {
+interface IconAndErrorProps {
   iconSize?: "normal" | "large";
   icon: React.ReactNode;
+  error?: string;
 }
 
-interface ElementWithIconProps extends IconProps {
+interface ElementWithIconProps extends IconAndErrorProps {
   children: React.ReactNode;
 }
 
 interface InputWithIconProps
-  extends IconProps,
+  extends IconAndErrorProps,
     React.InputHTMLAttributes<HTMLInputElement> {
   isMoney?: boolean;
 }
 
 interface TextareaWithIconProps
-  extends IconProps,
+  extends IconAndErrorProps,
     React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   cannotResize?: boolean;
   ref?: React.RefObject<HTMLTextAreaElement | null>;
 }
 
-interface DatePickerWithIconProps extends IconProps {
+interface DatePickerWithIconProps extends IconAndErrorProps {
   selected: Date | null;
   onChange?: (...args: any[]) => void;
   placeholderText?: string;
@@ -35,26 +36,32 @@ interface DatePickerWithIconProps extends IconProps {
   dateFormat: string;
   minDate?: Date;
   timeIntervals?: number;
+  required?: boolean;
+  isClearable?: boolean;
   id?: string;
 }
 
 const ElementWithIcon = ({
   icon,
   iconSize = "normal",
+  error,
   children,
 }: ElementWithIconProps) => {
   return (
-    <div className="bg-background-light relative rounded-lg w-full shadow-md py-1 pr-1 pl-4 flex justify-end gap-1.5 items-center input-border transition-all has-[select:disabled]:bg-dim has-[input:disabled]:bg-dim has-[textarea:disabled]:bg-dim has-[select:disabled]:text-text-dim has-[input:disabled]:text-text-dim has-[textarea:disabled]:text-text-dim">
-      {children}
-      <div className="mb-auto">
-        <div
-          className={`rounded-sm ${
-            iconSize === "normal" ? "p-1.5" : "p-0.5"
-          } bg-secondary`}
-        >
-          {icon}
+    <div className="w-full flex flex-col items-start gap-1">
+      <div className="bg-background-light relative rounded-lg w-full shadow-md py-1 pr-1 pl-4 flex justify-end gap-1.5 items-center input-border transition-all has-[select:disabled]:bg-dim has-[input:disabled]:bg-dim has-[textarea:disabled]:bg-dim has-[select:disabled]:text-text-dim has-[input:disabled]:text-text-dim has-[textarea:disabled]:text-text-dim">
+        {children}
+        <div className="mb-auto">
+          <div
+            className={`rounded-sm ${
+              iconSize === "normal" ? "p-1.5" : "p-0.5"
+            } bg-secondary`}
+          >
+            {icon}
+          </div>
         </div>
       </div>
+      <p className="text-primary text-xs">{error}</p>
     </div>
   );
 };
@@ -62,6 +69,7 @@ const ElementWithIcon = ({
 export const InputWithIcon = ({
   icon,
   iconSize = "normal",
+  error,
   isMoney = false,
   name,
   type,
@@ -73,7 +81,7 @@ export const InputWithIcon = ({
   onChange,
   onMouseOver,
 }: InputWithIconProps) => (
-  <ElementWithIcon icon={icon} iconSize={iconSize}>
+  <ElementWithIcon icon={icon} iconSize={iconSize} error={error}>
     <>
       {isMoney && "£"}
       <input
@@ -95,6 +103,7 @@ export const InputWithIcon = ({
 export const SelectWithIcon = ({
   icon,
   iconSize = "normal",
+  error,
   children,
   name,
   required,
@@ -103,8 +112,8 @@ export const SelectWithIcon = ({
   onBlur,
   onChange,
   onMouseOver,
-}: React.SelectHTMLAttributes<HTMLSelectElement> & IconProps) => (
-  <ElementWithIcon icon={icon} iconSize={iconSize}>
+}: React.SelectHTMLAttributes<HTMLSelectElement> & IconAndErrorProps) => (
+  <ElementWithIcon icon={icon} iconSize={iconSize} error={error}>
     <select
       className="w-full outline-0"
       name={name}
@@ -123,6 +132,7 @@ export const SelectWithIcon = ({
 export const TextareaWithIcon = ({
   icon,
   iconSize,
+  error,
   name,
   placeholder,
   rows,
@@ -136,7 +146,7 @@ export const TextareaWithIcon = ({
   onMouseOver,
   onInput,
 }: TextareaWithIconProps) => (
-  <ElementWithIcon icon={icon} iconSize={iconSize}>
+  <ElementWithIcon icon={icon} iconSize={iconSize} error={error}>
     <textarea
       className={`w-full outline-0 leading-snug my-1.5 ${
         cannotResize ? "resize-none" : ""
@@ -159,7 +169,9 @@ export const TextareaWithIcon = ({
 export const DatePickerWithIcon = ({
   icon,
   iconSize,
+  error,
   selected,
+  required = false,
   onChange,
   dateFormat,
   minDate,
@@ -170,9 +182,10 @@ export const DatePickerWithIcon = ({
   showTimeInput = false,
   showTimeSelect = false,
   timeIntervals,
+  isClearable = false,
   id,
 }: DatePickerWithIconProps) => (
-  <ElementWithIcon icon={icon} iconSize={iconSize}>
+  <ElementWithIcon icon={icon} iconSize={iconSize} error={error}>
     <DatePicker
       selected={selected}
       onChange={onChange}
@@ -185,6 +198,8 @@ export const DatePickerWithIcon = ({
       dateFormat={dateFormat}
       minDate={minDate}
       timeIntervals={timeIntervals}
+      required={required}
+      isClearable={isClearable}
       id={id}
       className="w-full outline-none"
     />
