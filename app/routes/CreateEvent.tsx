@@ -23,6 +23,16 @@ import { venuesTable } from "src/db/schema/venues";
 import { universitiesTable } from "src/db/schema/universities";
 import { eq } from "drizzle-orm";
 import WideButton from "~/components/WideButton";
+import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
+
+interface CreateEventFormErrors {
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  ticketPrice: string;
+  [key: string]: string;
+}
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
   const { supabase, headers } = getSupabaseClient(request);
@@ -95,6 +105,13 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
   );
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [clientErrors, setClientErrors] = useState<CreateEventFormErrors>({
+    title: "",
+    description: "",
+    startDate: "",
+    endDate: "",
+    ticketPrice: "",
+  });
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   const handleDescriptionHeight = () => {
@@ -107,7 +124,13 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
 
   return (
     <PaddedContainer>
-      <Form method="post" className="flex flex-col gap-5 items-center">
+      <Form
+        method="post"
+        className="flex flex-col gap-5 items-center"
+        onSubmit={handleFormSubmit<CreateEventFormErrors>(setClientErrors)}
+        onInvalid={handleInvalid}
+        noValidate
+      >
         <h2 className="font-bold">Create an Event</h2>
         <SelectWithIcon
           key="universitySelect"
@@ -170,6 +193,7 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           name="title"
           placeholder="Title"
           required
+          error={clientErrors.title}
         />
         <TextareaWithIcon
           icon={<Description stroke="#044c3b" />}
@@ -177,9 +201,9 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           placeholder="Description"
           cannotResize
           rows={3}
-          required
           ref={descriptionRef}
           onInput={handleDescriptionHeight}
+          error={clientErrors.description}
         />
         <DatePickerWithIcon
           icon={<DateFrom stroke="#044c3b" />}
@@ -190,7 +214,10 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           showTimeSelect
           dateFormat="iiii do MMMM y @ hh:mm aa"
           timeIntervals={5}
+          required
+          isClearable
           id="startDatePicker"
+          error={clientErrors.startDate}
         />
         <input
           name="startDate"
@@ -206,7 +233,10 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           showTimeSelect
           dateFormat="iiii do MMMM y @ hh:mm aa"
           timeIntervals={5}
+          required
+          isClearable
           id="endDatePicker"
+          error={clientErrors.endDate}
         />
         <input
           name="endDate"
@@ -219,6 +249,7 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           type="number"
           placeholder="Ticket Price"
           isMoney
+          error={clientErrors.ticketPrice}
         />
         <WideButton colour="primary" type="submit">
           Create Event
