@@ -173,23 +173,21 @@ export const DatePickerWithIcon = ({
   id,
 }: DatePickerWithIconProps) => (
   <ElementWithIcon icon={icon} iconSize={iconSize}>
-    <div className="w-full">
-      <DatePicker
-        selected={selected}
-        onChange={onChange}
-        placeholderText={placeholderText}
-        timeInputLabel={timeInputLabel}
-        timeCaption={timeCaption}
-        showYearDropdown={!hideYearDropdown}
-        showTimeInput={showTimeInput}
-        showTimeSelect={showTimeSelect}
-        dateFormat={dateFormat}
-        minDate={minDate}
-        timeIntervals={timeIntervals}
-        id={id}
-        className="w-full outline-none"
-      />
-    </div>
+    <DatePicker
+      selected={selected}
+      onChange={onChange}
+      placeholderText={placeholderText}
+      timeInputLabel={timeInputLabel}
+      timeCaption={timeCaption}
+      showYearDropdown={!hideYearDropdown}
+      showTimeInput={showTimeInput}
+      showTimeSelect={showTimeSelect}
+      dateFormat={dateFormat}
+      minDate={minDate}
+      timeIntervals={timeIntervals}
+      id={id}
+      className="w-full outline-none"
+    />
   </ElementWithIcon>
 );
 
