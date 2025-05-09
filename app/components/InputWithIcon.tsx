@@ -40,6 +40,7 @@ interface DatePickerWithIconProps extends IconAndErrorProps {
   required?: boolean;
   isClearable?: boolean;
   id?: string;
+  name?: string;
 }
 
 const ElementWithIcon = ({
@@ -202,6 +203,7 @@ export const DatePickerWithIcon = ({
   timeIntervals,
   isClearable = false,
   id,
+  name,
 }: DatePickerWithIconProps) => (
   <ElementWithIcon icon={icon} iconSize={iconSize} error={error} id={id}>
     <DatePicker
@@ -219,6 +221,7 @@ export const DatePickerWithIcon = ({
       required={required}
       isClearable={isClearable}
       id={id}
+      name={name}
       className="w-full outline-none"
     />
   </ElementWithIcon>
