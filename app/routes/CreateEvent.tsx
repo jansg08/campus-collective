@@ -112,15 +112,6 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
     endDate: "",
     ticketPrice: "",
   });
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
-
-  const handleDescriptionHeight = () => {
-    const el = descriptionRef.current;
-    if (el) {
-      el.style.height = "";
-      el.style.height = el.scrollHeight + "px";
-    }
-  };
 
   return (
     <PaddedContainer>
@@ -185,12 +176,13 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
         id="photoUpload"
         className="hidden"
         onChange={(e) =>
-          setPhotoName(e.target.value.match(/.+?(?!(\/|\\))/gi)?.join() || "")
+          setPhotoName(e.target.value.match(/(?<=C:\\fakepath\\).+/gi)?.join() || "")
           }
           /> */}
         <InputWithIcon
           icon={<Title stroke="#044c3b" />}
           name="title"
+          id="titleInput"
           placeholder="Title"
           required
           error={clientErrors.title}
@@ -198,11 +190,10 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
         <TextareaWithIcon
           icon={<Description stroke="#044c3b" />}
           name="description"
+          id="descriptionTextarea"
           placeholder="Description"
           cannotResize
           rows={3}
-          ref={descriptionRef}
-          onInput={handleDescriptionHeight}
           error={clientErrors.description}
         />
         <DatePickerWithIcon
@@ -246,6 +237,7 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
         <InputWithIcon
           icon={<CreditCard stroke="#044c3b" />}
           name="ticketPrice"
+          id="ticketPriceInput"
           type="number"
           placeholder="Ticket Price"
           isMoney
