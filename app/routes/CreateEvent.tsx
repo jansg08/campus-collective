@@ -7,23 +7,27 @@ import {
 import PaddedContainer from "~/components/PaddedContainer";
 import MortarBoard from "~/svgs/MortarboardBig.svg?react";
 import MapPin from "~/svgs/MapPinBig.svg?react";
+import User from "~/svgs/User.svg?react";
 import Camera from "~/svgs/CameraBig.svg?react";
 import Title from "~/svgs/TitleBig.svg?react";
 import Description from "~/svgs/DescriptionBig.svg?react";
+import Categories from "~/svgs/Categories.svg?react";
 import DateFrom from "~/svgs/DateFromBig.svg?react";
 import DateTo from "~/svgs/DateToBig.svg?react";
 import CreditCard from "~/svgs/CreditCardBig.svg?react";
 import type { Route } from "./+types/CreateEvent";
 import { getSupabaseClient } from "~/auth/supabase.server";
 import { data, Form, redirect } from "react-router";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { db } from "src/db";
 import { venueAuthoritiesTable } from "src/db/schema/venueAuthorities";
 import { venuesTable } from "src/db/schema/venues";
 import { universitiesTable } from "src/db/schema/universities";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import WideButton from "~/components/WideButton";
 import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
+import { categoriesTable } from "src/db/schema/categories";
+import { eventsTable } from "src/db/schema/events";
 
 interface CreateEventFormErrors {
   title: string;
@@ -47,7 +51,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     throw redirect("/", { headers });
   }
 
-  const uniAndVenuesResult = await db
+  const uniAndVenuesQuery = db
     .select({
       venueId: venueAuthoritiesTable.venueId,
       venueName: venuesTable.name,
@@ -62,6 +66,18 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
     )
     .where(eq(venueAuthoritiesTable.userId, user.id));
 
+  const usersQuery = db.execute(
+    sql`SELECT id, email FROM auth.users ORDER BY email ASC`
+  );
+
+  const categoriesQuery = db
+    .select({ name: categoriesTable.name, id: categoriesTable.id })
+    .from(categoriesTable);
+
+  const [uniAndVenuesResult, usersResult, categoriesResult] = await Promise.all(
+    [uniAndVenuesQuery, usersQuery, categoriesQuery]
+  );
+
   const responseBody = {
     universities: uniAndVenuesResult
       .map(({ universityId, universityName }) => ({
@@ -73,6 +89,8 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
       id: venueId,
       name: venueName,
     })),
+    users: usersResult,
+    categories: categoriesResult,
   };
 
   return data(responseBody, { headers });
@@ -94,11 +112,28 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
   const insertValues = {
     title: String(formData.get("title")),
+    description: String(formData.get("description")),
+    startTime: new Date(formData.get("startDate") as string),
+    endTime: new Date(formData.get("endDate") as string),
+    venueId: Number(formData.get("venue")),
+    ticketPrice: Number(formData.get("ticketPrice")),
+    host: String(formData.get("host")),
+    creator: user.id,
+    // ! create input to capture values
+    isListed: true,
+    isPublic: true,
+    categoryId: Number(formData.get("category")),
   };
+
+  try {
+    await db.insert(eventsTable).values(insertValues);
+  } catch (err) {
+    return data({ err }, { headers });
+  }
 };
 
 const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
-  const { universities, venues } = loaderData;
+  const { universities, venues, users, categories } = loaderData;
   const [photoName, setPhotoName] = useState("");
   const [isUniversitySelected, setIsUniversitySelected] = useState(
     universities.length === 1
@@ -106,13 +141,15 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [clientErrors, setClientErrors] = useState<CreateEventFormErrors>({
+    venue: "",
+    host: "",
     title: "",
     description: "",
+    category: "",
     startDate: "",
     endDate: "",
     ticketPrice: "",
   });
-
   return (
     <PaddedContainer>
       <Form
@@ -145,16 +182,31 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
         <SelectWithIcon
           key="venueSelect"
           icon={<MapPin stroke="#044c3b" />}
-          iconSize="normal"
           name="venue"
           disabled={!isUniversitySelected}
+          error={clientErrors.venue}
         >
-          <option disabled selected={venues.length !== 1}>
+          <option disabled selected={venues.length !== 1} value={-1}>
             Select Venue
           </option>
           {venues.map((venue) => (
             <option value={venue.id} key={venue.id}>
               {venue.name}
+            </option>
+          ))}
+        </SelectWithIcon>
+        <SelectWithIcon
+          key="hostSelect"
+          icon={<User stroke="#044c3b" width={20} height={20} />}
+          name="host"
+          error={clientErrors.host}
+        >
+          <option disabled selected value={-1}>
+            Select Host
+          </option>
+          {users.map((user) => (
+            <option value={user.id} key={user.id}>
+              {user.email}
             </option>
           ))}
         </SelectWithIcon>
@@ -196,6 +248,21 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           rows={3}
           error={clientErrors.description}
         />
+        <SelectWithIcon
+          key="categorySelect"
+          icon={<Categories stroke="#044c3b" />}
+          name="category"
+          error={clientErrors.category}
+        >
+          <option disabled selected value={-1}>
+            Select Category
+          </option>
+          {categories.map((category) => (
+            <option value={category.id} key={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </SelectWithIcon>
         <DatePickerWithIcon
           icon={<DateFrom stroke="#044c3b" />}
           selected={startDate}
@@ -208,11 +275,13 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           required
           isClearable
           id="startDatePicker"
-          error={clientErrors.startDate}
+          name="start_date"
+          error={clientErrors.start_date}
         />
         <input
           name="startDate"
           type="hidden"
+          required
           value={startDate ? startDate.toISOString() : ""}
         />
         <DatePickerWithIcon
@@ -226,12 +295,14 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           timeIntervals={5}
           required
           isClearable
+          name="end_date"
           id="endDatePicker"
-          error={clientErrors.endDate}
+          error={clientErrors.end_date}
         />
         <input
           name="endDate"
           type="hidden"
+          required
           value={endDate ? endDate.toISOString() : ""}
         />
         <InputWithIcon
@@ -241,6 +312,7 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           type="number"
           placeholder="Ticket Price"
           isMoney
+          required
           error={clientErrors.ticketPrice}
         />
         <WideButton colour="primary" type="submit">
