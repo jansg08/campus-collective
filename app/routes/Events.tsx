@@ -6,7 +6,7 @@ import { categoriesTable } from "src/db/schema/categories";
 import { eventsTable } from "src/db/schema/events";
 import { venuesTable } from "src/db/schema/venues";
 import EventCard from "~/components/EventCard";
-import InputWithIcon from "~/components/InputWithIcon";
+import { InputWithIcon } from "~/components/InputWithIcon";
 import SquareButton from "~/components/SquareButton";
 import ChevronSmall from "~/svgs/ChevronSmall.svg?react";
 import Filter from "~/svgs/Filter.svg?react";
@@ -146,7 +146,7 @@ const UniversitiesDropdown = ({
             <li key={id}>
               <NavLink
                 to={`/${slug}/events`}
-                className="flex items-center gap-1.5 py-1.5 px-3 hover hover:bg-[#E9E6DC] transition-all"
+                className="flex items-center gap-1.5 py-1.5 px-3 hover hover:bg-dim transition-all"
               >
                 {({ isActive, isPending }) => (
                   <>

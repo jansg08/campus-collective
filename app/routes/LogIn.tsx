@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { Form, Link, redirect } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
-import InputWithIcon from "~/components/InputWithIcon";
+import { InputWithIcon } from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
 
 import Email from "~/svgs/EmailBig.svg?react";
 import Password from "~/svgs/PasswordBig.svg?react";
-import {
-  type formErrors,
-  handleFormSubmit,
-  handleInvalid,
-} from "~/utils/formValidation";
+import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
 import type { Route } from "./+types/LogIn";
 import { getSupabaseClient } from "~/auth/supabase.server";
 import { eq } from "drizzle-orm";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
+
+interface LogInFormErrors {
+  email: string;
+  password: string;
+  [key: string]: string;
+}
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
@@ -54,12 +56,15 @@ export const action = async ({ request }: Route.ActionArgs) => {
 };
 
 const LogIn = ({ actionData }: Route.ComponentProps) => {
-  const [clientErrors, setClientErrors] = useState<formErrors>({});
+  const [clientErrors, setClientErrors] = useState<LogInFormErrors>({
+    email: "",
+    password: "",
+  });
   return (
     <PaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/4">
         <Form
-          onSubmit={handleFormSubmit(setClientErrors)}
+          onSubmit={handleFormSubmit<LogInFormErrors>(setClientErrors)}
           onInvalid={handleInvalid}
           className="flex flex-col gap-8 items-center"
           noValidate
@@ -68,28 +73,22 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
         >
           <h2 className="font-bold">Log In</h2>
           <div className="flex flex-col gap-5 w-full">
-            <div>
-              <InputWithIcon
-                icon={<Email stroke="#044c3b" />}
-                name="email"
-                type="email"
-                placeholder="Email address"
-                required
-              />
-              <p>{clientErrors.email}</p>
-            </div>
-            <div>
-              <InputWithIcon
-                icon={<Password stroke="#044c3b" />}
-                name="password"
-                type="password"
-                placeholder="Password"
-                required
-              />
-              <p className="text-primary text-xs mt-1">
-                {clientErrors.password}
-              </p>
-            </div>
+            <InputWithIcon
+              icon={<Email stroke="#044c3b" />}
+              name="email"
+              type="email"
+              placeholder="Email address"
+              required
+              error={clientErrors.email}
+            />
+            <InputWithIcon
+              icon={<Password stroke="#044c3b" />}
+              name="password"
+              type="password"
+              placeholder="Password"
+              required
+              error={clientErrors.password}
+            />
           </div>
           <WideButton type="submit">Log In</WideButton>
           <p className="text-sm">

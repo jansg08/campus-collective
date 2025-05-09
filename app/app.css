@@ -96,6 +96,13 @@
     color: rgba(255, 255, 255, 1);
     background-color: rgba(0, 0, 0, 0.4);
   }
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+  .react-datepicker__input-container {
+    width: 100%;
+  }
 }
 
 @theme {
@@ -107,6 +114,7 @@
   --color-secondary: #d8d4f9;
   --color-secondary-light: #f1f0ff;
   --color-accent: #1da8ff;
+  --color-dim: #e9e6dc;
 
   --font-serif: "Source Serif 4", "serif";
   --font-weight-bold: 700;

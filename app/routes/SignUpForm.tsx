@@ -1,24 +1,30 @@
 import { useState } from "react";
 import { Form, Link } from "react-router";
-import InputWithIcon from "~/components/InputWithIcon";
+import { InputWithIcon } from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
 
 import Email from "~/svgs/EmailBig.svg?react";
 import Mortarboard from "~/svgs/MortarboardBig.svg?react";
 import Password from "~/svgs/PasswordBig.svg?react";
-import {
-  handleFormSubmit,
-  handleInvalid,
-  type formErrors,
-} from "~/utils/formValidation";
-interface SignUpFormProps {}
+import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
 
-const SignUpForm = ({}: SignUpFormProps) => {
-  const [clientErrors, setClientErrors] = useState<formErrors>({});
+interface SignUpFormErrors {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  [key: string]: string;
+}
+
+const SignUpForm = () => {
+  const [clientErrors, setClientErrors] = useState<SignUpFormErrors>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   return (
     <Form
-      onSubmit={handleFormSubmit(setClientErrors)}
+      onSubmit={handleFormSubmit<SignUpFormErrors>(setClientErrors)}
       onInvalid={handleInvalid}
       className="flex flex-col gap-8 items-center"
       noValidate
@@ -27,38 +33,30 @@ const SignUpForm = ({}: SignUpFormProps) => {
     >
       <h2 className="font-bold">Sign Up</h2>
       <div className="flex flex-col gap-5 w-full">
-        <div>
-          <InputWithIcon
-            icon={<Email stroke="#044c3b" />}
-            name="email"
-            type="email"
-            placeholder="Email address"
-            required
-          />
-          <p className="text-primary text-xs mt-1">{clientErrors.email}</p>
-        </div>
-        <div>
-          <InputWithIcon
-            icon={<Password stroke="#044c3b" />}
-            name="password"
-            type="password"
-            placeholder="Password"
-            required
-          />
-          <p className="text-primary text-xs mt-1">{clientErrors.password}</p>
-        </div>
-        <div>
-          <InputWithIcon
-            icon={<Password stroke="#4ba590" />}
-            name="confirmPassword"
-            type="password"
-            placeholder="Confirm password"
-            required
-          />
-          <p className="text-primary text-xs mt-1">
-            {clientErrors.confirmPassword}
-          </p>
-        </div>
+        <InputWithIcon
+          icon={<Email stroke="#044c3b" />}
+          name="email"
+          type="email"
+          placeholder="Email address"
+          required
+          error={clientErrors.email}
+        />
+        <InputWithIcon
+          icon={<Password stroke="#044c3b" />}
+          name="password"
+          type="password"
+          placeholder="Password"
+          required
+          error={clientErrors.password}
+        />
+        <InputWithIcon
+          icon={<Password stroke="#4ba590" />}
+          name="confirmPassword"
+          type="password"
+          placeholder="Confirm password"
+          required
+          error={clientErrors.confirmPassword}
+        />
       </div>
       <WideButton type="submit">Sign Up</WideButton>
       <p className="text-sm">
