@@ -1,4 +1,4 @@
-import { useRef, type FormEvent, type SyntheticEvent } from "react";
+import { useRef, useState, type FormEvent, type SyntheticEvent } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -6,6 +6,7 @@ interface IconAndErrorProps {
   iconSize?: "normal" | "large";
   icon: React.ReactNode;
   error?: string;
+  hoverMsg?: string | React.ReactNode;
 }
 
 interface ElementWithIconProps extends IconAndErrorProps {
@@ -47,12 +48,23 @@ const ElementWithIcon = ({
   icon,
   iconSize = "normal",
   error,
+  hoverMsg,
   id,
   children,
 }: ElementWithIconProps) => {
+  const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className="w-full flex flex-col items-start gap-1">
-      <div className="bg-background-light relative rounded-lg w-full shadow-md py-1 pr-1 pl-4 flex justify-end gap-1.5 items-center input-border transition-all has-[select:disabled]:bg-dim has-[input:disabled]:bg-dim has-[textarea:disabled]:bg-dim has-[select:disabled]:text-text-dim has-[input:disabled]:text-text-dim has-[textarea:disabled]:text-text-dim">
+    <div className="w-full flex flex-col items-start gap-1 relative">
+      {hoverMsg && isHovered && (
+        <div className="absolute z-50 bg-[rgba(var(--color-rgba-text),0.7)] backdrop-blur-xs top-0 left-0 -translate-y-[calc(100%+0.25rem)] rounded-sm text-white py-1.5 px-2">
+          {hoverMsg}
+        </div>
+      )}
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="bg-background-light relative rounded-lg w-full shadow-md py-1 pr-1 pl-4 flex justify-end gap-1.5 items-center input-border transition-all has-[select:disabled]:bg-background-dim has-[input:disabled]:bg-background-dim has-[textarea:disabled]:bg-background-dim has-[select:disabled]:text-text-dim has-[input:disabled]:text-text-dim has-[textarea:disabled]:text-text-dim"
+      >
         {children}
         <label htmlFor={id} className="mb-auto">
           <div
@@ -73,6 +85,7 @@ export const InputWithIcon = ({
   icon,
   iconSize = "normal",
   error,
+  hoverMsg,
   isMoney = false,
   name,
   id,
@@ -85,7 +98,13 @@ export const InputWithIcon = ({
   onChange,
   onMouseOver,
 }: InputWithIconProps) => (
-  <ElementWithIcon icon={icon} iconSize={iconSize} error={error} id={id}>
+  <ElementWithIcon
+    icon={icon}
+    iconSize={iconSize}
+    error={error}
+    id={id}
+    hoverMsg={hoverMsg}
+  >
     <>
       {isMoney && "£"}
       <input
@@ -109,6 +128,7 @@ export const SelectWithIcon = ({
   icon,
   iconSize = "normal",
   error,
+  hoverMsg,
   children,
   name,
   id,
@@ -119,7 +139,13 @@ export const SelectWithIcon = ({
   onChange,
   onMouseOver,
 }: React.SelectHTMLAttributes<HTMLSelectElement> & IconAndErrorProps) => (
-  <ElementWithIcon icon={icon} iconSize={iconSize} error={error} id={id}>
+  <ElementWithIcon
+    icon={icon}
+    iconSize={iconSize}
+    error={error}
+    id={id}
+    hoverMsg={hoverMsg}
+  >
     <select
       className="w-full outline-0"
       name={name}
@@ -139,6 +165,7 @@ export const TextareaWithIcon = ({
   icon,
   iconSize,
   error,
+  hoverMsg,
   name,
   id,
   placeholder,
@@ -163,7 +190,13 @@ export const TextareaWithIcon = ({
     if (onInput) onInput(e);
   };
   return (
-    <ElementWithIcon icon={icon} iconSize={iconSize} error={error} id={id}>
+    <ElementWithIcon
+      icon={icon}
+      iconSize={iconSize}
+      error={error}
+      id={id}
+      hoverMsg={hoverMsg}
+    >
       <textarea
         className={`w-full outline-0 leading-snug my-1.5 ${
           cannotResize ? "resize-none" : ""
@@ -189,6 +222,7 @@ export const DatePickerWithIcon = ({
   icon,
   iconSize,
   error,
+  hoverMsg,
   selected,
   required = false,
   onChange,
@@ -205,7 +239,13 @@ export const DatePickerWithIcon = ({
   id,
   name,
 }: DatePickerWithIconProps) => (
-  <ElementWithIcon icon={icon} iconSize={iconSize} error={error} id={id}>
+  <ElementWithIcon
+    icon={icon}
+    iconSize={iconSize}
+    error={error}
+    id={id}
+    hoverMsg={hoverMsg}
+  >
     <DatePicker
       selected={selected}
       onChange={onChange}
