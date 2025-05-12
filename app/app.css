@@ -100,8 +100,22 @@
   .react-datepicker-wrapper {
     width: 100%;
   }
+
   .react-datepicker__input-container {
     width: 100%;
+  }
+
+  .hover-underline {
+    position: relative;
+  }
+
+  .hover-underline:hover::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0.1em;
+    top: 1.4em;
+    background-color: var(--color-text);
   }
 }
 
@@ -121,7 +135,7 @@
   --color-rgba-text-dim: 75, 165, 144;
   --color-rgba-background: 247, 244, 233;
   --color-rgba-background-light: 255, 253, 244;
-  --color-rgba-backbround-dim: 233, 230, 220;
+  --color-rgba-background-dim: 233, 230, 220;
   --color-rgba-primary: 245, 105, 96;
   --color-rgba-secondary: 216, 212, 249;
   --color-rgba-secondary-light: 241, 240, 255;

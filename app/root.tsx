@@ -82,7 +82,11 @@ export default function App({ loaderData }: Route.ComponentProps) {
   const { user = null } = JSON.parse(loaderData);
   return (
     <>
-      <Header authenticated={user} avatar_url={user?.avatarUrl} />
+      <Header
+        authenticated={user}
+        avatar_url={user?.avatarUrl}
+        isStaff={user?.user_metadata?.is_staff}
+      />
       <main className="pt-20">
         <Outlet />
       </main>
