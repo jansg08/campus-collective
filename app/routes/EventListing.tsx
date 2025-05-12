@@ -166,7 +166,7 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
           </Link>
           <Chevron stroke="#4ba590" className="rotate-270 w-2" />
           <Link
-            to={`${university.name}/events?category=${category.id}`}
+            to={`/${university.slug}/events?category=${category.id}`}
             className="underline hover:text-text"
           >
             {category.name}
