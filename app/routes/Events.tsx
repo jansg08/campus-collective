@@ -146,7 +146,7 @@ const UniversitiesDropdown = ({
             <li key={id}>
               <NavLink
                 to={`/${slug}/events`}
-                className="flex items-center gap-1.5 py-1.5 px-3 hover hover:bg-dim transition-all"
+                className="flex items-center gap-1.5 py-1.5 px-3 hover hover:bg-background-dim transition-all"
               >
                 {({ isActive, isPending }) => (
                   <>
