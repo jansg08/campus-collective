@@ -32,7 +32,7 @@ const EventCard = ({
           className="aspect-video flex justify-between gap-4 items-start py-4 pr-4 rounded-t-lg bg-cover bg-center"
         >
           <div className="h-full flex flex-col justify-end">
-            <h3 className="text-background bg-[rgba(4,76,59,0.8)] leading-none font-bold p-4 max-w-80">
+            <h3 className="text-background bg-[rgba(var(--color-rgba-text),0.8)] leading-none font-bold p-4 max-w-80">
               {title}
             </h3>
           </div>

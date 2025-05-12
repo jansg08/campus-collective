@@ -99,7 +99,7 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
         {universities?.map(({ slug, logoUrl }) => (
           <Link
             to={`/${slug}/events`}
-            className="px-8 py-6 hover:bg-dim flex items-center justify-center rounded-lg transition-all"
+            className="px-8 py-6 hover:bg-background-dim flex items-center justify-center rounded-lg transition-all"
             key={slug}
           >
             <img className="w-full" src={logoUrl} />

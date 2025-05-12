@@ -167,7 +167,7 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           name="university"
           id="universitySelect"
           onChange={(e) =>
-            e.target.value !== "-1" && setIsUniversitySelected(true)
+            setIsUniversitySelected(e.target.value !== "-1" ? true : false)
           }
         >
           <option value={-1} selected={universities.length !== 1} disabled>
@@ -185,6 +185,11 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           name="venue"
           disabled={!isUniversitySelected}
           error={clientErrors.venue}
+          hoverMsg={
+            isUniversitySelected
+              ? ""
+              : "Please select the university to get available venues"
+          }
         >
           <option disabled selected={venues.length !== 1} value={-1}>
             Select Venue
