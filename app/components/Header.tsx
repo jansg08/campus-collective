@@ -5,45 +5,23 @@ import LogIn from "../svgs/LogIn.svg?react";
 import SquareButton from "./SquareButton";
 import { Link, NavLink } from "react-router";
 import { Form } from "react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import useOutsideClick from "~/utils/useOutSideClick";
 
 interface HeaderProps {
   authenticated: boolean;
   isStaff: boolean;
-  avatar_url?: string;
+  avatarUrl?: string;
 }
 
-const Header = ({ authenticated, isStaff, avatar_url }: HeaderProps) => {
+const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
   const [showMenu, setShowMenu] = useState(false);
-  const authButtons = {
-    logIn: (
-      <SquareButton colour="primary" isLink={true} path="/log-in">
-        <LogIn stroke="#f7f4e9" />
-      </SquareButton>
-    ),
-    noAvatar: (
-      <Form action="/log-out" method="post">
-        <SquareButton colour="primary" isLink={false} type="submit">
-          <User stroke="#f7f4e9" />
-        </SquareButton>
-      </Form>
-    ),
-    avatar: (
-      <Link to="/account">
-        <img src={avatar_url} />
-      </Link>
-    ),
-  };
-  let option: "logIn" | "noAvatar" | "avatar";
-
-  if (!authenticated) {
-    option = "logIn";
-  } else if (avatar_url) {
-    option = "avatar";
-  } else {
-    option = "noAvatar";
-  }
-
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null!);
+  useOutsideClick({
+    ref: dropdownRef,
+    handler: () => setShowUserDropdown(false),
+  });
   return (
     <header className="w-full py-2.5 px-5 bg-background-light shadow-below flex flex-col gap-4 justify-center fixed z-40">
       <div className="h-15 flex items-center justify-between">
@@ -53,7 +31,51 @@ const Header = ({ authenticated, isStaff, avatar_url }: HeaderProps) => {
         <Link to="/">
           <Logo />
         </Link>
-        {authButtons[option]}
+        {authenticated ? (
+          <SquareButton
+            colour={avatarUrl ? "custom" : "primary"}
+            bgUrl={avatarUrl}
+            position="relative"
+            onClick={(e) => {
+              const dropdown = document.getElementById("dropdown");
+              if (
+                e.target instanceof HTMLElement ||
+                e.target instanceof SVGElement
+              ) {
+                if (e.target.id !== "dropdown" && !dropdown?.contains(e.target))
+                  setShowUserDropdown(!showUserDropdown);
+              }
+            }}
+          >
+            {!avatarUrl && <User stroke="#f7f4e9" height={28} width={28} />}
+            {showUserDropdown && (
+              <div
+                id="dropdown"
+                ref={dropdownRef}
+                className="absolute top-[calc(100%+0.75rem)] right-0 z-50 w-fit flex flex-col items-start py-1.5 rounded-sm bg-[rgba(var(--color-rgba-text),0.8)]"
+              >
+                <div className="absolute right-5 -top-1 translate-x-1/2 dropdown-triangle h-1 w-2 bg-[rgba(var(--color-rgba-text),0.8)]" />
+                <Link
+                  to=""
+                  className="w-full text-left py-0.5 px-3 leading-tight transition-all hover:bg-text"
+                >
+                  Profile
+                </Link>
+                <Form action="/log-out" method="post">
+                  <input
+                    className="whitespace-nowrap transition-all hover:bg-text py-0.5 px-3 leading-tight"
+                    type="submit"
+                    value="Log out"
+                  />
+                </Form>
+              </div>
+            )}
+          </SquareButton>
+        ) : (
+          <SquareButton colour="primary" isLink={true} path="/log-in">
+            <LogIn stroke="#f7f4e9" height={28} width={28} />
+          </SquareButton>
+        )}
       </div>
       {showMenu && (
         <ul className="text-xl flex flex-col gap-3 mb-1 w-fit">
