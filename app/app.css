@@ -117,6 +117,10 @@
     top: 1.4em;
     background-color: var(--color-text);
   }
+
+  .dropdown-triangle {
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
 }
 
 @theme {

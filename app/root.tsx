@@ -84,7 +84,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
     <>
       <Header
         authenticated={user}
-        avatar_url={user?.avatarUrl}
+        avatarUrl={user?.avatarUrl}
         isStaff={user?.user_metadata?.is_staff}
       />
       <main className="pt-20">

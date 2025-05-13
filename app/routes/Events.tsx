@@ -290,7 +290,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
           selected={selectedUni}
         />
       </div>
-      <div className="flex gap-3 w-full sticky top-20 p-5 blur-down">
+      <div className="flex gap-3 items-center w-full sticky top-20 p-5 blur-down">
         <SquareButton colour="secondary" onClick={() => setIsOptionsOpen(true)}>
           <Filter stroke="#044c3b" />
         </SquareButton>
