@@ -87,7 +87,7 @@ export default function App({ loaderData }: Route.ComponentProps) {
         avatarUrl={user?.avatarUrl}
         isStaff={user?.user_metadata?.is_staff}
       />
-      <main className="pt-20">
+      <main className="pt-20 flex justify-center">
         <Outlet />
       </main>
     </>
