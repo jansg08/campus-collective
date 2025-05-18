@@ -1,4 +1,5 @@
 import {
+  data,
   isRouteErrorResponse,
   Links,
   Meta,
@@ -59,31 +60,31 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
         .from(profilesTable)
         .where(eq(profilesTable.id, userResponse.data.user.id));
 
-      return new Response(
-        JSON.stringify({
+      return data(
+        {
           user: {
             ...userResponse.data.user,
             avatarUrl: result.avatarUrl || "",
           },
-        }),
+        },
         {
           headers,
         }
       );
     } catch (err) {
-      console.log(err);
+      return data({ err }, { headers });
     }
   }
 
-  return new Response(JSON.stringify({}), { headers });
+  return data(null, { headers });
 };
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const { user = null } = JSON.parse(loaderData);
+  const user = loaderData && "user" in loaderData ? loaderData.user : null;
   return (
     <>
       <Header
-        authenticated={user}
+        authenticated={!!user}
         avatarUrl={user?.avatarUrl}
         isStaff={user?.user_metadata?.is_staff}
       />
