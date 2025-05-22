@@ -47,14 +47,23 @@
     transform: scale(90%);
   }
 
+  .blur-up,
+  .blur-down,
+  .blur-right,
+  .blur-left,
+  .blur-topright {
+    position: relative;
+  }
+
   .blur-down::before {
     content: "";
     height: 100%;
-    width: 100%;
+    width: min(calc(100% + 5rem), 100vw);
     position: absolute;
     top: 0;
-    left: 0;
+    left: -2.5rem;
     z-index: -1;
+    overflow: hidden;
     -webkit-backdrop-filter: blur(15px);
     backdrop-filter: blur(15px);
     -webkit-mask-image: linear-gradient(
@@ -69,6 +78,84 @@
       black 30%,
       black 100%
     );
+  }
+
+  .blur-up::before {
+    content: "";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      black 40%,
+      black 100%
+    );
+    mask-image: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      black 30%,
+      black 100%
+    );
+  }
+
+  .blur-right::before {
+    content: "";
+    height: calc(100% + 1.25rem);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      black 0%,
+      black 15rem,
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      black 0%,
+      black 13rem,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
+  .blur-diagright::before {
+    content: "";
+    height: calc(100% + 1.25rem);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-mask-image: linear-gradient(
+      45deg,
+      black 0%,
+      black 16rem,
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+        0deg,
+        black 0%,
+        black 50%,
+        rgba(0, 0, 0, 0) 100%
+      ),
+      linear-gradient(
+        90deg,
+        black 0%,
+        rgba(0, 0, 0, 0.9) 16rem,
+        rgba(0, 0, 0, 0) 100%
+      );
   }
 
   .expand-map {
@@ -113,8 +200,8 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 0.1em;
-    top: 1.4em;
+    height: 0.15rem;
+    top: 1.6rem;
     background-color: var(--color-text);
   }
 
@@ -156,6 +243,8 @@
 
   --home-logo-cols: repeat(auto-fit, minmax(225px, 1fr));
   --event-card-cols: repeat(auto-fit, minmax(250px, 1fr));
+
+  --breakpoint-xs: 32rem;
 }
 
 @font-face {

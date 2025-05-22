@@ -51,30 +51,30 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 const NewUser = () => {
   return (
-    <>
-      <div className="relative flex flex-col items-start gap-4">
+    <div className="flex flex-col w-full blur-right">
+      <div className="w-full relative flex flex-col items-start gap-4">
         <h1 className="w-60 leading-tight">Welcome to Campus Collective.</h1>
-        <MortarBoard className="absolute right-0 top-3 -z-10" />
+        <MortarBoard className="absolute right-0 top-1/5 -z-10 w-31/45 -translate-y-1/3" />
         <h3 className="text-text-dim w-72">
           The event platform that's <i>for students, by students.</i>
         </h3>
-        <p className="text-xl">
+        <p className="text-xl max-w-90">
           Celebrate and support the best entertainment your campus has to offer
           by getting started below.
         </p>
       </div>
-      <div className="flex flex-col gap-4 w-full">
-        <Link to="/log-in">
+      <div className="flex flex-col xs:flex-row gap-4 w-[min(40rem,100%)] py-9">
+        <Link to="/log-in" className="w-full">
           <WideButton>Log In</WideButton>
         </Link>
-        <Link to="/sign-up">
+        <Link to="/sign-up" className="w-full">
           <WideButton colour="secondary">Sign Up</WideButton>
         </Link>
       </div>
-      <p className="text-xl">
+      <p className="w-full text-xl">
         <b>Just want to browse?</b> Find your university below to see what's on.
       </p>
-    </>
+    </div>
   );
 };
 

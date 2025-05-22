@@ -7,8 +7,6 @@ import { bookingsTable } from "src/db/schema/bookings";
 import type { Route } from "./+types/ConfirmBookingForm";
 import { db } from "src/db";
 
-interface ConfirmBookingFormProps {}
-
 export const action = async ({ request, params }: Route.ActionArgs) => {
   const eventId = Number(params.eventId);
   const { supabase, headers } = getSupabaseClient(request);
@@ -18,33 +16,36 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
   } = await supabase.auth.getUser();
 
   if (user && eventId) {
-    const [newBooking] = await db
-      .insert(bookingsTable)
-      .values({ userId: user.id, eventId: eventId })
-      .returning({
-        dateBooked: bookingsTable.dateBooked,
-        paymentRef: bookingsTable.paymentRef,
-      })
-      .onConflictDoNothing();
+    try {
+      const [newBooking] = await db
+        .insert(bookingsTable)
+        .values({ userId: user.id, eventId: eventId })
+        .returning({
+          dateBooked: bookingsTable.dateBooked,
+          paymentRef: bookingsTable.paymentRef,
+        });
 
-    if (newBooking) {
-      return redirect(`${request.url}/success`, { headers });
-    }
-    return data(
-      {
-        error: {
-          code: "booking_exists",
-          msg: "The booking already exists for the given event and user id",
+      if (newBooking) {
+        return redirect(`${request.url}/success`, { headers });
+      }
+      return data(
+        {
+          err: {
+            code: "booking_exists",
+            msg: "The booking already exists for the given event and user id",
+          },
         },
-      },
-      { headers }
-    );
+        { headers }
+      );
+    } catch (err) {
+      return data({ err }, { headers });
+    }
   }
 
   if (user) {
     return data(
       {
-        error: {
+        err: {
           code: "event_not_found",
           msg: "The event with the given event id does not exist",
         },
@@ -57,8 +58,8 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 };
 
 const ConfirmBookingForm = ({ actionData }: Route.ComponentProps) => {
-  const error = actionData?.error;
-  console.log(error);
+  const err = actionData?.err;
+  console.log(err);
   const { event } = useOutletContext<EventOutletContext>();
   return (
     <>

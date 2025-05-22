@@ -5,6 +5,7 @@ interface WideButtonProps
   children: React.ReactNode;
   colour?: "primary" | "secondary";
   isThin?: boolean;
+  buttonWidth?: `w-${string}`;
 }
 
 interface LinkProps extends WideButtonProps {
@@ -21,12 +22,13 @@ const WideButton = ({
   children,
   colour = "primary",
   isThin = false,
+  buttonWidth = "w-full",
   type,
   isLink = false,
   path,
   onClick,
 }: LinkProps | NonLinkProps) => {
-  const classes = `w-full leading-none transition-all cursor-pointer flex items-center justify-center ${
+  const classes = `${buttonWidth} leading-none transition-all cursor-pointer flex items-center justify-center ${
     isThin
       ? "py-2 rounded-sm shadow-md text-sm"
       : "py-3 rounded-lg shadow-lg font-bold"
