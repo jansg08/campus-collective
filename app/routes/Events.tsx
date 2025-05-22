@@ -18,6 +18,7 @@ import type { Route } from "./+types/Events";
 import { universitiesTable } from "src/db/schema/universities";
 import useOutsideClick from "~/utils/useOutSideClick";
 import Modal from "~/components/Modal";
+import PaddedContainer from "~/components/PaddedContainer";
 
 interface University {
   id: number;
@@ -176,7 +177,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
   const submit = useSubmit();
 
   return (
-    <div className="flex flex-col relative">
+    <PaddedContainer padding="none" flexGap="gap-0">
       {isOptionsOpen && (
         <Modal closeModal={() => setIsOptionsOpen(false)}>
           <Form
@@ -303,7 +304,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
           />
         </Form>
       </div>
-      <ul className="grid grid-cols-(--event-card-cols) gap-5 px-5">
+      <ul className="w-full grid grid-cols-(--event-card-cols) gap-5 px-5">
         {events.map(({ id, ...rest }) => {
           const props = {
             ...rest,
@@ -317,7 +318,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
           );
         })}
       </ul>
-    </div>
+    </PaddedContainer>
   );
 };
 
