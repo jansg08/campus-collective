@@ -1,11 +1,26 @@
-import { Body, Font, Head, Html, Tailwind } from "@react-email/components";
+import {
+  Body,
+  Container,
+  Font,
+  Head,
+  Html,
+  Preview,
+  Tailwind,
+} from "@react-email/components";
 import tailwindConfig from "./tailwind.config";
+import { preview } from "vite";
 
 interface EmailTemplateProps {
   children: React.ReactNode;
+  preview?: string;
+  maxWidth?: `max-w-${string}`;
 }
 
-export const EmailTemplate = ({ children }: EmailTemplateProps) => {
+export const EmailTemplate = ({
+  children,
+  preview,
+  maxWidth,
+}: EmailTemplateProps) => {
   return (
     <Html>
       <Head>
@@ -25,23 +40,14 @@ export const EmailTemplate = ({ children }: EmailTemplateProps) => {
         </style>
       </Head>
       <Tailwind config={tailwindConfig}>
-        <Body className="m-0 w-screen box-border">
-          <main className="absolute top-0 left-0 w-full h-full p-5 box-border">
-            <table className="w-full h-full">
-              <tr>
-                <td></td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="max-w-80 mx-auto bg-secondary p-8 rounded-2xl shadow-xl text-center">
-                    {children}
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td></td>
-              </tr>
-            </table>
+        <Body className="m-5">
+          {preview && <Preview>{preview}</Preview>}
+          <main>
+            <Container
+              className={`${maxWidth} mx-auto my-20 bg-secondary p-8 rounded-2xl shadow-xl text-center`}
+            >
+              {children}
+            </Container>
           </main>
         </Body>
       </Tailwind>
