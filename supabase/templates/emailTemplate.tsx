@@ -35,16 +35,16 @@ export const EmailTemplate = ({
         />
         <style>
           {
-            "button { border: none; } p { margin: 0 } body { color: #044c3b; background-color: #f7f4e9 } h1,h2,h3,h4,h5,h6 { margin: 0px }"
+            "button { border: none; } p { margin: 0; } h1,h2,h3,h4,h5,h6 { margin: 0px; }"
           }
         </style>
       </Head>
       <Tailwind config={tailwindConfig}>
-        <Body className="m-5">
+        <Body className="m-5 py-15 text-text bg-background">
           {preview && <Preview>{preview}</Preview>}
           <main>
             <Container
-              className={`${maxWidth} mx-auto my-20 bg-secondary p-8 rounded-2xl shadow-xl text-center`}
+              className={`${maxWidth} mx-auto bg-secondary p-8 rounded-2xl shadow-xl text-center`}
             >
               {children}
             </Container>
