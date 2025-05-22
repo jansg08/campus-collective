@@ -12,6 +12,7 @@ interface SquareButtonProps
   left?: `left-${string}`;
   bottom?: `bottom-${string}`;
   right?: `right-${string}`;
+  isHidden?: string;
 }
 
 interface LinkProps extends SquareButtonProps {
@@ -37,6 +38,7 @@ const SquareButton = ({
   left,
   bottom,
   right,
+  isHidden = "",
   onClick,
 }: LinkProps | NonLinkProps) => {
   const sizeClasses = {
@@ -56,7 +58,7 @@ const SquareButton = ({
     secondary: "bg-secondary hover:brightness-105",
     custom: "",
   };
-  const classes = `${colour !== "custom" ? `bg-${colour}` : ""} ${
+  const classes = `${isHidden} ${colour !== "custom" ? `bg-${colour}` : ""} ${
     sizeClasses[bgUrl ? "withBackground" : "withIcon"][size]
   } ${position} ${top} ${left} ${bottom} ${right} ${zIndex} shadow-lg transition-all cursor-pointer ${
     colourClasses[colour]
