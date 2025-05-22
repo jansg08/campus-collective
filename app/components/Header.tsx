@@ -8,6 +8,7 @@ import { Form } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import useOutsideClick from "~/utils/useOutSideClick";
 import WideButton from "./WideButton";
+import { useWindowWidth } from "~/hooks/useWindowWidth";
 
 interface HeaderProps {
   authenticated: boolean;
@@ -15,23 +16,18 @@ interface HeaderProps {
   avatarUrl?: string;
 }
 
-const getWindowWidth = () => {
-  const { innerWidth: width } = window;
-  return width;
-};
-
 const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(getWindowWidth());
+  const windowWidth = useWindowWidth(toggleMenu);
   const { pathname } = useLocation();
   const breakpoint = 768;
-  const handleResize = () => {
-    setWindowWidth(getWindowWidth());
+
+  function toggleMenu(windowWidth: number) {
     if (windowWidth > breakpoint) {
       setShowMenu(false);
     }
-  };
+  }
 
   const userDropdownRef = useRef<HTMLDivElement>(null!);
   useOutsideClick({
@@ -42,13 +38,6 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
   useEffect(() => {
     setShowMenu(false);
   }, [pathname]);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
 
   return (
     <header className="w-full py-2.5 px-5 bg-background-light shadow-below flex justify-center fixed z-40">
@@ -111,19 +100,27 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
                   </div>
                 )}
               </SquareButton>
-            ) : windowWidth < 636 ? (
-              <SquareButton colour="primary" isLink={true} path="/log-in">
-                <LogIn stroke="#f7f4e9" height={28} width={28} />
-              </SquareButton>
             ) : (
-              <WideButton
-                colour="primary"
-                isLink={true}
-                path="/log-in"
-                buttonWidth="w-24"
-              >
-                Log In
-              </WideButton>
+              <>
+                <SquareButton
+                  colour="primary"
+                  isLink={true}
+                  path="/log-in"
+                  isHidden="sm:hidden"
+                >
+                  <LogIn stroke="#f7f4e9" height={28} width={28} />
+                </SquareButton>
+
+                <WideButton
+                  colour="primary"
+                  isLink={true}
+                  path="/log-in"
+                  buttonWidth="w-24"
+                  isHidden="hidden sm:flex"
+                >
+                  Log In
+                </WideButton>
+              </>
             )}
           </div>
         </div>
