@@ -35,7 +35,7 @@ const ConfirmEmail = ({ actionData }: Route.ComponentProps) => {
       className="flex flex-col gap-8 items-center"
     >
       <h2 className="font-bold">Confirm Email</h2>
-      <div className="flex flex-col gap-5 w-full">
+      <div className="flex flex-col gap-5 w-full text-center">
         <p>Thank you for joining Campus Collective! </p>
         <p>
           To confirm your account please check your inbox for a confirmation
