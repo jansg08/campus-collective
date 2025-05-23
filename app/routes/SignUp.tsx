@@ -35,7 +35,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
 const SignUp = ({ actionData }: Route.ComponentProps) => {
   return (
     <PaddedContainer padding="thick" fullPage>
-      <section className="w-full -translate-y-1/4">
+      <section className="w-full -translate-y-1/8">
         <Outlet />
       </section>
     </PaddedContainer>
