@@ -40,7 +40,7 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
   }, [pathname]);
 
   return (
-    <header className="w-full py-2.5 px-5 bg-background-light shadow-below flex justify-center fixed z-40">
+    <header className="w-full py-2.5 bg-background-light shadow-below flex justify-center fixed z-40">
       <div className="w-[min(100%,80rem)] flex flex-col gap-4 px-5">
         <div className="w-full h-15 flex items-center">
           <div className="w-full flex justify-start">
