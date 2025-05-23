@@ -172,89 +172,98 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
             {category.name}
           </Link>
         </div>
-        <div className="w-full flex flex-col gap-2 leading-none">
-          <h2 className="font-bold">{event.title}</h2>
-          <h3 className="font-bold text-text-dim">
-            {formatPrice(event.price)}
-          </h3>
-        </div>
-        <WideButton
-          isLink={!dateBooked}
-          path={
-            user ? `/${university.slug}/events/${event.id}/confirm` : "/log-in"
-          }
-          colour={dateBooked ? "secondary" : "primary"}
-          onClick={
-            dateBooked
-              ? () =>
-                  generateIcsFile({
-                    title: event.title,
-                    description: event.description,
-                    venue,
-                    startTime: event.startTime,
-                    endTime: event.endTime,
-                  })
-              : undefined
-          }
-        >
-          {dateBooked && <PlusCircle stroke="#044c3b" />}
-          {user
-            ? dateBooked
-              ? "Add to Calendar"
-              : "Book Now"
-            : "Log in to book"}
-        </WideButton>
-        <div className="text-sm w-full">
-          <p>{event.description}</p>
-        </div>
-        <EventDetails
-          startTime={event.startTime}
-          endTime={event.endTime}
-          venue={venueName}
-          venueLinked
-          university={university.name}
-        />
-        <div
-          className={`w-full aspect-square flex items-center justify-center rounded-lg relative z-0 shadow-lg ${
-            mapExpanded || "expand-map"
-          }`}
-          ref={mapRef}
-          onClick={({ target }) => {
-            if (target instanceof HTMLElement) {
-              if (
-                !(target.tagName === "svg") &&
-                !(target.tagName === "BUTTON")
-              ) {
-                setMapExpanded(true);
-              }
-            }
-          }}
-        >
-          {venueCoords && MapComponent ? (
-            <MapComponent
-              center={[venueCoords.y, venueCoords.x]}
-              borderRadius="8px"
-              popUpContent={
-                <LinkedVenue venue={venueName} university={university.name} />
-              }
-              expanded={mapExpanded}
+        <div className="w-full flex flex-col gap-6 md:flex-row md:gap-6">
+          <div className="w-full flex flex-col gap-6 ">
+            <div className="w-full flex flex-col gap-2 leading-none">
+              <h2 className="font-bold">{event.title}</h2>
+              <h3 className="font-bold text-text-dim">
+                {formatPrice(event.price)}
+              </h3>
+            </div>
+            <div className="w-full flex items-center justify-start">
+              <WideButton
+                isLink={!dateBooked}
+                path={
+                  user
+                    ? `/${university.slug}/events/${event.id}/confirm`
+                    : "/log-in"
+                }
+                colour={dateBooked ? "secondary" : "primary"}
+                onClick={
+                  dateBooked
+                    ? () =>
+                        generateIcsFile({
+                          title: event.title,
+                          description: event.description,
+                          venue,
+                          startTime: event.startTime,
+                          endTime: event.endTime,
+                        })
+                    : undefined
+                }
+                buttonWidth="w-[min(100%,30rem)]"
+              >
+                {dateBooked && <PlusCircle stroke="#044c3b" />}
+                {user
+                  ? dateBooked
+                    ? "Add to Calendar"
+                    : "Book Now"
+                  : "Log in to book"}
+              </WideButton>
+            </div>
+            <div className="text-sm w-full">
+              <p>{event.description}</p>
+            </div>
+            <EventDetails
+              startTime={event.startTime}
+              endTime={event.endTime}
+              venue={venueName}
+              venueLinked
+              university={university.name}
             />
-          ) : (
-            <Grid color="#4BA590" size={72} />
-          )}
-          {mapExpanded && (
-            <SquareButton
-              colour="primary"
-              size="smaller"
-              position="absolute"
-              top="top-5"
-              right="right-5"
-              zIndex="z-400"
-              onClick={() => setMapExpanded(false)}
-            >
-              <Minimise stroke="#f7f4e9" />
-            </SquareButton>
-          )}
+          </div>
+          <div
+            className={`w-full aspect-square flex items-center justify-center rounded-lg relative z-0 shadow-lg ${
+              mapExpanded || "expand-map h-48 md:h-72"
+            }`}
+            ref={mapRef}
+            onClick={({ target }) => {
+              if (target instanceof HTMLElement) {
+                if (
+                  !(target.tagName === "svg") &&
+                  !(target.tagName === "BUTTON")
+                ) {
+                  setMapExpanded(true);
+                }
+              }
+            }}
+          >
+            {venueCoords && MapComponent ? (
+              <MapComponent
+                center={[venueCoords.y, venueCoords.x]}
+                borderRadius="8px"
+                popUpContent={
+                  <LinkedVenue venue={venueName} university={university.name} />
+                }
+                expanded={mapExpanded}
+              />
+            ) : (
+              <Grid color="#4BA590" size={72} />
+            )}
+            {mapExpanded && (
+              <SquareButton
+                colour="primary"
+                size="smaller"
+                position="absolute"
+                top="top-5"
+                right="right-5"
+                zIndex="z-400"
+                onClick={() => setMapExpanded(false)}
+              >
+                <Minimise stroke="#f7f4e9" />
+              </SquareButton>
+            )}
+          </div>
         </div>
       </PaddedContainer>
     </>
