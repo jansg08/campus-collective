@@ -6,6 +6,7 @@ interface PaddedContainerProps {
   fullPage?: boolean;
   background?: `bg-${string}` | "";
   shadow?: `shadow-${string}` | "";
+  extraClasses?: string;
 }
 
 const PaddedContainer = ({
@@ -16,16 +17,21 @@ const PaddedContainer = ({
   fullPage = false,
   background = "",
   shadow = "",
+  extraClasses = "",
 }: PaddedContainerProps) => {
   return (
     <div
-      className={`w-[min(100%,80rem)] ${
-        padding === "none" || (padding === "normal" ? "p-5" : "p-10")
-      } ${
-        fullPage ? "h-[calc(100vh_-_5rem)]" : ""
-      } ${margin} ${background} ${shadow} relative flex flex-col items-center justify-center box-border ${flexGap}`}
+      className={`w-screen ${background} flex justify-center ${shadow} ${margin}`}
     >
-      {children}
+      <div
+        className={`${
+          padding === "normal" ? "w-[min(100%,80rem)]" : "w-[min(100%,30rem)]"
+        } ${padding === "none" || (padding === "normal" ? "p-5" : "p-10")} ${
+          fullPage ? "h-[calc(100vh_-_5rem)]" : ""
+        } relative flex flex-col items-center justify-center box-border ${flexGap} ${extraClasses}}`}
+      >
+        {children}
+      </div>
     </div>
   );
 };

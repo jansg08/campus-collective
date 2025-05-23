@@ -44,7 +44,7 @@
     background-color: var(--color-accent);
     border-radius: calc(var(--spacing) * 2.5);
     transition: all var(--default-transition-duration) ease-in-out;
-    transform: scale(90%);
+    transform: scale(85%);
   }
 
   .blur-up,
@@ -57,10 +57,10 @@
 
   .blur-down::before {
     content: "";
-    height: 100%;
-    width: min(calc(100% + 5rem), 100vw);
+    height: calc(100% + 2.5rem);
+    width: min(calc(100% + 5rem), calc(100vw + 1.25rem));
     position: absolute;
-    top: 0;
+    top: -1.25rem;
     left: -2.5rem;
     z-index: -1;
     overflow: hidden;
@@ -158,10 +158,6 @@
       );
   }
 
-  .expand-map {
-    height: calc(var(--spacing) * 48);
-  }
-
   .expand-map::before {
     content: "Click to Interact";
     width: 100%;
@@ -207,6 +203,18 @@
 
   .dropdown-triangle {
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  .university-dropdown:hover::before {
+    content: "";
+    position: absolute;
+    width: calc(100% + 0.5rem);
+    height: 100%;
+    top: 0;
+    left: -0.3rem;
+    z-index: -1;
+    background-color: var(--color-background-dim);
+    border-radius: calc(var(--spacing));
   }
 }
 
