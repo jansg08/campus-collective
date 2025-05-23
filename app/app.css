@@ -44,7 +44,7 @@
     background-color: var(--color-accent);
     border-radius: calc(var(--spacing) * 2.5);
     transition: all var(--default-transition-duration) ease-in-out;
-    transform: scale(90%);
+    transform: scale(85%);
   }
 
   .blur-up,
