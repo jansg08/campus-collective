@@ -54,7 +54,11 @@ const ElementWithIcon = ({
 }: ElementWithIconProps) => {
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <div className="w-full flex flex-col items-start gap-1 relative">
+    <div
+      className={`w-full flex flex-col items-start ${
+        error ? "gap-1" : ""
+      } relative`}
+    >
       {hoverMsg && isHovered && (
         <div className="absolute z-50 bg-[rgba(var(--color-rgba-text),0.7)] backdrop-blur-xs top-0 left-0 -translate-y-[calc(100%+0.25rem)] rounded-sm text-white py-1.5 px-2">
           {hoverMsg}
