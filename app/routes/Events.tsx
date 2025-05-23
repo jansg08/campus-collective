@@ -126,8 +126,8 @@ const UniversitiesDropdown = ({
   });
   return (
     <div
-      className={`flex items-center gap-1 relative w-fit transition-all ml-4 pl-1 mr-5 ${
-        isOpen ? "bg-gray-200" : "hover:bg-gray-200"
+      className={`flex items-center gap-1 relative w-fit transition-all ${
+        isOpen ? "bg-gray-200" : "university-dropdown"
       } rounded-sm`}
     >
       <img src={currentUniCrest} className="size-6 inline rounded-full" />
@@ -177,7 +177,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
   const submit = useSubmit();
 
   return (
-    <PaddedContainer padding="none" flexGap="gap-0">
+    <PaddedContainer padding="normal" flexGap="gap-5">
       {isOptionsOpen && (
         <Modal closeModal={() => setIsOptionsOpen(false)}>
           <Form
@@ -284,14 +284,14 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
           </Form>
         </Modal>
       )}
-      <div className="w-full pt-5">
-        <p className="text-sm text-text-dim px-5">Viewing events for</p>
+      <div className="w-full">
+        <p className="text-sm text-text-dim">Viewing events for</p>
         <UniversitiesDropdown
           universities={universities}
           selected={selectedUni}
         />
       </div>
-      <div className="flex gap-3 items-center w-full sticky top-20 p-5 blur-down">
+      <div className="flex gap-3 items-center w-full sticky top-25 blur-down">
         <SquareButton colour="secondary" onClick={() => setIsOptionsOpen(true)}>
           <Filter stroke="#044c3b" />
         </SquareButton>
@@ -304,7 +304,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
           />
         </Form>
       </div>
-      <ul className="w-full grid grid-cols-(--event-card-cols) gap-5 px-5">
+      <ul className="w-full grid grid-cols-(--event-card-cols) gap-5">
         {events.map(({ id, ...rest }) => {
           const props = {
             ...rest,
