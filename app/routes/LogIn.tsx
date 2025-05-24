@@ -39,14 +39,14 @@ export const action = async ({ request }: Route.ActionArgs) => {
 
   if (user) {
     try {
-      if (user.user_metadata?.universitySlug) {
+      if (user.user_metadata?.university) {
         const [result] = await db
           .select({
-            universitySlug: universitiesTable.slug,
+            slug: universitiesTable.slug,
           })
           .from(universitiesTable)
           .where(eq(universitiesTable.id, user.user_metadata?.university));
-        redirect(`/${result.universitySlug}/events`, { headers });
+        return redirect(`/${result.slug}/events`, { headers });
       }
       return redirect("/", { headers });
     } catch (err) {
