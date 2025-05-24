@@ -1,4 +1,4 @@
-import { data, Form, Link } from "react-router";
+import { data, Form, Link, useFetcher } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
 import WideButton from "~/components/WideButton";
 import MortarBoard from "~/svgs/MortarboardMassive.svg?react";
@@ -6,6 +6,9 @@ import type { Route } from "./+types/Home";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
 import { getSupabaseClient } from "~/auth/supabase.server";
+import { SelectWithIcon } from "~/components/InputWithIcon";
+import { Squircle } from "ldrs/react";
+import "ldrs/react/Squircle.css";
 
 export function meta() {
   return [
@@ -28,6 +31,7 @@ export async function loader({ request }: Route.LoaderArgs) {
       logoUrl: universitiesTable.logoUrl,
       name: universitiesTable.name,
       slug: universitiesTable.slug,
+      id: universitiesTable.id,
     })
     .from(universitiesTable)
     .orderBy(universitiesTable.slug);
@@ -78,15 +82,56 @@ const NewUser = () => {
   );
 };
 
-const WelcomeBack = () => {
+const WelcomeBack = ({
+  universities,
+}: {
+  universities: Route.ComponentProps["loaderData"]["universities"];
+}) => {
+  let fetcher = useFetcher();
   return (
     <>
-      <div className="flex flex-col gap-4 w-full text-xl">
+      <div className="flex flex-col gap-4 w-full text-lg">
         <h1 className="leading-tight w-full">Welcome back!</h1>
-        <p className="w-full">
+        <p className="text-lg">
           Get started with exploring the best your uni has to offer by finding
           it below.
         </p>
+        <p className="text-lg">
+          <b>Do you go to one of the universities below?</b> Save it here so you
+          can be taken straight to its events page every time you log in. You
+          can always change it on your profile page.
+        </p>
+        <fetcher.Form
+          method="post"
+          action="/set-university"
+          className="flex gap-3 text-base"
+        >
+          <div className="w-max h-10 text-lg">
+            <SelectWithIcon iconSize="large">
+              <option value={-1} selected disabled>
+                Select University
+              </option>
+              {universities.map((uni) => (
+                <option key={uni.id} value={uni.id} className="px-2">
+                  {uni.name}
+                </option>
+              ))}
+            </SelectWithIcon>
+          </div>
+          <WideButton
+            type="submit"
+            colour="secondary"
+            className="w-fit"
+            disabled={fetcher.state !== "idle"}
+            buttonWidth="w-20"
+          >
+            {fetcher.state === "idle" ? (
+              "Save"
+            ) : (
+              <Squircle color="#4BA590" size={16} stroke={2.5} />
+            )}
+          </WideButton>
+        </fetcher.Form>
       </div>
     </>
   );
@@ -96,7 +141,7 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
   const { universities, user } = loaderData;
   return (
     <PaddedContainer flexGap="gap-9">
-      {user ? <WelcomeBack /> : <NewUser />}
+      {user ? <WelcomeBack universities={universities} /> : <NewUser />}
       <div className="w-full grid grid-cols-(--home-logo-cols) gap-2">
         {universities?.map(({ slug, logoUrl }) => (
           <Link
