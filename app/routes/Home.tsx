@@ -90,6 +90,7 @@ const WelcomeBack = ({
   user: Route.ComponentProps["loaderData"]["user"];
 }) => {
   let fetcher = useFetcher();
+  console.log(fetcher.data);
   return (
     <>
       <div className="flex flex-col gap-4 w-full text-lg">
@@ -107,11 +108,11 @@ const WelcomeBack = ({
             </p>
             <fetcher.Form
               method="post"
-              action="/set-university"
+              action="/profile/update-university"
               className="flex gap-3 text-base"
             >
               <div className="w-max h-10 text-lg">
-                <SelectWithIcon iconSize="large">
+                <SelectWithIcon iconSize="large" name="universityId">
                   <option value={-1} selected disabled>
                     Select University
                   </option>
