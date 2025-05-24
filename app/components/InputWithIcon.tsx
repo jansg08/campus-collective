@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 interface IconAndErrorProps {
   iconSize?: "normal" | "large";
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   error?: string;
   hoverMsg?: string | React.ReactNode;
 }
@@ -67,18 +67,22 @@ const ElementWithIcon = ({
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="bg-background-light relative rounded-lg w-full shadow-md py-1 pr-1 pl-4 flex justify-end gap-1.5 items-center input-border transition-all has-[select:disabled]:bg-background-dim has-[input:disabled]:bg-background-dim has-[textarea:disabled]:bg-background-dim has-[select:disabled]:text-text-dim has-[input:disabled]:text-text-dim has-[textarea:disabled]:text-text-dim"
+        className={`bg-background-light relative rounded-lg w-full shadow-md py-1 ${
+          icon ? "pr-1 pl-4" : "px-2 h-10"
+        } flex justify-end gap-1.5 items-center input-border transition-all has-[select:disabled]:bg-background-dim has-[input:disabled]:bg-background-dim has-[textarea:disabled]:bg-background-dim has-[select:disabled]:text-text-dim has-[input:disabled]:text-text-dim has-[textarea:disabled]:text-text-dim`}
       >
         {children}
-        <label htmlFor={id} className="mb-auto">
-          <div
-            className={`rounded-sm ${
-              iconSize === "normal" ? "p-1.5" : "p-0.5"
-            } bg-secondary`}
-          >
-            {icon}
-          </div>
-        </label>
+        {icon && (
+          <label htmlFor={id} className="mb-auto">
+            <div
+              className={`rounded-sm ${
+                iconSize === "normal" ? "p-1.5" : "p-0.5"
+              } bg-secondary`}
+            >
+              {icon}
+            </div>
+          </label>
+        )}
       </div>
       <p className="text-primary text-xs">{error}</p>
     </div>
