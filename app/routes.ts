@@ -21,5 +21,8 @@ export default [
     ]),
   ]),
   route("create-event", "routes/CreateEvent.tsx"),
+  ...prefix("profile", [
+    route("update-university", "resources/updateUniversity.ts"),
+  ]),
   ...prefix("auth", [route("confirm", "resources/confirm.ts")]),
 ] satisfies RouteConfig;
