@@ -84,8 +84,10 @@ const NewUser = () => {
 
 const WelcomeBack = ({
   universities,
+  user,
 }: {
   universities: Route.ComponentProps["loaderData"]["universities"];
+  user: Route.ComponentProps["loaderData"]["user"];
 }) => {
   let fetcher = useFetcher();
   return (
@@ -96,42 +98,46 @@ const WelcomeBack = ({
           Get started with exploring the best your uni has to offer by finding
           it below.
         </p>
-        <p className="text-lg">
-          <b>Do you go to one of the universities below?</b> Save it here so you
-          can be taken straight to its events page every time you log in. You
-          can always change it on your profile page.
-        </p>
-        <fetcher.Form
-          method="post"
-          action="/set-university"
-          className="flex gap-3 text-base"
-        >
-          <div className="w-max h-10 text-lg">
-            <SelectWithIcon iconSize="large">
-              <option value={-1} selected disabled>
-                Select University
-              </option>
-              {universities.map((uni) => (
-                <option key={uni.id} value={uni.id} className="px-2">
-                  {uni.name}
-                </option>
-              ))}
-            </SelectWithIcon>
-          </div>
-          <WideButton
-            type="submit"
-            colour="secondary"
-            className="w-fit"
-            disabled={fetcher.state !== "idle"}
-            buttonWidth="w-20"
-          >
-            {fetcher.state === "idle" ? (
-              "Save"
-            ) : (
-              <Squircle color="#4BA590" size={16} stroke={2.5} />
-            )}
-          </WideButton>
-        </fetcher.Form>
+        {!user?.user_metadata?.university && (
+          <>
+            <p className="text-lg">
+              <b>Do you go to one of the universities below?</b> Save it here so
+              you can be taken straight to its events page every time you log
+              in. You can always change it on your profile page.
+            </p>
+            <fetcher.Form
+              method="post"
+              action="/set-university"
+              className="flex gap-3 text-base"
+            >
+              <div className="w-max h-10 text-lg">
+                <SelectWithIcon iconSize="large">
+                  <option value={-1} selected disabled>
+                    Select University
+                  </option>
+                  {universities.map((uni) => (
+                    <option key={uni.id} value={uni.id} className="px-2">
+                      {uni.name}
+                    </option>
+                  ))}
+                </SelectWithIcon>
+              </div>
+              <WideButton
+                type="submit"
+                colour="secondary"
+                className="w-fit"
+                disabled={fetcher.state !== "idle"}
+                buttonWidth="w-20"
+              >
+                {fetcher.state === "idle" ? (
+                  "Save"
+                ) : (
+                  <Squircle color="#4BA590" size={16} stroke={2.5} />
+                )}
+              </WideButton>
+            </fetcher.Form>
+          </>
+        )}
       </div>
     </>
   );
@@ -141,7 +147,11 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
   const { universities, user } = loaderData;
   return (
     <PaddedContainer flexGap="gap-9">
-      {user ? <WelcomeBack universities={universities} /> : <NewUser />}
+      {user ? (
+        <WelcomeBack universities={universities} user={user} />
+      ) : (
+        <NewUser />
+      )}
       <div className="w-full grid grid-cols-(--home-logo-cols) gap-2">
         {universities?.map(({ slug, logoUrl }) => (
           <Link
