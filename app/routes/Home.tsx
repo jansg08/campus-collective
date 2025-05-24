@@ -1,4 +1,4 @@
-import { data, Link } from "react-router";
+import { data, Form, Link } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
 import WideButton from "~/components/WideButton";
 import MortarBoard from "~/svgs/MortarboardMassive.svg?react";
@@ -81,11 +81,13 @@ const NewUser = () => {
 const WelcomeBack = () => {
   return (
     <>
-      <h1 className="leading-tight w-full">Welcome back!</h1>
-      <p>
-        Get started with exploring the best your uni has to offer by finding it
-        below.
-      </p>
+      <div className="flex flex-col gap-4 w-full text-xl">
+        <h1 className="leading-tight w-full">Welcome back!</h1>
+        <p className="w-full">
+          Get started with exploring the best your uni has to offer by finding
+          it below.
+        </p>
+      </div>
     </>
   );
 };
