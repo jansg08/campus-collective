@@ -205,7 +205,7 @@
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
   }
 
-  .university-dropdown:hover::before {
+  .university-dropdown::before {
     content: "";
     position: absolute;
     width: calc(100% + 0.5rem);
@@ -213,8 +213,13 @@
     top: 0;
     left: -0.3rem;
     z-index: -1;
-    background-color: var(--color-background-dim);
+    background-color: rgba(var(--color-rgba-background-dim), 0);
     border-radius: calc(var(--spacing));
+    transition: all var(--default-transition-duration) ease-in-out;
+  }
+
+  .university-dropdown:hover::before {
+    background-color: var(--color-background-dim);
   }
 }
 
