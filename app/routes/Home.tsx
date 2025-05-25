@@ -112,8 +112,8 @@ const WelcomeBack = ({
               className="flex gap-3 text-base"
             >
               <div className="w-max h-10 text-lg">
-                <SelectWithIcon iconSize="large" name="universityId">
-                  <option value={-1} selected disabled>
+                <SelectWithIcon iconSize="large" name="universityId" required>
+                  <option value="" selected disabled>
                     Select University
                   </option>
                   {universities.map((uni) => (
