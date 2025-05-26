@@ -19,6 +19,9 @@ export const profilesTable = pgTable("profiles", {
     .primaryKey()
     .references(() => users.id),
   avatarUrl: varchar("avatar_url"),
-  universityId: integer("university_id").references(() => universitiesTable.id),
+  universityId: integer("university_id").references(
+    () => universitiesTable.id,
+    { onDelete: "cascade" }
+  ),
   isStaff: boolean("is_staff").notNull().default(false),
 });
