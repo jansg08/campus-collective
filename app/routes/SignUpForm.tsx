@@ -14,6 +14,7 @@ import type { Route } from "./+types/SignUpForm";
 
 interface SignUpFormErrors {
   email: string;
+  university: string;
   password: string;
   confirmPassword: string;
   [key: string]: string;
@@ -39,6 +40,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
   const { universities } = loaderData;
   const [clientErrors, setClientErrors] = useState<SignUpFormErrors>({
     email: "",
+    university: "",
     password: "",
     confirmPassword: "",
   });
@@ -66,6 +68,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
           icon={<Mortarboard stroke="#044c3b" />}
           name="university"
           required
+          error={clientErrors.university}
         >
           <option value="" selected disabled>
             Select University
