@@ -16,7 +16,7 @@ const Modal = ({ children, closeModal }: ModalProps) => {
   });
   return (
     <div
-      className="fixed z-30 top-full -translate-y-full w-full p-5 rounded-t-lg bg-secondary-light shadow-above flex flex-col gap-4"
+      className="fixed z-30 top-full sm:top-1/2 -translate-y-full sm:-translate-y-1/2 w-full sm:w-[40rem] p-5 rounded-t-lg sm:rounded-lg bg-secondary-light shadow-above flex flex-col gap-4"
       ref={dropdownRef}
     >
       <SquareButton
