@@ -42,7 +42,7 @@ export const formatError = ({ input, formData }: formatErrorParams) => {
       }
       break;
     default:
-      if (input.validity.valueMissing || input.value == "-1") {
+      if (input.validity.valueMissing) {
         return `${
           input.name[0].toUpperCase() + input.name.slice(1)
         } is required`;
