@@ -7,6 +7,7 @@ interface IconAndErrorProps {
   icon?: React.ReactNode;
   error?: string;
   hoverMsg?: string | React.ReactNode;
+  isSelect?: boolean;
 }
 
 interface ElementWithIconProps extends IconAndErrorProps {
@@ -51,8 +52,13 @@ const ElementWithIcon = ({
   hoverMsg,
   id,
   children,
+  isSelect = false,
 }: ElementWithIconProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const spacingClasses = [
+    ["px-2 h-10", "pr-1 pl-4"], // any nested element except a select 0: with icon 1: without icon
+    ["px-1 h-10", "pr-1 pl-3"], // nested select element 0: with icon 1: without icon
+  ];
   return (
     <div
       className={`w-full flex flex-col items-start ${
@@ -68,7 +74,7 @@ const ElementWithIcon = ({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={`bg-background-light relative rounded-lg w-full shadow-md py-1 ${
-          icon ? "pr-1 pl-4" : "px-2 h-10"
+          spacingClasses[isSelect ? 1 : 0][icon ? 1 : 0]
         } flex justify-end gap-1.5 items-center input-border transition-all has-[select:disabled]:bg-background-dim has-[input:disabled]:bg-background-dim has-[textarea:disabled]:bg-background-dim has-[select:disabled]:text-text-dim has-[input:disabled]:text-text-dim has-[textarea:disabled]:text-text-dim`}
       >
         {children}
@@ -153,9 +159,10 @@ export const SelectWithIcon = ({
     error={error}
     id={id}
     hoverMsg={hoverMsg}
+    isSelect
   >
     <select
-      className="w-full outline-0"
+      className="w-full outline-0 invalid:text-text-dim"
       name={name}
       required={required}
       disabled={disabled}

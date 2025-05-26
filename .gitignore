@@ -7,3 +7,6 @@
 
 # Dotenv
 .env.*
+
+# VS Code workspace settings
+.vscode/

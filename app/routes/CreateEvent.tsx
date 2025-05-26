@@ -163,14 +163,14 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
         <SelectWithIcon
           key="universitySelect"
           icon={<MortarBoard stroke="#044c3b" />}
-          iconSize="large"
           name="university"
           id="universitySelect"
+          required
           onChange={(e) =>
             setIsUniversitySelected(e.target.value !== "-1" ? true : false)
           }
         >
-          <option value={-1} selected={universities.length !== 1} disabled>
+          <option value="" selected={universities.length !== 1} disabled>
             Select University
           </option>
           {universities.map((uni) => (
@@ -185,13 +185,14 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           name="venue"
           disabled={!isUniversitySelected}
           error={clientErrors.venue}
+          required
           hoverMsg={
             isUniversitySelected
               ? ""
               : "Please select the university to get available venues"
           }
         >
-          <option disabled selected={venues.length !== 1} value={-1}>
+          <option disabled selected={venues.length !== 1} value="">
             Select Venue
           </option>
           {venues.map((venue) => (
@@ -205,8 +206,9 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           icon={<User stroke="#044c3b" width={20} height={20} />}
           name="host"
           error={clientErrors.host}
+          required
         >
-          <option disabled selected value={-1}>
+          <option disabled selected value="">
             Select Host
           </option>
           {users.map((user) => (
@@ -258,8 +260,9 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           icon={<Categories stroke="#044c3b" />}
           name="category"
           error={clientErrors.category}
+          required
         >
-          <option disabled selected value={-1}>
+          <option disabled selected value="">
             Select Category
           </option>
           {categories.map((category) => (

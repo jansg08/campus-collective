@@ -1,23 +1,46 @@
 import { useState } from "react";
 import { Form, Link } from "react-router";
-import { InputWithIcon } from "~/components/InputWithIcon";
+import { db } from "src/db";
+import { universitiesTable } from "src/db/schema/universities";
+import { InputWithIcon, SelectWithIcon } from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
 
 import Email from "~/svgs/EmailBig.svg?react";
 import Mortarboard from "~/svgs/MortarboardBig.svg?react";
 import Password from "~/svgs/PasswordBig.svg?react";
+import ConfirmPassword from "~/svgs/ConfirmPasswordBig.svg?react";
 import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
+import type { Route } from "./+types/SignUpForm";
 
 interface SignUpFormErrors {
   email: string;
+  university: string;
   password: string;
   confirmPassword: string;
   [key: string]: string;
 }
 
-const SignUpForm = () => {
+export const loader = async () => {
+  try {
+    const universities = await db
+      .select({
+        id: universitiesTable.id,
+        name: universitiesTable.name,
+      })
+      .from(universitiesTable)
+      .orderBy(universitiesTable.slug);
+
+    return { universities };
+  } catch (err) {
+    return { err };
+  }
+};
+
+const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
+  const { universities } = loaderData;
   const [clientErrors, setClientErrors] = useState<SignUpFormErrors>({
     email: "",
+    university: "",
     password: "",
     confirmPassword: "",
   });
@@ -41,6 +64,28 @@ const SignUpForm = () => {
           required
           error={clientErrors.email}
         />
+        <SelectWithIcon
+          icon={<Mortarboard stroke="#044c3b" />}
+          name="university"
+          required
+          error={clientErrors.university}
+        >
+          <option value="" selected disabled>
+            Select University
+          </option>
+          <option value="" disabled>
+            -----
+          </option>
+          <option value="-1">Not listed</option>
+          <option value="" disabled>
+            -----
+          </option>
+          {universities?.map((uni) => (
+            <option key={uni.id} value={uni.id}>
+              {uni.name}
+            </option>
+          ))}
+        </SelectWithIcon>
         <InputWithIcon
           icon={<Password stroke="#044c3b" />}
           name="password"
@@ -50,7 +95,7 @@ const SignUpForm = () => {
           error={clientErrors.password}
         />
         <InputWithIcon
-          icon={<Password stroke="#4ba590" />}
+          icon={<ConfirmPassword stroke="#044c3b" />}
           name="confirmPassword"
           type="password"
           placeholder="Confirm password"
