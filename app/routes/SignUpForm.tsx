@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Link } from "react-router";
+import { Form, Link, useOutletContext } from "react-router";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
 import { InputWithIcon, SelectWithIcon } from "~/components/InputWithIcon";
@@ -11,6 +11,8 @@ import Password from "~/svgs/PasswordBig.svg?react";
 import ConfirmPassword from "~/svgs/ConfirmPasswordBig.svg?react";
 import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
 import type { Route } from "./+types/SignUpForm";
+import { ErrorMessage, InfoMessage } from "~/components/Message";
+import type { SignUpFormContext } from "./SignUp";
 
 interface SignUpFormErrors {
   email: string;
@@ -44,6 +46,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
     password: "",
     confirmPassword: "",
   });
+  const parentContext = useOutletContext<SignUpFormContext | undefined>();
 
   return (
     <Form
@@ -55,6 +58,26 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
       action="/sign-up"
     >
       <h2 className="font-bold">Sign Up</h2>
+      {parentContext?.serverError &&
+        (parentContext?.serverError?.code === "email_exists" ||
+        parentContext?.serverError?.code === "user_already_exists" ? (
+          <ErrorMessage>
+            {parentContext?.serverError?.message}. You can log in with it{" "}
+            <Link to="/log-in" className="underline">
+              here
+            </Link>
+            .
+          </ErrorMessage>
+        ) : (
+          <ErrorMessage>
+            {parentContext.serverError.message}
+            {parentContext.serverError.code}
+          </ErrorMessage>
+        ))}
+      <InfoMessage>
+        Setting your uni means you'll be taken straight to its events page each
+        time you log in.
+      </InfoMessage>
       <div className="flex flex-col gap-5 w-full">
         <InputWithIcon
           icon={<Email stroke="#044c3b" />}

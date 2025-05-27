@@ -1,4 +1,4 @@
-import { Outlet, redirect } from "react-router";
+import { data, Outlet, redirect } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
 
 import type { Route } from "./+types/SignUp";
@@ -9,6 +9,13 @@ interface MetadataProps {
   university?: number;
 }
 
+export interface SignUpFormContext {
+  serverError?: {
+    code: string;
+    message?: string;
+  };
+}
+
 export const action = async ({ request }: Route.ActionArgs) => {
   const formData = await request.formData();
   const email = String(formData.get("email"));
@@ -17,6 +24,10 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const { supabase, headers } = getSupabaseClient(request);
   const metadata: MetadataProps = {
     is_staff: false,
+  };
+  const serverError = {
+    code: "",
+    message: "",
   };
 
   // !implement data validation here
@@ -35,18 +46,39 @@ export const action = async ({ request }: Route.ActionArgs) => {
   });
 
   if (error) {
-    return { error };
+    if (error?.code) {
+      serverError.code = error.code;
+      switch (error.code) {
+        case "email_exists":
+          serverError.message =
+            "The email you provided is already linked to an account on our platform";
+          break;
+        case "user_already_exists":
+          serverError.message =
+            "The email you provided is already linked to an account on our platform";
+          break;
+        case "signup_disabled":
+          serverError.message =
+            "Sign ups are temporarily disabled. Please try again later.";
+          break;
+        default:
+          serverError.message = error.message;
+          break;
+      }
+    }
+    return data({ serverError }, { headers });
   }
 
   return redirect(`/sign-up/confirm?email=${email}`, { headers });
 };
 
 const SignUp = ({ actionData }: Route.ComponentProps) => {
-  console.log(actionData);
   return (
     <PaddedContainer padding="thick" fullPage>
       <section className="w-full -translate-y-1/24">
-        <Outlet />
+        <Outlet
+          context={actionData && { serverError: actionData?.serverError }}
+        />
       </section>
     </PaddedContainer>
   );
