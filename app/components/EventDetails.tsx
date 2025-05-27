@@ -47,17 +47,16 @@ const EventDetails = ({
   venueLinked = false,
   university = "",
 }: EventDetailsProps) => {
+  const lineClasses = `w-full flex gap-1.5 items-center ${
+    variant === "small" && "text-sm"
+  }`;
   return (
     <div
       className={`w-full flex flex-col ${
         variant === "normal" ? "gap-4" : "gap-2"
       }`}
     >
-      <p
-        className={`w-full flex gap-1.5 items-center ${
-          variant === "small" && "text-sm"
-        }`}
-      >
+      <p className={lineClasses}>
         {variant === "normal" ? (
           <Calendar stroke="#044c3b" />
         ) : (
@@ -65,11 +64,7 @@ const EventDetails = ({
         )}
         {format(startTime, "iiii do MMMM y")}
       </p>
-      <p
-        className={`w-full flex gap-1.5 items-center ${
-          variant === "small" && "text-sm"
-        }`}
-      >
+      <p className={lineClasses}>
         {variant === "normal" ? (
           <Clock stroke="#044c3b" />
         ) : (
@@ -77,11 +72,7 @@ const EventDetails = ({
         )}
         {`${format(startTime, "HH:mm")}-${format(endTime, "HH:mm")}`}
       </p>
-      <p
-        className={`w-full flex gap-1.5 items-center ${
-          variant === "small" && "text-sm"
-        }`}
-      >
+      <p className={lineClasses}>
         {variant === "normal" ? (
           <MapPin stroke="#044c3b" />
         ) : (
