@@ -25,8 +25,8 @@ const EventCard = ({
   id,
 }: EventCardProps) => {
   return (
-    <Link to={`/${uniSlug}/events/${id}`}>
-      <div className="w-full rounded-lg shadow-lg">
+    <Link to={`/${uniSlug}/events/${id}`} className="h-full">
+      <div className="w-full flex flex-col rounded-lg shadow-lg h-full">
         <div
           style={{ backgroundImage: `url(${photoUrl})` }}
           className="aspect-video flex justify-between gap-4 items-start py-4 pr-4 rounded-t-lg bg-cover bg-center"
@@ -40,7 +40,7 @@ const EventCard = ({
             {formatPrice(price)}
           </span>
         </div>
-        <div className="p-4 bg-secondary-light flex flex-col gap-2 rounded-b-lg">
+        <div className="h-full p-4 bg-secondary-light flex flex-col justify-between gap-2 rounded-b-lg">
           <EventDetails
             variant="small"
             startTime={startTime}
