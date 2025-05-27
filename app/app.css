@@ -233,6 +233,7 @@
   --color-background-light: #fffdf4;
   --color-background-dim: #e9e6dc;
   --color-primary: #f56960;
+  --color-primary-light: #ffd7d5;
   --color-secondary: #d8d4f9;
   --color-secondary-light: #f1f0ff;
   --color-accent: #1da8ff;
@@ -244,6 +245,7 @@
   --color-rgba-background-light: 255, 253, 244;
   --color-rgba-background-dim: 233, 230, 220;
   --color-rgba-primary: 245, 105, 96;
+  --color-rgba-primary-light: 255, 215, 213;
   --color-rgba-secondary: 216, 212, 249;
   --color-rgba-secondary-light: 241, 240, 255;
   --color-rgba-accent: 29, 168, 255;
