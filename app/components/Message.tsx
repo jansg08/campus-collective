@@ -30,7 +30,7 @@ const Message = ({
     >
       <div className="px-2">{icon}</div>
       <div
-        className={`${secondaryBackgroundColour} ${textColour} rounded-md p-2 w-full text-sm leading-normal`}
+        className={`${secondaryBackgroundColour} ${textColour} rounded-md py-2 px-3 w-full text-sm leading-normal`}
       >
         {children}
       </div>
