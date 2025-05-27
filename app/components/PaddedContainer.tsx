@@ -25,7 +25,9 @@ const PaddedContainer = ({
     >
       <div
         className={`${
-          padding === "normal" ? "w-[min(100%,80rem)]" : "w-[min(100%,30rem)]"
+          padding === "normal"
+            ? "w-full sm:w-[min(calc(4*100%/5+8rem),80rem)]"
+            : "w-[min(100%,30rem)]"
         } ${padding === "none" || (padding === "normal" ? "p-5" : "p-10")} ${
           fullPage ? "h-[calc(100vh_-_5rem)]" : ""
         } relative flex flex-col items-center justify-center box-border ${flexGap} ${extraClasses}}`}

@@ -312,7 +312,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
             uniSlug: universities[selectedUni].slug,
           };
           return (
-            <li key={id}>
+            <li key={id} className="h-full">
               <EventCard {...props} />
             </li>
           );

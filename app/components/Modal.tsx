@@ -15,21 +15,23 @@ const Modal = ({ children, closeModal }: ModalProps) => {
     handler: closeModal,
   });
   return (
-    <div
-      className="fixed z-30 top-full -translate-y-full w-full p-5 rounded-t-lg bg-secondary-light shadow-above flex flex-col gap-4"
-      ref={dropdownRef}
-    >
-      <SquareButton
-        colour="primary"
-        position="absolute"
-        size="small"
-        top="top-5"
-        right="right-5"
-        onClick={closeModal}
+    <div className="h-screen w-screen max-w-full fixed top-0 left-0 z-600 flex items-end xs:items-center justify-center bg-[rgba(0,0,0,0.5)]">
+      <div
+        className="w-full box-border relative xs:w-[26rem] p-5 rounded-t-lg xs:rounded-lg bg-secondary-light flex flex-col gap-4"
+        ref={dropdownRef}
       >
-        <X stroke="#f7f4e9" />
-      </SquareButton>
-      {children}
+        <SquareButton
+          colour="primary"
+          position="absolute"
+          size="small"
+          top="top-5"
+          right="right-5"
+          onClick={closeModal}
+        >
+          <X stroke="#f7f4e9" />
+        </SquareButton>
+        {children}
+      </div>
     </div>
   );
 };
