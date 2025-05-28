@@ -3,6 +3,7 @@ import PaddedContainer from "~/components/PaddedContainer";
 
 import type { Route } from "./+types/SignUp";
 import { getSupabaseClient } from "~/auth/supabase.server";
+import type { ServerErrorProps } from "~/utils/types";
 
 interface MetadataProps {
   is_staff: boolean;
@@ -10,10 +11,7 @@ interface MetadataProps {
 }
 
 export interface SignUpFormContext {
-  serverError?: {
-    code: string;
-    message?: string;
-  };
+  serverError?: ServerErrorProps;
 }
 
 export const action = async ({ request }: Route.ActionArgs) => {
@@ -25,7 +23,7 @@ export const action = async ({ request }: Route.ActionArgs) => {
   const metadata: MetadataProps = {
     is_staff: false,
   };
-  const serverError = {
+  const serverError: ServerErrorProps = {
     code: "",
     message: "",
   };
@@ -51,15 +49,23 @@ export const action = async ({ request }: Route.ActionArgs) => {
       switch (error.code) {
         case "email_exists":
           serverError.message =
-            "The email you provided is already linked to an account on our platform";
+            "The email you provided is already linked to an account on our platform.";
           break;
         case "user_already_exists":
           serverError.message =
-            "The email you provided is already linked to an account on our platform";
+            "The email you provided is already linked to an account on our platform.";
           break;
         case "signup_disabled":
           serverError.message =
             "Sign ups are temporarily disabled. Please try again later.";
+          break;
+        case "request_timeout":
+          serverError.message =
+            "We were unable to reach our authentication service. Please try again later.";
+          break;
+        case "unexpected_failure":
+          serverError.message =
+            "An unexpected error occurred while logging you in. Please try again later.";
           break;
         default:
           serverError.message = error.message;
