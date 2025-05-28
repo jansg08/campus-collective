@@ -69,14 +69,11 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
             .
           </ErrorMessage>
         ) : (
-          <ErrorMessage>
-            {parentContext.serverError.message}
-            {parentContext.serverError.code}
-          </ErrorMessage>
+          <ErrorMessage>{parentContext.serverError.message}</ErrorMessage>
         ))}
       <InfoMessage>
-        Setting your uni means you'll be taken straight to its events page each
-        time you log in.
+        Setting your university means you'll be taken straight to its events
+        page each time you log in.
       </InfoMessage>
       <div className="flex flex-col gap-5 w-full">
         <InputWithIcon
