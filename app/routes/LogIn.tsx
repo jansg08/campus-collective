@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { data, Form, Link, redirect } from "react-router";
+import { data, Form, Link, redirect, useNavigation } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
 import { InputWithIcon } from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
@@ -14,6 +14,8 @@ import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
 import { ErrorMessage } from "~/components/Message";
 import type { ServerErrorProps } from "~/utils/types";
+import { Mirage } from "ldrs/react";
+import "ldrs/react/Mirage.css";
 
 interface LogInFormErrors {
   email: string;
@@ -95,6 +97,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
     email: "",
     password: "",
   });
+  let navigation = useNavigation();
   let errorMsg: React.ReactNode | null;
   if (actionData?.serverError) {
     const { code, message, data } = actionData.serverError;
@@ -112,6 +115,8 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
           .
         </ErrorMessage>
       );
+    } else {
+      errorMsg = <ErrorMessage>{message}</ErrorMessage>;
     }
   }
   return (
@@ -131,21 +136,31 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
             <InputWithIcon
               icon={<Email stroke="#044c3b" />}
               name="email"
+              id="emailInput"
               type="email"
               placeholder="Email address"
               required
               error={clientErrors.email}
+              disabled={navigation.state !== "idle"}
             />
             <InputWithIcon
               icon={<Password stroke="#044c3b" />}
               name="password"
+              id="passwordInput"
               type="password"
               placeholder="Password"
               required
               error={clientErrors.password}
+              disabled={navigation.state !== "idle"}
             />
           </div>
-          <WideButton type="submit">Log In</WideButton>
+          <WideButton type="submit">
+            {navigation.state === "idle" ? (
+              "Log In"
+            ) : (
+              <Mirage size="70" color="#f7f4e9" />
+            )}
+          </WideButton>
           <p className="text-sm">
             Don't have an account?{" "}
             <Link className="underline" to="/sign-up">
