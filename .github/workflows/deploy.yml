@@ -46,8 +46,8 @@ jobs:
               -o UserKnownHostsFile=/dev/null \
               -o ProxyCommand="cloudflared access ssh --hostname ${{ secrets.SERVER_SSH_HOST }} --service-token-id ${{ secrets.CF_ACCESS_CLIENT_ID }} --service-token-secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }}" \
               ${{ secrets.SERVER_SSH_USER }}@${{ secrets.SERVER_SSH_HOST }} << 'EOF'
-            docker pull ghcr.io/${{ github.repository_owner }}/campus-collective:latest
-            docker stop campus-collective || true
-            docker rm campus-collective || true
-            docker run -d --name campus-collective -p 3000:3000 ghcr.io/${{ github.repository_owner }}/campus-collective:latest
+            sudo docker pull ghcr.io/${{ github.repository_owner }}/campus-collective:latest
+            sudo docker stop campus-collective || true
+            sudo docker rm campus-collective || true
+            sudo docker run -d --name campus-collective -p 3000:3000 ghcr.io/${{ github.repository_owner }}/campus-collective:latest
           EOF
