@@ -120,56 +120,68 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
     }
   }
   return (
-    <PaddedContainer padding="thick" fullPage>
-      <section className="w-full -translate-y-1/4">
-        <Form
-          onSubmit={handleFormSubmit<LogInFormErrors>(setClientErrors)}
-          onInvalid={handleInvalid}
-          className="flex flex-col gap-8 items-center"
-          noValidate
-          method="post"
-          action="/log-in"
-        >
-          <h2 className="font-bold">Log In</h2>
-          {errorMsg}
-          <div className="flex flex-col gap-5 w-full">
-            <InputWithIcon
-              icon={<Email stroke="#044c3b" />}
-              name="email"
-              id="emailInput"
-              type="email"
-              placeholder="Email address"
-              required
-              error={clientErrors.email}
-              disabled={navigation.state !== "idle"}
-            />
-            <InputWithIcon
-              icon={<Password stroke="#044c3b" />}
-              name="password"
-              id="passwordInput"
-              type="password"
-              placeholder="Password"
-              required
-              error={clientErrors.password}
-              disabled={navigation.state !== "idle"}
-            />
-          </div>
-          <WideButton type="submit">
-            {navigation.state === "idle" ? (
-              "Log In"
-            ) : (
-              <Mirage size="70" color="#f7f4e9" />
-            )}
-          </WideButton>
-          <p className="text-sm">
-            Don't have an account?{" "}
-            <Link className="underline" to="/sign-up">
-              Sign up here
-            </Link>
-          </p>
-        </Form>
-      </section>
-    </PaddedContainer>
+    <>
+      <title>Log In | Campus Collective</title>
+      <meta property="og:title" content="Log In | Campus Collective" />
+      <meta
+        name="description"
+        content="Log in to your Campus Collective account here"
+      />
+      <meta
+        property="og:description"
+        content="Log in to your Campus Collective account here"
+      />
+      <PaddedContainer padding="thick" fullPage>
+        <section className="w-full -translate-y-1/4">
+          <Form
+            onSubmit={handleFormSubmit<LogInFormErrors>(setClientErrors)}
+            onInvalid={handleInvalid}
+            className="flex flex-col gap-8 items-center"
+            noValidate
+            method="post"
+            action="/log-in"
+          >
+            <h2 className="font-bold">Log In</h2>
+            {errorMsg}
+            <div className="flex flex-col gap-5 w-full">
+              <InputWithIcon
+                icon={<Email stroke="#044c3b" />}
+                name="email"
+                id="emailInput"
+                type="email"
+                placeholder="Email address"
+                required
+                error={clientErrors.email}
+                disabled={navigation.state !== "idle"}
+              />
+              <InputWithIcon
+                icon={<Password stroke="#044c3b" />}
+                name="password"
+                id="passwordInput"
+                type="password"
+                placeholder="Password"
+                required
+                error={clientErrors.password}
+                disabled={navigation.state !== "idle"}
+              />
+            </div>
+            <WideButton type="submit">
+              {navigation.state === "idle" ? (
+                "Log In"
+              ) : (
+                <Mirage size="70" color="#f7f4e9" />
+              )}
+            </WideButton>
+            <p className="text-sm">
+              Don't have an account?{" "}
+              <Link className="underline" to="/sign-up">
+                Sign up here
+              </Link>
+            </p>
+          </Form>
+        </section>
+      </PaddedContainer>
+    </>
   );
 };
 
