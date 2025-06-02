@@ -1,6 +1,6 @@
 import { getSupabaseClient } from "~/auth/supabase.server";
-import type { Route } from "../routes/+types/LogOut";
 import { redirect } from "react-router";
+import type { Route } from "./+types/logOut";
 
 export const action = async ({ request }: Route.ActionArgs) => {
   const { supabase, headers } = getSupabaseClient(request);
