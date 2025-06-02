@@ -41,14 +41,12 @@ jobs:
         uses: AnimMouse/setup-cloudflared@v2
 
       - name: Deploy to server via Cloudflare Access SSH
-        env:
-          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
-          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
-          CF_ACCESS_AUDIENCE: ${{ secrets.CF_ACCESS_AUDIENCE }}
         run: |
-          ssh -o ProxyCommand="cloudflared access ssh --hostname ${{ secrets.SERVER_SSH_HOST }}" ${{ secrets.SERVER_SSH_USER }}@${{ secrets.SERVER_SSH_HOST }} << 'EOF'
-            docker pull ghcr.io/${{ github.repository_owner }}/campus-collective:latest
-            docker stop campus-collective || true
-            docker rm campus-collective || true
-            docker run -d --name campus-collective -p 3000:3000 ghcr.io/${{ github.repository_owner }}/campus-collective:latest
-          EOF
+          cloudflared access ssh \
+            --hostname ${{ secrets.SERVER_SSH_HOST }} \
+            --id ${{ secrets.CF_ACCESS_CLIENT_ID }} \
+            --secret ${{ secrets.CF_ACCESS_CLIENT_SECRET }} \
+            --command "docker pull ghcr.io/${{ github.repository_owner }}/campus-collective:latest && \
+                      docker stop campus-collective || true && \
+                      docker rm campus-collective || true && \
+                      docker run -d --name campus-collective -p 3000:3000 ghcr.io/${{ github.repository_owner }}/campus-collective:latest"
