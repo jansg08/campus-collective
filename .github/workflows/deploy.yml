@@ -37,6 +37,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Setup cloudflared
+        uses: AnimMouse/setup-cloudflared@v2
+
       - name: Deploy to server via Cloudflare Access SSH
         env:
           CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
