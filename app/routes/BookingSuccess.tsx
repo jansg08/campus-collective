@@ -10,8 +10,6 @@ import { db } from "src/db";
 import { and, eq } from "drizzle-orm";
 import { generateIcsFile } from "~/utils/generateIcsFile";
 
-interface BookingSuccessProps {}
-
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const eventId = Number(params.eventId);
   const { universitySlug } = params;
@@ -48,6 +46,7 @@ const BookingSuccess = ({ loaderData }: Route.ComponentProps) => {
 
   return (
     <>
+      <title>{`Booking Confirmed | ${event.title}`}</title>
       <h3>Booking Confirmed!</h3>
       <p className="text-sm">
         It's official - you're going to <b>{event.title}</b> on{" "}
