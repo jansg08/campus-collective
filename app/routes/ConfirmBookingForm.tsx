@@ -63,6 +63,7 @@ const ConfirmBookingForm = ({ actionData }: Route.ComponentProps) => {
   const { event } = useOutletContext<EventOutletContext>();
   return (
     <>
+      <title>{`Confirm Booking | ${event.title}`}</title>
       <h3>Confirm Booking</h3>
       <div className="leading-normal text-sm flex flex-col gap-2">
         <h6 className="font-bold">What?</h6>
