@@ -29,26 +29,29 @@ const ConfirmEmail = ({ actionData }: Route.ComponentProps) => {
   const [email] = useState(() => searchParams.get("email") ?? "");
 
   return (
-    <Form
-      method="post"
-      action={`/sign-up/confirm?email=${email}`}
-      className="flex flex-col gap-8 items-center"
-    >
-      <h2 className="font-bold">Confirm Email</h2>
-      <div className="flex flex-col gap-5 w-full text-center">
-        <p>Thank you for joining Campus Collective! </p>
-        <p>
-          To confirm your account please check your inbox for a confirmation
-          email and follow the steps from there.
-        </p>
-        <p>
-          The email is valid for 5 minutes. After that you will need to request
-          another one using the button below.
-        </p>
-      </div>
-      <input name="email" value={email} className="hidden" />
-      <WideButton type="submit">Resend Confirmation</WideButton>
-    </Form>
+    <>
+      <title>Confirm Email | Campus Collective</title>
+      <Form
+        method="post"
+        action={`/sign-up/confirm?email=${email}`}
+        className="flex flex-col gap-8 items-center"
+      >
+        <h2 className="font-bold">Confirm Email</h2>
+        <div className="flex flex-col gap-5 w-full text-center">
+          <p>Thank you for joining Campus Collective! </p>
+          <p>
+            To confirm your account please check your inbox for a confirmation
+            email and follow the steps from there.
+          </p>
+          <p>
+            The email is valid for 5 minutes. After that you will need to
+            request another one using the button below.
+          </p>
+        </div>
+        <input name="email" value={email} className="hidden" />
+        <WideButton type="submit">Resend Confirmation</WideButton>
+      </Form>
+    </>
   );
 };
 
