@@ -8,7 +8,7 @@ import {
 export default [
   index("routes/Home.tsx"),
   route("log-in", "routes/LogIn.tsx"),
-  route("log-out", "routes/LogOut.tsx"),
+  route("log-out", "resources/logOut.ts"),
   route("sign-up", "routes/SignUp.tsx", [
     index("routes/SignUpForm.tsx"),
     route("confirm", "routes/ConfirmEmail.tsx"),

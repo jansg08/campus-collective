@@ -1,5 +1,5 @@
 import { getSupabaseClient } from "~/auth/supabase.server";
-import type { Route } from "./+types/LogOut";
+import type { Route } from "../routes/+types/LogOut";
 import { redirect } from "react-router";
 
 export const action = async ({ request }: Route.ActionArgs) => {
