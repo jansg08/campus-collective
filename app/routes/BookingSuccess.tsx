@@ -9,6 +9,7 @@ import { bookingsTable } from "src/db/schema/bookings";
 import { db } from "src/db";
 import { and, eq } from "drizzle-orm";
 import { generateIcsFile } from "~/utils/generateIcsFile";
+import { InfoMessage } from "~/components/Message";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const eventId = Number(params.eventId);
@@ -67,10 +68,12 @@ const BookingSuccess = ({ loaderData }: Route.ComponentProps) => {
         <PlusCircle stroke="#044c3b" className="mr-1" />
         Add to Calendar
       </WideButton>
-      <p className="text-sm">
-        If you don't want to add it right away, you can always find events your
-        signed up for under 'My Events' in the top menu
-      </p>
+      <InfoMessage layoutClasses="mt-2">
+        <p className="text-sm">
+          If you don't want to add it right away, you can always find events
+          your signed up for under 'My Events' in the top menu.
+        </p>
+      </InfoMessage>
     </>
   );
 };
