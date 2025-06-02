@@ -144,8 +144,11 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
   }, [mapExpanded]);
   return (
     <>
-      <title>{event.title}</title>
-      <meta property="og:title" content={event.title} />
+      <title>{`${event.title} | ${university.name}`}</title>
+      <meta
+        property="og:title"
+        content={`${event.title} | ${university.name}`}
+      />
       <meta
         name="description"
         content={event.description?.match(/^.*?\./g)?.join("")}
