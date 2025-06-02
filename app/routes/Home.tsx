@@ -10,19 +10,6 @@ import { SelectWithIcon } from "~/components/InputWithIcon";
 import { Squircle } from "ldrs/react";
 import "ldrs/react/Squircle.css";
 
-export function meta() {
-  return [
-    {
-      title: "Campus Collective: Your Student Event Platform",
-    },
-    {
-      name: "description",
-      content:
-        "A place for students to showcase their talent or support others. Explore all the events your uni has to offer.",
-    },
-  ];
-}
-
 export async function loader({ request }: Route.LoaderArgs) {
   const { supabase, headers } = getSupabaseClient(request);
   const userPromise = supabase.auth.getUser();
@@ -55,30 +42,43 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 const NewUser = () => {
   return (
-    <div className="flex flex-col w-full blur-right">
-      <div className="w-full relative flex flex-col items-start gap-4">
-        <h1 className="w-60 leading-tight">Welcome to Campus Collective.</h1>
-        <MortarBoard className="absolute right-0 top-1/5 -z-10 w-31/45 -translate-y-1/3" />
-        <h3 className="text-text-dim w-72">
-          The event platform that's <i>for students, by students.</i>
-        </h3>
-        <p className="text-xl max-w-90">
-          Celebrate and support the best entertainment your campus has to offer
-          by getting started below.
+    <>
+      <title>Home | Campus Collective</title>
+      <meta property="og:title" content="Home | Campus Collective" />
+      <meta
+        name="description"
+        content="Campus Collective: A place for students to showcase their talent or support others. Explore all the events your uni has to offer."
+      />
+      <meta
+        property="og:description"
+        content="Campus Collective: A place for students to showcase their talent or support others. Explore all the events your uni has to offer."
+      />
+      <div className="flex flex-col w-full blur-right">
+        <div className="w-full relative flex flex-col items-start gap-4">
+          <h1 className="w-60 leading-tight">Welcome to Campus Collective.</h1>
+          <MortarBoard className="absolute right-0 top-1/5 -z-10 w-31/45 -translate-y-1/3" />
+          <h3 className="text-text-dim w-72">
+            The event platform that's <i>for students, by students.</i>
+          </h3>
+          <p className="text-xl max-w-90">
+            Celebrate and support the best entertainment your campus has to
+            offer by getting started below.
+          </p>
+        </div>
+        <div className="flex flex-col xs:flex-row gap-4 w-[min(40rem,100%)] py-9">
+          <Link to="/log-in" className="w-full">
+            <WideButton>Log In</WideButton>
+          </Link>
+          <Link to="/sign-up" className="w-full">
+            <WideButton colour="secondary">Sign Up</WideButton>
+          </Link>
+        </div>
+        <p className="w-full text-xl">
+          <b>Just want to browse?</b> Find your university below to see what's
+          on.
         </p>
       </div>
-      <div className="flex flex-col xs:flex-row gap-4 w-[min(40rem,100%)] py-9">
-        <Link to="/log-in" className="w-full">
-          <WideButton>Log In</WideButton>
-        </Link>
-        <Link to="/sign-up" className="w-full">
-          <WideButton colour="secondary">Sign Up</WideButton>
-        </Link>
-      </div>
-      <p className="w-full text-xl">
-        <b>Just want to browse?</b> Find your university below to see what's on.
-      </p>
-    </div>
+    </>
   );
 };
 

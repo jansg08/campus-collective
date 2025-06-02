@@ -49,88 +49,100 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
   const parentContext = useOutletContext<SignUpFormContext | undefined>();
 
   return (
-    <Form
-      onSubmit={handleFormSubmit<SignUpFormErrors>(setClientErrors)}
-      onInvalid={handleInvalid}
-      className="flex flex-col gap-8 items-center"
-      noValidate
-      method="post"
-      action="/sign-up"
-    >
-      <h2 className="font-bold">Sign Up</h2>
-      {parentContext?.serverError &&
-        (parentContext?.serverError?.code === "email_exists" ||
-        parentContext?.serverError?.code === "user_already_exists" ? (
-          <ErrorMessage>
-            {parentContext?.serverError?.message}. You can log in with it{" "}
-            <Link to="/log-in" className="underline">
-              here
-            </Link>
-            .
-          </ErrorMessage>
-        ) : (
-          <ErrorMessage>{parentContext.serverError.message}</ErrorMessage>
-        ))}
-      <InfoMessage>
-        Setting your university means you'll be taken straight to its events
-        page each time you log in.
-      </InfoMessage>
-      <div className="flex flex-col gap-5 w-full">
-        <InputWithIcon
-          icon={<Email stroke="#044c3b" />}
-          name="email"
-          type="email"
-          placeholder="Email address"
-          required
-          error={clientErrors.email}
-        />
-        <SelectWithIcon
-          icon={<Mortarboard stroke="#044c3b" />}
-          name="university"
-          required
-          error={clientErrors.university}
-        >
-          <option value="" selected disabled>
-            Select University
-          </option>
-          <option value="" disabled>
-            -----
-          </option>
-          <option value="-1">Not listed</option>
-          <option value="" disabled>
-            -----
-          </option>
-          {universities?.map((uni) => (
-            <option key={uni.id} value={uni.id}>
-              {uni.name}
-            </option>
+    <>
+      <title>Sign Up | Campus Collective</title>
+      <meta property="og:title" content="Sign Up | Campus Collective" />
+      <meta
+        name="description"
+        content="Sign up for a Campus Collective account now"
+      />
+      <meta
+        property="og:description"
+        content="Sign up for a Campus Collective account now"
+      />
+      <Form
+        onSubmit={handleFormSubmit<SignUpFormErrors>(setClientErrors)}
+        onInvalid={handleInvalid}
+        className="flex flex-col gap-8 items-center"
+        noValidate
+        method="post"
+        action="/sign-up"
+      >
+        <h2 className="font-bold">Sign Up</h2>
+        {parentContext?.serverError &&
+          (parentContext?.serverError?.code === "email_exists" ||
+          parentContext?.serverError?.code === "user_already_exists" ? (
+            <ErrorMessage>
+              {parentContext?.serverError?.message}. You can log in with it{" "}
+              <Link to="/log-in" className="underline">
+                here
+              </Link>
+              .
+            </ErrorMessage>
+          ) : (
+            <ErrorMessage>{parentContext.serverError.message}</ErrorMessage>
           ))}
-        </SelectWithIcon>
-        <InputWithIcon
-          icon={<Password stroke="#044c3b" />}
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          error={clientErrors.password}
-        />
-        <InputWithIcon
-          icon={<ConfirmPassword stroke="#044c3b" />}
-          name="confirmPassword"
-          type="password"
-          placeholder="Confirm password"
-          required
-          error={clientErrors.confirmPassword}
-        />
-      </div>
-      <WideButton type="submit">Sign Up</WideButton>
-      <p className="text-sm">
-        Already have an account?{" "}
-        <Link className="underline" to="/log-in">
-          Log in here
-        </Link>
-      </p>
-    </Form>
+        <InfoMessage>
+          Setting your university means you'll be taken straight to its events
+          page each time you log in.
+        </InfoMessage>
+        <div className="flex flex-col gap-5 w-full">
+          <InputWithIcon
+            icon={<Email stroke="#044c3b" />}
+            name="email"
+            type="email"
+            placeholder="Email address"
+            required
+            error={clientErrors.email}
+          />
+          <SelectWithIcon
+            icon={<Mortarboard stroke="#044c3b" />}
+            name="university"
+            required
+            error={clientErrors.university}
+          >
+            <option value="" selected disabled>
+              Select University
+            </option>
+            <option value="" disabled>
+              -----
+            </option>
+            <option value="-1">Not listed</option>
+            <option value="" disabled>
+              -----
+            </option>
+            {universities?.map((uni) => (
+              <option key={uni.id} value={uni.id}>
+                {uni.name}
+              </option>
+            ))}
+          </SelectWithIcon>
+          <InputWithIcon
+            icon={<Password stroke="#044c3b" />}
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            error={clientErrors.password}
+          />
+          <InputWithIcon
+            icon={<ConfirmPassword stroke="#044c3b" />}
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm password"
+            required
+            error={clientErrors.confirmPassword}
+          />
+        </div>
+        <WideButton type="submit">Sign Up</WideButton>
+        <p className="text-sm">
+          Already have an account?{" "}
+          <Link className="underline" to="/log-in">
+            Log in here
+          </Link>
+        </p>
+      </Form>
+    </>
   );
 };
 

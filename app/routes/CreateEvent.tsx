@@ -151,78 +151,80 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
     ticketPrice: "",
   });
   return (
-    <PaddedContainer>
-      <Form
-        method="post"
-        className="flex flex-col gap-5 items-center"
-        onSubmit={handleFormSubmit<CreateEventFormErrors>(setClientErrors)}
-        onInvalid={handleInvalid}
-        noValidate
-      >
-        <h2 className="font-bold">Create an Event</h2>
-        <SelectWithIcon
-          key="universitySelect"
-          icon={<MortarBoard stroke="#044c3b" />}
-          name="university"
-          id="universitySelect"
-          required
-          onChange={(e) =>
-            setIsUniversitySelected(e.target.value !== "-1" ? true : false)
-          }
+    <>
+      <title>Create an Event | Campus Collective</title>
+      <PaddedContainer>
+        <Form
+          method="post"
+          className="flex flex-col gap-5 items-center"
+          onSubmit={handleFormSubmit<CreateEventFormErrors>(setClientErrors)}
+          onInvalid={handleInvalid}
+          noValidate
         >
-          <option value="" selected={universities.length !== 1} disabled>
-            Select University
-          </option>
-          {universities.map((uni) => (
-            <option value={uni.id} key={uni.id}>
-              {uni.name}
+          <h2 className="font-bold">Create an Event</h2>
+          <SelectWithIcon
+            key="universitySelect"
+            icon={<MortarBoard stroke="#044c3b" />}
+            name="university"
+            id="universitySelect"
+            required
+            onChange={(e) =>
+              setIsUniversitySelected(e.target.value !== "-1" ? true : false)
+            }
+          >
+            <option value="" selected={universities.length !== 1} disabled>
+              Select University
             </option>
-          ))}
-        </SelectWithIcon>
-        <SelectWithIcon
-          key="venueSelect"
-          icon={<MapPin stroke="#044c3b" />}
-          name="venue"
-          disabled={!isUniversitySelected}
-          error={clientErrors.venue}
-          required
-          hoverMsg={
-            isUniversitySelected
-              ? ""
-              : "Please select the university to get available venues"
-          }
-        >
-          <option disabled selected={venues.length !== 1} value="">
-            Select Venue
-          </option>
-          {venues.map((venue) => (
-            <option value={venue.id} key={venue.id}>
-              {venue.name}
+            {universities.map((uni) => (
+              <option value={uni.id} key={uni.id}>
+                {uni.name}
+              </option>
+            ))}
+          </SelectWithIcon>
+          <SelectWithIcon
+            key="venueSelect"
+            icon={<MapPin stroke="#044c3b" />}
+            name="venue"
+            disabled={!isUniversitySelected}
+            error={clientErrors.venue}
+            required
+            hoverMsg={
+              isUniversitySelected
+                ? ""
+                : "Please select the university to get available venues"
+            }
+          >
+            <option disabled selected={venues.length !== 1} value="">
+              Select Venue
             </option>
-          ))}
-        </SelectWithIcon>
-        <SelectWithIcon
-          key="hostSelect"
-          icon={<User stroke="#044c3b" width={20} height={20} />}
-          name="host"
-          error={clientErrors.host}
-          required
-        >
-          <option disabled selected value="">
-            Select Host
-          </option>
-          {users.map((user) => (
-            <option value={user.id} key={user.id}>
-              {user.email}
+            {venues.map((venue) => (
+              <option value={venue.id} key={venue.id}>
+                {venue.name}
+              </option>
+            ))}
+          </SelectWithIcon>
+          <SelectWithIcon
+            key="hostSelect"
+            icon={<User stroke="#044c3b" width={20} height={20} />}
+            name="host"
+            error={clientErrors.host}
+            required
+          >
+            <option disabled selected value="">
+              Select Host
             </option>
-          ))}
-        </SelectWithIcon>
-        {/* Cover Image File Upload
+            {users.map((user) => (
+              <option value={user.id} key={user.id}>
+                {user.email}
+              </option>
+            ))}
+          </SelectWithIcon>
+          {/* Cover Image File Upload
           <label
           htmlFor="photoUpload"
-        className="cursor-pointer flex items-center justify-center flex-col gap-4 bg-background-light w-full h-40 rounded-lg shadow-lg"
-        >
-        <div className="rounded-md bg-secondary p-1.5">
+          className="cursor-pointer flex items-center justify-center flex-col gap-4 bg-background-light w-full h-40 rounded-lg shadow-lg"
+          >
+          <div className="rounded-md bg-secondary p-1.5">
           <Camera stroke="#044c3b" />
           </div>
           <span className="text-wrap">
@@ -231,103 +233,104 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           </label>
           <input
           type="file"
-        name="coverPhoto"
-        id="photoUpload"
-        className="hidden"
-        onChange={(e) =>
+          name="coverPhoto"
+          id="photoUpload"
+          className="hidden"
+          onChange={(e) =>
           setPhotoName(e.target.value.match(/(?<=C:\\fakepath\\).+/gi)?.join() || "")
           }
           /> */}
-        <InputWithIcon
-          icon={<Title stroke="#044c3b" />}
-          name="title"
-          id="titleInput"
-          placeholder="Title"
-          required
-          error={clientErrors.title}
-        />
-        <TextareaWithIcon
-          icon={<Description stroke="#044c3b" />}
-          name="description"
-          id="descriptionTextarea"
-          placeholder="Description"
-          cannotResize
-          rows={3}
-          error={clientErrors.description}
-        />
-        <SelectWithIcon
-          key="categorySelect"
-          icon={<Categories stroke="#044c3b" />}
-          name="category"
-          error={clientErrors.category}
-          required
-        >
-          <option disabled selected value="">
-            Select Category
-          </option>
-          {categories.map((category) => (
-            <option value={category.id} key={category.id}>
-              {category.name}
+          <InputWithIcon
+            icon={<Title stroke="#044c3b" />}
+            name="title"
+            id="titleInput"
+            placeholder="Title"
+            required
+            error={clientErrors.title}
+          />
+          <TextareaWithIcon
+            icon={<Description stroke="#044c3b" />}
+            name="description"
+            id="descriptionTextarea"
+            placeholder="Description"
+            cannotResize
+            rows={3}
+            error={clientErrors.description}
+          />
+          <SelectWithIcon
+            key="categorySelect"
+            icon={<Categories stroke="#044c3b" />}
+            name="category"
+            error={clientErrors.category}
+            required
+          >
+            <option disabled selected value="">
+              Select Category
             </option>
-          ))}
-        </SelectWithIcon>
-        <DatePickerWithIcon
-          icon={<DateFrom stroke="#044c3b" />}
-          selected={startDate}
-          onChange={(date: Date) => setStartDate(date)}
-          placeholderText="Start date and time"
-          minDate={new Date()}
-          showTimeSelect
-          dateFormat="iiii do MMMM y @ hh:mm aa"
-          timeIntervals={5}
-          required
-          isClearable
-          id="startDatePicker"
-          name="start_date"
-          error={clientErrors.start_date}
-        />
-        <input
-          name="startDate"
-          type="hidden"
-          required
-          value={startDate ? startDate.toISOString() : ""}
-        />
-        <DatePickerWithIcon
-          icon={<DateTo stroke="#044c3b" />}
-          selected={endDate}
-          onChange={(date: Date) => setEndDate(date)}
-          placeholderText="End date and time"
-          minDate={startDate || new Date()}
-          showTimeSelect
-          dateFormat="iiii do MMMM y @ hh:mm aa"
-          timeIntervals={5}
-          required
-          isClearable
-          name="end_date"
-          id="endDatePicker"
-          error={clientErrors.end_date}
-        />
-        <input
-          name="endDate"
-          type="hidden"
-          required
-          value={endDate ? endDate.toISOString() : ""}
-        />
-        <InputWithIcon
-          icon={<CreditCard stroke="#044c3b" />}
-          name="ticketPrice"
-          id="ticketPriceInput"
-          type="number"
-          placeholder="Ticket Price"
-          isMoney
-          required
-          error={clientErrors.ticketPrice}
-        />
-        <WideButton colour="primary" type="submit">
-          Create Event
-        </WideButton>
-      </Form>
-    </PaddedContainer>
+            {categories.map((category) => (
+              <option value={category.id} key={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </SelectWithIcon>
+          <DatePickerWithIcon
+            icon={<DateFrom stroke="#044c3b" />}
+            selected={startDate}
+            onChange={(date: Date) => setStartDate(date)}
+            placeholderText="Start date and time"
+            minDate={new Date()}
+            showTimeSelect
+            dateFormat="iiii do MMMM y @ hh:mm aa"
+            timeIntervals={5}
+            required
+            isClearable
+            id="startDatePicker"
+            name="start_date"
+            error={clientErrors.start_date}
+          />
+          <input
+            name="startDate"
+            type="hidden"
+            required
+            value={startDate ? startDate.toISOString() : ""}
+          />
+          <DatePickerWithIcon
+            icon={<DateTo stroke="#044c3b" />}
+            selected={endDate}
+            onChange={(date: Date) => setEndDate(date)}
+            placeholderText="End date and time"
+            minDate={startDate || new Date()}
+            showTimeSelect
+            dateFormat="iiii do MMMM y @ hh:mm aa"
+            timeIntervals={5}
+            required
+            isClearable
+            name="end_date"
+            id="endDatePicker"
+            error={clientErrors.end_date}
+          />
+          <input
+            name="endDate"
+            type="hidden"
+            required
+            value={endDate ? endDate.toISOString() : ""}
+          />
+          <InputWithIcon
+            icon={<CreditCard stroke="#044c3b" />}
+            name="ticketPrice"
+            id="ticketPriceInput"
+            type="number"
+            placeholder="Ticket Price"
+            isMoney
+            required
+            error={clientErrors.ticketPrice}
+          />
+          <WideButton colour="primary" type="submit">
+            Create Event
+          </WideButton>
+        </Form>
+      </PaddedContainer>
+    </>
   );
 };
 

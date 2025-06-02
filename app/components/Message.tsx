@@ -7,15 +7,10 @@ interface MessageProps {
   primaryBackgroundColour: `bg-${string}`;
   secondaryBackgroundColour: `bg-${string}`;
   textColour: `text-${string}`;
+  layoutClasses?: string;
 }
 
-interface ErrorMessageProps {
-  children: React.ReactNode;
-}
-
-interface InfoMessageProps {
-  children: React.ReactNode;
-}
+type StyledMessageProps = Pick<MessageProps, "children" | "layoutClasses">;
 
 const Message = ({
   children,
@@ -23,10 +18,11 @@ const Message = ({
   primaryBackgroundColour,
   secondaryBackgroundColour,
   textColour,
+  layoutClasses,
 }: MessageProps) => {
   return (
     <div
-      className={`${primaryBackgroundColour} w-full rounded-lg p-0.5 flex items-center gap-0.5`}
+      className={`${primaryBackgroundColour} w-full rounded-lg p-0.5 flex items-center gap-0.5 ${layoutClasses}`}
     >
       <div className="px-2">{icon}</div>
       <div
@@ -38,26 +34,34 @@ const Message = ({
   );
 };
 
-export const ErrorMessage = ({ children }: ErrorMessageProps) => {
+export const ErrorMessage = ({
+  children,
+  layoutClasses,
+}: StyledMessageProps) => {
   return (
     <Message
       icon={<ErrorTriangle stroke="#f7f4e9" />}
       primaryBackgroundColour="bg-primary"
       secondaryBackgroundColour="bg-primary-light"
       textColour="text-text"
+      layoutClasses={layoutClasses}
     >
       {children}
     </Message>
   );
 };
 
-export const InfoMessage = ({ children }: InfoMessageProps) => {
+export const InfoMessage = ({
+  children,
+  layoutClasses,
+}: StyledMessageProps) => {
   return (
     <Message
       icon={<InfoCircle stroke="#f7f4e9" />}
       primaryBackgroundColour="bg-accent"
       secondaryBackgroundColour="bg-secondary-light"
       textColour="text-text"
+      layoutClasses={layoutClasses}
     >
       {children}
     </Message>

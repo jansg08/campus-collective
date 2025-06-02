@@ -144,6 +144,19 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
   }, [mapExpanded]);
   return (
     <>
+      <title>{`${event.title} | ${university.name}`}</title>
+      <meta
+        property="og:title"
+        content={`${event.title} | ${university.name}`}
+      />
+      <meta
+        name="description"
+        content={event.description?.match(/^.*?\./g)?.join("")}
+      />
+      <meta
+        property="og:description"
+        content={event.description?.match(/^.*?\./g)?.join("")}
+      />
       <div
         style={{
           backgroundImage: `url(${event.img})`,
