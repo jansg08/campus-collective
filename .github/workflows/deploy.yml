@@ -21,7 +21,10 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/campus-collective:latest .
+        run: |
+          docker build \
+            --build-arg VITE_S3_STORAGE_URL=${{ secrets.VITE_S3_STORAGE_URL }} \
+            -t ghcr.io/${{ github.repository_owner }}/campus-collective:latest .
 
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository_owner }}/campus-collective:latest
@@ -49,5 +52,9 @@ jobs:
             sudo docker pull ghcr.io/${{ github.repository_owner }}/campus-collective:latest
             sudo docker stop campus-collective || true
             sudo docker rm campus-collective || true
-            sudo docker run -d --name campus-collective -p 3000:3000 ghcr.io/${{ github.repository_owner }}/campus-collective:latest
+            sudo docker run -d \
+              --name campus-collective \
+              --env-file /home/jack/campus-collective-app/.env \
+              -p 3000:3000 \
+              ghcr.io/${{ github.repository_owner }}/campus-collective:latest
           EOF
