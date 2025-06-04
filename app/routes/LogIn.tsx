@@ -1,5 +1,12 @@
 import { useRef, useState } from "react";
-import { data, Form, Link, redirect, useNavigation } from "react-router";
+import {
+  data,
+  Form,
+  Link,
+  redirect,
+  useFetcher,
+  useNavigation,
+} from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
 import { InputWithIcon } from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
@@ -97,7 +104,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
     email: "",
     password: "",
   });
-  let navigation = useNavigation();
+  let fetcher = useFetcher();
   let errorMsg: React.ReactNode | null;
   if (actionData?.serverError) {
     const { code, message, data } = actionData.serverError;
@@ -133,7 +140,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
       />
       <PaddedContainer padding="thick" fullPage>
         <section className="w-full -translate-y-1/4">
-          <Form
+          <fetcher.Form
             onSubmit={handleFormSubmit<LogInFormErrors>(setClientErrors)}
             onInvalid={handleInvalid}
             className="flex flex-col gap-8 items-center"
@@ -152,7 +159,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
                 placeholder="Email address"
                 required
                 error={clientErrors.email}
-                disabled={navigation.state !== "idle"}
+                disabled={fetcher.state !== "idle"}
               />
               <InputWithIcon
                 icon={<Password stroke="#044c3b" />}
@@ -162,11 +169,11 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
                 placeholder="Password"
                 required
                 error={clientErrors.password}
-                disabled={navigation.state !== "idle"}
+                disabled={fetcher.state !== "idle"}
               />
             </div>
             <WideButton type="submit">
-              {navigation.state === "idle" ? (
+              {fetcher.state === "idle" ? (
                 "Log In"
               ) : (
                 <Mirage size="70" color="#f7f4e9" />
@@ -178,7 +185,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
                 Sign up here
               </Link>
             </p>
-          </Form>
+          </fetcher.Form>
         </section>
       </PaddedContainer>
     </>
