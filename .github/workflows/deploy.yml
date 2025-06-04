@@ -54,6 +54,7 @@ jobs:
             sudo docker rm campus-collective || true
             sudo docker run -d \
               --name campus-collective \
+              --dns=8.8.8.8 \
               --env-file /home/jack/campus-collective-app/.env \
               -p 3000:3000 \
               ghcr.io/${{ github.repository_owner }}/campus-collective:latest
