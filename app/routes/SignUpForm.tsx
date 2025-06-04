@@ -71,6 +71,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
       >
         <h2 className="font-bold">Sign Up</h2>
         {fetcher.data?.serverError &&
+          fetcher.state === "idle" &&
           (fetcher.data?.serverError?.code === "email_exists" ||
           fetcher.data?.serverError?.code === "user_already_exists" ? (
             <ErrorMessage>
