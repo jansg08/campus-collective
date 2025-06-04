@@ -1,12 +1,5 @@
 import { useRef, useState } from "react";
-import {
-  data,
-  Form,
-  Link,
-  redirect,
-  useFetcher,
-  useNavigation,
-} from "react-router";
+import { data, Link, redirect, useFetcher } from "react-router";
 import PaddedContainer from "~/components/PaddedContainer";
 import { InputWithIcon } from "~/components/InputWithIcon";
 import WideButton from "~/components/WideButton";
@@ -149,7 +142,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
             action="/log-in"
           >
             <h2 className="font-bold">Log In</h2>
-            {errorMsg}
+            {fetcher.state === "idle" && errorMsg}
             <div className="flex flex-col gap-5 w-full">
               <InputWithIcon
                 icon={<Email stroke="#044c3b" />}
