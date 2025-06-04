@@ -84,10 +84,6 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
           ) : (
             <ErrorMessage>{fetcher.data.serverError.message}</ErrorMessage>
           ))}
-        <InfoMessage>
-          Setting your university means you'll be taken straight to its events
-          page each time you log in.
-        </InfoMessage>
         <div className="flex flex-col gap-5 w-full">
           <InputWithIcon
             icon={<Email stroke="#044c3b" />}
