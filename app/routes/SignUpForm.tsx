@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Link, useOutletContext } from "react-router";
+import { Link, useFetcher, useOutletContext } from "react-router";
 import { db } from "src/db";
 import { universitiesTable } from "src/db/schema/universities";
 import { InputWithIcon, SelectWithIcon } from "~/components/InputWithIcon";
@@ -13,6 +13,8 @@ import { handleFormSubmit, handleInvalid } from "~/utils/formValidation";
 import type { Route } from "./+types/SignUpForm";
 import { ErrorMessage, InfoMessage } from "~/components/Message";
 import type { SignUpFormContext } from "./SignUp";
+import { Mirage } from "ldrs/react";
+import "ldrs/react/Mirage.css";
 
 interface SignUpFormErrors {
   email: string;
@@ -46,8 +48,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
     password: "",
     confirmPassword: "",
   });
-  const parentContext = useOutletContext<SignUpFormContext | undefined>();
-
+  const fetcher = useFetcher<SignUpFormContext>();
   return (
     <>
       <title>Sign Up | Campus Collective</title>
@@ -60,7 +61,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
         property="og:description"
         content="Sign up for a Campus Collective account now"
       />
-      <Form
+      <fetcher.Form
         onSubmit={handleFormSubmit<SignUpFormErrors>(setClientErrors)}
         onInvalid={handleInvalid}
         className="flex flex-col gap-8 items-center"
@@ -69,18 +70,19 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
         action="/sign-up"
       >
         <h2 className="font-bold">Sign Up</h2>
-        {parentContext?.serverError &&
-          (parentContext?.serverError?.code === "email_exists" ||
-          parentContext?.serverError?.code === "user_already_exists" ? (
+        {fetcher.data?.serverError &&
+          fetcher.state === "idle" &&
+          (fetcher.data?.serverError?.code === "email_exists" ||
+          fetcher.data?.serverError?.code === "user_already_exists" ? (
             <ErrorMessage>
-              {parentContext?.serverError?.message}. You can log in with it{" "}
+              {fetcher.data?.serverError?.message} You can log in with it{" "}
               <Link to="/log-in" className="underline">
                 here
               </Link>
               .
             </ErrorMessage>
           ) : (
-            <ErrorMessage>{parentContext.serverError.message}</ErrorMessage>
+            <ErrorMessage>{fetcher.data.serverError.message}</ErrorMessage>
           ))}
         <InfoMessage>
           Setting your university means you'll be taken straight to its events
@@ -94,12 +96,14 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
             placeholder="Email address"
             required
             error={clientErrors.email}
+            disabled={fetcher.state !== "idle"}
           />
           <SelectWithIcon
             icon={<Mortarboard stroke="#044c3b" />}
             name="university"
             required
             error={clientErrors.university}
+            disabled={fetcher.state !== "idle"}
           >
             <option value="" selected disabled>
               Select University
@@ -124,6 +128,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
             placeholder="Password"
             required
             error={clientErrors.password}
+            disabled={fetcher.state !== "idle"}
           />
           <InputWithIcon
             icon={<ConfirmPassword stroke="#044c3b" />}
@@ -132,16 +137,23 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
             placeholder="Confirm password"
             required
             error={clientErrors.confirmPassword}
+            disabled={fetcher.state !== "idle"}
           />
         </div>
-        <WideButton type="submit">Sign Up</WideButton>
+        <WideButton type="submit">
+          {fetcher.state === "idle" ? (
+            "Sign Up"
+          ) : (
+            <Mirage size="70" color="#f7f4e9" />
+          )}
+        </WideButton>
         <p className="text-sm">
           Already have an account?{" "}
           <Link className="underline" to="/log-in">
             Log in here
           </Link>
         </p>
-      </Form>
+      </fetcher.Form>
     </>
   );
 };
