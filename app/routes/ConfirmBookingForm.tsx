@@ -1,4 +1,11 @@
-import { data, Form, redirect, useOutletContext } from "react-router";
+import {
+  data,
+  Form,
+  redirect,
+  useLocation,
+  useNavigation,
+  useOutletContext,
+} from "react-router";
 import type { EventOutletContext } from "~/routes/ConfirmBooking";
 import WideButton from "../components/WideButton";
 import { format } from "date-fns";
@@ -6,6 +13,8 @@ import { getSupabaseClient } from "~/auth/supabase.server";
 import { bookingsTable } from "src/db/schema/bookings";
 import type { Route } from "./+types/ConfirmBookingForm";
 import { db } from "src/db";
+import { Mirage } from "ldrs/react";
+import "ldrs/react/Mirage.css";
 
 export const action = async ({ request, params }: Route.ActionArgs) => {
   const eventId = Number(params.eventId);
@@ -59,7 +68,8 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 
 const ConfirmBookingForm = ({ actionData }: Route.ComponentProps) => {
   const err = actionData?.err;
-  console.log(err);
+  const { formAction, state } = useNavigation();
+  const { pathname } = useLocation();
   const { event } = useOutletContext<EventOutletContext>();
   return (
     <>
@@ -78,7 +88,13 @@ const ConfirmBookingForm = ({ actionData }: Route.ComponentProps) => {
       </div>
       {event.price === 0 && (
         <Form method="post" className="flex flex-col gap-2">
-          <WideButton type="submit">Free • Confirm Booking</WideButton>
+          <WideButton type="submit">
+            {state !== "idle" && formAction === `${pathname}?index` ? (
+              <Mirage size="70" color="#f7f4e9" />
+            ) : (
+              "Free • Confirm Booking"
+            )}
+          </WideButton>
           <p className="text-2xs text-text-dim">
             This event is free - no payment will be taken
           </p>
