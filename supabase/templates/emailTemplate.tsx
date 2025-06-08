@@ -8,7 +8,6 @@ import {
   Tailwind,
 } from "@react-email/components";
 import tailwindConfig from "./tailwind.config";
-import { preview } from "vite";
 
 interface EmailTemplateProps {
   children: React.ReactNode;
@@ -33,9 +32,18 @@ export const EmailTemplate = ({
           }}
           fontWeight={360}
         />
+        <Font
+          fontFamily="Sora"
+          fallbackFontFamily={"Verdana"}
+          webFont={{
+            url: "https://fonts.gstatic.com/s/sora/v16/xMQbuFFYT72XzQUpDg.woff2",
+            format: "woff2",
+          }}
+          fontWeight={300}
+        />
         <style>
           {
-            "button { border: none; } p { margin: 0; } h1,h2,h3,h4,h5,h6 { margin: 0px; }"
+            "body { font-family: 'Sora', Verdana } button { border: none; } p { margin: 0; } h1,h2,h3,h4,h5,h6 { margin: 0px; font-family: 'Source Serif 4', Georgia; }"
           }
         </style>
       </Head>
