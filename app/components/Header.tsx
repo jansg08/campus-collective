@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import useOutsideClick from "~/utils/useOutSideClick";
 import WideButton from "./WideButton";
 import { useWindowWidth } from "~/hooks/useWindowWidth";
+import { AnimatePresence, motion } from "motion/react";
 
 interface HeaderProps {
   authenticated: boolean;
@@ -41,7 +42,7 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
 
   return (
     <header className="w-full py-2.5 bg-background-light shadow-below flex justify-center fixed z-40">
-      <div className="w-full sm:w-[min(calc(4*100%/5+8rem),80rem)] flex flex-col gap-4 px-5">
+      <div className="w-full sm:w-[min(calc(4*100%/5+8rem),80rem)] flex flex-col px-5">
         <div className="w-full h-15 flex items-center">
           <div className="w-full flex justify-start">
             <SquareButton
@@ -124,26 +125,34 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
             )}
           </div>
         </div>
-        {showMenu && (
-          <ul className="w-fit text-xl flex flex-col gap-3 mb-1">
-            <li className="flex flex-col gap-1.5">
-              My Events
-              <ul className="pl-3 text-lg flex flex-col gap-1.5 relative w-min">
-                <li className="hover-underline">
-                  <NavLink to="">Attending</NavLink>
-                </li>
-                <li className="hover-underline">
-                  <NavLink to="">Organised</NavLink>
-                </li>
-              </ul>
-            </li>
-            {isStaff && (
-              <li className="flex flex-col gap-1.5 hover-underline">
-                <NavLink to="/create-event">Create Event</NavLink>
+        <AnimatePresence initial={false}>
+          {showMenu && (
+            <motion.ul
+              className="w-fit text-xl flex flex-col gap-3 mb-1 overflow-hidden"
+              initial={{ height: 0 }}
+              animate={{ height: "auto" }}
+              exit={{ height: 0 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+            >
+              <li className="flex flex-col gap-1.5 mt-4">
+                My Events
+                <ul className="pl-3 text-lg flex flex-col gap-1.5 relative w-min">
+                  <li className="hover-underline">
+                    <NavLink to="">Attending</NavLink>
+                  </li>
+                  <li className="hover-underline">
+                    <NavLink to="">Organised</NavLink>
+                  </li>
+                </ul>
               </li>
-            )}
-          </ul>
-        )}
+              {isStaff && (
+                <li className="flex flex-col gap-1.5 hover-underline">
+                  <NavLink to="/create-event">Create Event</NavLink>
+                </li>
+              )}
+            </motion.ul>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
