@@ -2,6 +2,8 @@
   <img alt="Logo for Campus Collective" src="./app/svgs/Logo.svg" width="512">
 </p>
 
+### You can view the hosted version [here](https://campus-collective.jack.hansjee.com).
+
 # Summary
 
 Campus Collective is a student-first events platform designed to showcase all the entertainment a university has to offer, allowing fellow students to experience home-grown talent.
