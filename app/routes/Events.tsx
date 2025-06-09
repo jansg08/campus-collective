@@ -19,6 +19,7 @@ import { universitiesTable } from "src/db/schema/universities";
 import useOutsideClick from "~/utils/useOutSideClick";
 import Modal from "~/components/Modal";
 import PaddedContainer from "~/components/PaddedContainer";
+import { motion, AnimatePresence } from "motion/react";
 
 interface University {
   id: number;
@@ -138,35 +139,41 @@ const UniversitiesDropdown = ({
         <span className="text-start">{currentUniName}</span>
         <ChevronSmall stroke="#044c3b" />
       </button>
-      {isOpen && (
-        <ul
-          className="absolute z-10 top-[calc(100%+var(--spacing))] left-0 max-h-[40vh] box-border w-fit overflow-y-auto bg-background-light py-1.5 rounded-lg flex flex-col shadow-lg"
-          ref={dropdownRef}
-        >
-          {universities.map(({ name, crestUrl, slug, id }) => (
-            <li key={id}>
-              <NavLink
-                to={`/${slug}/events`}
-                className="flex items-center gap-1.5 py-1.5 px-3 hover hover:bg-background-dim transition-all"
-              >
-                {({ isActive, isPending }) => (
-                  <>
-                    <img
-                      src={crestUrl}
-                      className="size-6 inline rounded-full"
-                    />
-                    <span className="leading-normal min-w-32">{name}</span>
-                    {isActive && <Tick stroke="#4BA590" />}
-                    {isPending && (
-                      <Squircle color="#4BA590" size={12} stroke={2} />
-                    )}
-                  </>
-                )}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.ul
+            className="absolute z-10 top-[calc(100%+var(--spacing))] left-0 max-h-[40vh] box-border w-fit overflow-y-auto bg-background-light py-1.5 rounded-lg flex flex-col shadow-lg"
+            ref={dropdownRef}
+            initial={{ height: 0, overflowY: "hidden" }}
+            animate={{ height: "auto" }}
+            exit={{ height: 0, overflowY: "hidden" }}
+            transition={{ duration: 0.15, ease: "easeInOut" }}
+          >
+            {universities.map(({ name, crestUrl, slug, id }) => (
+              <li key={id}>
+                <NavLink
+                  to={`/${slug}/events`}
+                  className="flex items-center gap-1.5 py-1.5 px-3 hover hover:bg-background-dim transition-all"
+                >
+                  {({ isActive, isPending }) => (
+                    <>
+                      <img
+                        src={crestUrl}
+                        className="size-6 inline rounded-full"
+                      />
+                      <span className="leading-normal min-w-32">{name}</span>
+                      {isActive && <Tick stroke="#4BA590" />}
+                      {isPending && (
+                        <Squircle color="#4BA590" size={12} stroke={2} />
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

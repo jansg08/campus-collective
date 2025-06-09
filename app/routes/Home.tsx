@@ -90,7 +90,6 @@ const WelcomeBack = ({
   user: Route.ComponentProps["loaderData"]["user"];
 }) => {
   let fetcher = useFetcher();
-  console.log(fetcher.data);
   return (
     <>
       <div className="flex flex-col gap-4 w-full text-lg">
