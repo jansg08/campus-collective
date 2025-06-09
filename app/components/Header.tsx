@@ -78,28 +78,34 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
                 }}
               >
                 {!avatarUrl && <User stroke="#f7f4e9" height={28} width={28} />}
-                {showUserDropdown && (
-                  <div
-                    id="dropdown"
-                    ref={userDropdownRef}
-                    className="absolute top-[calc(100%+0.75rem)] right-0 z-50 w-fit flex flex-col items-start py-1.5 rounded-sm bg-[rgba(var(--color-rgba-text),0.8)]"
-                  >
-                    <div className="absolute right-5 -top-1 translate-x-1/2 dropdown-triangle h-1 w-2 bg-[rgba(var(--color-rgba-text),0.8)]" />
-                    <Link
-                      to=""
-                      className="w-full text-left py-0.5 px-3 leading-tight transition-all hover:bg-text"
+                <AnimatePresence>
+                  {showUserDropdown && (
+                    <motion.div
+                      id="dropdown"
+                      ref={userDropdownRef}
+                      className="absolute top-[calc(100%+0.75rem)] right-0 z-50 w-fit flex flex-col items-start rounded-sm bg-[rgba(var(--color-rgba-text),0.8)]"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.8 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.08, ease: "easeInOut" }}
                     >
-                      Profile
-                    </Link>
-                    <Form action="/log-out" method="post">
-                      <input
-                        className="whitespace-nowrap transition-all hover:bg-text py-0.5 px-3 leading-tight"
-                        type="submit"
-                        value="Log out"
-                      />
-                    </Form>
-                  </div>
-                )}
+                      <div className="absolute right-5 -top-1.5 translate-x-1/2 dropdown-triangle h-1.5 w-3 bg-[rgba(var(--color-rgba-text),0.8)]" />
+                      <Link
+                        to=""
+                        className="w-full text-left py-2 px-3 rounded-sm leading-tight transition-all hover:bg-text"
+                      >
+                        Profile
+                      </Link>
+                      <Form action="/log-out" method="post">
+                        <input
+                          className="whitespace-nowrap transition-all hover:bg-text py-2 px-3 rounded-sm leading-tight"
+                          type="submit"
+                          value="Log out"
+                        />
+                      </Form>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </SquareButton>
             ) : (
               <>
