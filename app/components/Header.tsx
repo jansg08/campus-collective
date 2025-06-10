@@ -9,7 +9,13 @@ import { useEffect, useRef, useState } from "react";
 import useOutsideClick from "~/utils/useOutSideClick";
 import WideButton from "./WideButton";
 import { useWindowWidth } from "~/hooks/useWindowWidth";
-import { AnimatePresence, motion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "motion/react";
+import hideOnScroll from "~/utils/hideOnScroll";
 
 interface HeaderProps {
   authenticated: boolean;
@@ -31,6 +37,14 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
   }
 
   const userDropdownRef = useRef<HTMLDivElement>(null!);
+  const [headerHidden, setHeaderHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(
+    scrollY,
+    "change",
+    hideOnScroll(scrollY, setHeaderHidden)
+  );
   useOutsideClick({
     ref: userDropdownRef,
     handler: () => setShowUserDropdown(false),
@@ -41,7 +55,12 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
   }, [pathname]);
 
   return (
-    <header className="w-full py-2.5 bg-background-light shadow-below flex justify-center fixed z-40">
+    <motion.header
+      className="w-full py-2.5 bg-background-light shadow-below flex justify-center fixed z-40"
+      variants={{ visible: { y: 0 }, hidden: { y: "-100%" } }}
+      animate={headerHidden ? "hidden" : "visible"}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+    >
       <div className="w-full sm:w-[min(calc(4*100%/5+8rem),80rem)] flex flex-col px-5">
         <div className="w-full h-15 flex items-center">
           <div className="w-full flex justify-start">
@@ -160,7 +179,7 @@ const Header = ({ authenticated, isStaff, avatarUrl }: HeaderProps) => {
           )}
         </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
