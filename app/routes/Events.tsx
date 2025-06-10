@@ -19,7 +19,13 @@ import { universitiesTable } from "src/db/schema/universities";
 import useOutsideClick from "~/utils/useOutSideClick";
 import Modal from "~/components/Modal";
 import PaddedContainer from "~/components/PaddedContainer";
-import { motion, AnimatePresence } from "motion/react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useMotionValueEvent,
+} from "motion/react";
+import hideOnScroll from "~/utils/hideOnScroll";
 
 interface University {
   id: number;
@@ -181,6 +187,15 @@ const UniversitiesDropdown = ({
 const Events = ({ loaderData }: Route.ComponentProps) => {
   const { events, universities, categories, venues, selectedUni } = loaderData;
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [searchBarHidden, setSearchBarHidden] = useState(false);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(
+    scrollY,
+    "change",
+    hideOnScroll(scrollY, setSearchBarHidden)
+  );
+
   const submit = useSubmit();
 
   return (
@@ -321,7 +336,12 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
             selected={selectedUni}
           />
         </div>
-        <div className="flex gap-3 items-center w-full sticky top-25 blur-down">
+        <motion.div
+          className="flex gap-3 items-center w-full sticky top-25 blur-down"
+          variants={{ visible: { y: 0 }, hidden: { y: "-5rem" } }}
+          animate={searchBarHidden ? "hidden" : "visible"}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+        >
           <SquareButton
             colour="secondary"
             onClick={() => setIsOptionsOpen(true)}
@@ -336,7 +356,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
               type="text"
             />
           </Form>
-        </div>
+        </motion.div>
         <ul className="w-full grid grid-cols-(--event-card-cols) gap-5">
           {events.map(({ id, ...rest }) => {
             const props = {
