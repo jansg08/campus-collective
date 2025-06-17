@@ -99,8 +99,8 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
   });
   let fetcher = useFetcher();
   let errorMsg: React.ReactNode | null;
-  if (actionData?.serverError) {
-    const { code, message, data } = actionData.serverError;
+  if (fetcher.data?.serverError) {
+    const { code, message, data } = fetcher.data.serverError;
     if (code === "email_not_confirmed" && data?.email) {
       errorMsg = (
         <ErrorMessage>
@@ -132,7 +132,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
         content="Log in to your Campus Collective account here"
       />
       <PaddedContainer padding="thick" fullPage>
-        <section className="w-full -translate-y-1/4">
+        <section className="w-full">
           <fetcher.Form
             onSubmit={handleFormSubmit<LogInFormErrors>(setClientErrors)}
             onInvalid={handleInvalid}
