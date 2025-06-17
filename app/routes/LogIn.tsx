@@ -97,7 +97,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
     email: "",
     password: "",
   });
-  let fetcher = useFetcher();
+  let fetcher = useFetcher<{ serverError?: ServerErrorProps }>();
   let errorMsg: React.ReactNode | null;
   if (fetcher.data?.serverError) {
     const { code, message, data } = fetcher.data.serverError;
