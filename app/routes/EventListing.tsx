@@ -11,7 +11,7 @@ import { db } from "src/db";
 import { eventsTable } from "src/db/schema/events";
 import { venuesTable } from "src/db/schema/venues";
 import { categoriesTable } from "src/db/schema/categories";
-import { Link, Outlet } from "react-router";
+import { Link, useLocation, useOutlet } from "react-router";
 import { and, eq } from "drizzle-orm";
 import { universitiesTable } from "src/db/schema/universities";
 import { data } from "react-router";
@@ -22,6 +22,7 @@ import { getSupabaseClient } from "~/auth/supabase.server";
 import SquareButton from "~/components/SquareButton";
 import { bookingsTable } from "src/db/schema/bookings";
 import { generateIcsFile } from "~/utils/generateIcsFile";
+import { motion, AnimatePresence } from "motion/react";
 
 export const loader = async ({ request, params }: Route.LoaderArgs) => {
   const { supabase, headers } = getSupabaseClient(request);
@@ -130,6 +131,7 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
     useState<React.FC<LeafletMapProps> | null>(null);
   const [mapExpanded, setMapExpanded] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
+  const outlet = useOutlet({ event: { ...event, venue } });
 
   useEffect(() => {
     import("~/components/LeafletMap").then((mod) =>
@@ -169,7 +171,16 @@ const EventListing = ({ loaderData }: Route.ComponentProps) => {
         shadow="shadow-above"
         flexGap="gap-6"
       >
-        <Outlet context={{ event: { ...event, venue } }} />
+        {/* <Outlet context={{ event: { ...event, venue } }} /> */}
+        <AnimatePresence>
+          <motion.div
+            exit={{ opacity: 0 }}
+            key={useLocation().pathname}
+            className="absolute z-600"
+          >
+            {outlet}
+          </motion.div>
+        </AnimatePresence>
         <div className="w-full flex items-center justify-start gap-1 text-text-dim text-sm">
           <Link
             to={`/${university.slug}/events`}
