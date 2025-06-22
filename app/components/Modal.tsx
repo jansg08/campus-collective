@@ -19,7 +19,8 @@ const Modal = ({ children, closeModal }: ModalProps) => {
   });
   return (
     <motion.div
-      className="h-screen w-screen max-w-full fixed top-0 left-0 z-600 bg-[rgba(0,0,0,0.5)]"
+      className="min-h-screen w-screen max-w-full fixed top-0 left-0 z-600 bg-[rgba(0,0,0,0.5)]"
+      style={{ minHeight: "-webkit-fill-available" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
