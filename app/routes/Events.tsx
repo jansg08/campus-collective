@@ -218,117 +218,127 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
         }${universities[selectedUni].name} has to offer`}
       />
       <PaddedContainer padding="normal" flexGap="gap-5">
-        {isOptionsOpen && (
-          <Modal closeModal={() => setIsOptionsOpen(false)}>
-            <Form
-              className="flex flex-col gap-4"
-              onChange={(e) => submit(e.currentTarget)}
-            >
-              <h4>Filter by</h4>
-              <select
-                name="category"
-                id="category"
-                className="bg-background-light py-2 rounded-sm"
+        <AnimatePresence>
+          {isOptionsOpen && (
+            <Modal closeModal={() => setIsOptionsOpen(false)}>
+              <Form
+                className="flex flex-col gap-4"
+                onChange={(e) => submit(e.currentTarget)}
               >
-                <option value="what">What?</option>
-                {categories.map(({ id, name }) => (
-                  <option value={id}>{name}</option>
-                ))}
-              </select>
-              <input
-                type="date"
-                placeholder="When?"
-                name="date"
-                className="bg-background-light py-2 rounded-sm"
-              />
-              <select
-                name="venue"
-                id="venue"
-                className=" bg-background-light py-2 rounded-sm"
-              >
-                <option value="where">Where?</option>
-                {venues.map(({ name, id }) => (
-                  <option value={id}>{name}</option>
-                ))}
-              </select>
-              <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
-                <span>Free?</span>
-                <label htmlFor="yes" className="flex items-center gap-1.5">
-                  Yes
-                  <input name="free" type="radio" id="yes" value="yes" />
-                </label>
-                <label htmlFor="no" className="flex items-center gap-1.5">
-                  No
-                  <input name="free" type="radio" id="no" value="no" />
-                </label>
-                <label htmlFor="dontMind" className="flex items-center gap-1.5">
-                  Don't Mind
-                  <input
-                    name="free"
-                    type="radio"
-                    id="dontMind"
-                    value="dontMind"
-                  />
-                </label>
-              </div>
-              <h4>Sort by</h4>
-              <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
-                <label
-                  htmlFor="date"
-                  className="flex items-center gap-1.5 justify-center w-full"
+                <h4>Filter by</h4>
+                <select
+                  name="category"
+                  id="category"
+                  className="bg-background-light py-2 rounded-sm"
                 >
-                  Date
-                  <input name="sortBy" type="radio" id="date" value="date" />
-                </label>
-                <label
-                  htmlFor="price"
-                  className="flex items-center gap-1.5 justify-center w-full"
+                  <option value="what">What?</option>
+                  {categories.map(({ id, name }) => (
+                    <option value={id}>{name}</option>
+                  ))}
+                </select>
+                <input
+                  type="date"
+                  placeholder="When?"
+                  name="date"
+                  className="bg-background-light py-2 rounded-sm"
+                />
+                <select
+                  name="venue"
+                  id="venue"
+                  className=" bg-background-light py-2 rounded-sm"
                 >
-                  Price
-                  <input name="sortBy" type="radio" id="price" value="price" />
-                </label>
-                <label
-                  htmlFor="duration"
-                  className="flex items-center gap-1.5 justify-center w-full"
-                >
-                  Duration
-                  <input
-                    name="sortBy"
-                    type="radio"
-                    id="duration"
-                    value="duration"
-                  />
-                </label>
-              </div>
-              <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
-                <label
-                  htmlFor="asc"
-                  className="flex items-center gap-1.5 justify-center w-full"
-                >
-                  Ascending
-                  <input
-                    name="sortDirection"
-                    type="radio"
-                    id="asc"
-                    value="asc"
-                  />
-                </label>
-                <label
-                  htmlFor="desc"
-                  className="flex items-center gap-1.5 justify-center w-full"
-                >
-                  Descending
-                  <input
-                    name="sortDirection"
-                    type="radio"
-                    id="desc"
-                    value="desc"
-                  />
-                </label>
-              </div>
-            </Form>
-          </Modal>
-        )}
+                  <option value="where">Where?</option>
+                  {venues.map(({ name, id }) => (
+                    <option value={id}>{name}</option>
+                  ))}
+                </select>
+                <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
+                  <span>Free?</span>
+                  <label htmlFor="yes" className="flex items-center gap-1.5">
+                    Yes
+                    <input name="free" type="radio" id="yes" value="yes" />
+                  </label>
+                  <label htmlFor="no" className="flex items-center gap-1.5">
+                    No
+                    <input name="free" type="radio" id="no" value="no" />
+                  </label>
+                  <label
+                    htmlFor="dontMind"
+                    className="flex items-center gap-1.5"
+                  >
+                    Don't Mind
+                    <input
+                      name="free"
+                      type="radio"
+                      id="dontMind"
+                      value="dontMind"
+                    />
+                  </label>
+                </div>
+                <h4>Sort by</h4>
+                <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
+                  <label
+                    htmlFor="date"
+                    className="flex items-center gap-1.5 justify-center w-full"
+                  >
+                    Date
+                    <input name="sortBy" type="radio" id="date" value="date" />
+                  </label>
+                  <label
+                    htmlFor="price"
+                    className="flex items-center gap-1.5 justify-center w-full"
+                  >
+                    Price
+                    <input
+                      name="sortBy"
+                      type="radio"
+                      id="price"
+                      value="price"
+                    />
+                  </label>
+                  <label
+                    htmlFor="duration"
+                    className="flex items-center gap-1.5 justify-center w-full"
+                  >
+                    Duration
+                    <input
+                      name="sortBy"
+                      type="radio"
+                      id="duration"
+                      value="duration"
+                    />
+                  </label>
+                </div>
+                <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
+                  <label
+                    htmlFor="asc"
+                    className="flex items-center gap-1.5 justify-center w-full"
+                  >
+                    Ascending
+                    <input
+                      name="sortDirection"
+                      type="radio"
+                      id="asc"
+                      value="asc"
+                    />
+                  </label>
+                  <label
+                    htmlFor="desc"
+                    className="flex items-center gap-1.5 justify-center w-full"
+                  >
+                    Descending
+                    <input
+                      name="sortDirection"
+                      type="radio"
+                      id="desc"
+                      value="desc"
+                    />
+                  </label>
+                </div>
+              </Form>
+            </Modal>
+          )}
+        </AnimatePresence>
         <div className="w-full">
           <p className="text-sm text-text-dim">Viewing events for</p>
           <UniversitiesDropdown
