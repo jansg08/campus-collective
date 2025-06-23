@@ -69,7 +69,7 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
         method="post"
         action="/sign-up"
       >
-        <h2 className="font-bold">Sign Up</h2>
+        <h2 className="font-medium">Sign Up</h2>
         {fetcher.data?.serverError &&
           fetcher.state === "idle" &&
           (fetcher.data?.serverError?.code === "email_exists" ||
@@ -145,7 +145,10 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
         </WideButton>
         <p className="text-sm">
           Already have an account?{" "}
-          <Link className="underline" to="/log-in">
+          <Link
+            className="border-b-1 hover:border-b-2 hover:font-medium transition-all"
+            to="/log-in"
+          >
             Log in here
           </Link>
         </p>

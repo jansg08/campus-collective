@@ -141,7 +141,7 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
             method="post"
             action="/log-in"
           >
-            <h2 className="font-bold">Log In</h2>
+            <h2 className="font-medium">Log In</h2>
             {fetcher.state === "idle" && errorMsg}
             <div className="flex flex-col gap-5 w-full">
               <InputWithIcon
@@ -174,7 +174,10 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
             </WideButton>
             <p className="text-sm">
               Don't have an account?{" "}
-              <Link className="underline" to="/sign-up">
+              <Link
+                className="border-b-1 hover:border-b-2 hover:font-medium transition-all"
+                to="/sign-up"
+              >
                 Sign up here
               </Link>
             </p>
