@@ -139,10 +139,10 @@ const UniversitiesDropdown = ({
     >
       <img src={currentUniCrest} className="size-6 inline rounded-full" />
       <button
-        className="flex items-center gap-1.5 text-2xl  px-1"
+        className="flex items-center gap-1.5 px-1"
         onClick={() => setIsOpen(true)}
       >
-        <span className="text-start">{currentUniName}</span>
+        <h3 className="text-start">{currentUniName}</h3>
         <ChevronSmall stroke="#044c3b" />
       </button>
       <AnimatePresence>
