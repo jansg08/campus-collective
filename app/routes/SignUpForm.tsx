@@ -86,19 +86,23 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
           ))}
         <div className="flex flex-col gap-5 w-full">
           <InputWithIcon
-            icon={<Email stroke="#044c3b" />}
+            iconAndError={{
+              icon: <Email stroke="#044c3b" />,
+              error: clientErrors.email,
+            }}
             name="email"
             type="email"
             placeholder="Email address"
             required
-            error={clientErrors.email}
             disabled={fetcher.state !== "idle"}
           />
           <SelectWithIcon
-            icon={<Mortarboard stroke="#044c3b" />}
+            iconAndError={{
+              icon: <Mortarboard stroke="#044c3b" />,
+              error: clientErrors.university,
+            }}
             name="university"
             required
-            error={clientErrors.university}
             disabled={fetcher.state !== "idle"}
           >
             <option value="" selected disabled>
@@ -118,21 +122,25 @@ const SignUpForm = ({ loaderData }: Route.ComponentProps) => {
             ))}
           </SelectWithIcon>
           <InputWithIcon
-            icon={<Password stroke="#044c3b" />}
+            iconAndError={{
+              icon: <Password stroke="#044c3b" />,
+              error: clientErrors.password,
+            }}
             name="password"
             type="password"
             placeholder="Password"
             required
-            error={clientErrors.password}
             disabled={fetcher.state !== "idle"}
           />
           <InputWithIcon
-            icon={<ConfirmPassword stroke="#044c3b" />}
+            iconAndError={{
+              icon: <ConfirmPassword stroke="#044c3b" />,
+              error: clientErrors.confirmPassword,
+            }}
             name="confirmPassword"
             type="password"
             placeholder="Confirm password"
             required
-            error={clientErrors.confirmPassword}
             disabled={fetcher.state !== "idle"}
           />
         </div>

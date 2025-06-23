@@ -360,7 +360,7 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
           </SquareButton>
           <Form className="w-full">
             <InputWithIcon
-              icon={<Search stroke="#044c3b" />}
+              iconAndError={{ icon: <Search stroke="#044c3b" /> }}
               name="search"
               placeholder="Search events"
               type="text"

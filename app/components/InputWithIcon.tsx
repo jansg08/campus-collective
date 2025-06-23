@@ -1,10 +1,11 @@
-import { useRef, useState, type FormEvent, type SyntheticEvent } from "react";
+import { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
+import { type DatePickerProps } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface IconAndErrorProps {
   iconSize?: "normal" | "large";
-  icon?: React.ReactNode;
+  icon: React.ReactNode;
   error?: string;
   hoverMsg?: string | React.ReactNode;
   isSelect?: boolean;
@@ -15,35 +16,26 @@ interface ElementWithIconProps extends IconAndErrorProps {
   id?: string;
 }
 
+interface FormFieldWithIconProps {
+  iconAndError: IconAndErrorProps;
+}
+
 interface InputWithIconProps
-  extends IconAndErrorProps,
+  extends FormFieldWithIconProps,
     React.InputHTMLAttributes<HTMLInputElement> {
   isMoney?: boolean;
 }
 
 interface TextareaWithIconProps
-  extends IconAndErrorProps,
+  extends FormFieldWithIconProps,
     React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   cannotResize?: boolean;
 }
 
-interface DatePickerWithIconProps extends IconAndErrorProps {
-  selected: Date | null;
-  onChange?: (...args: any[]) => void;
-  placeholderText?: string;
-  timeInputLabel?: string;
-  timeCaption?: string;
-  hideYearDropdown?: boolean;
-  showTimeInput?: boolean;
-  showTimeSelect?: boolean;
-  dateFormat: string;
-  minDate?: Date;
-  timeIntervals?: number;
-  required?: boolean;
-  isClearable?: boolean;
-  id?: string;
-  name?: string;
-}
+type DatePickerWithIconProps = FormFieldWithIconProps &
+  DatePickerProps & {
+    id?: string;
+  };
 
 const ElementWithIcon = ({
   icon,
@@ -96,80 +88,30 @@ const ElementWithIcon = ({
 };
 
 export const InputWithIcon = ({
-  icon,
-  iconSize = "normal",
-  error,
-  hoverMsg,
-  isMoney = false,
-  name,
+  iconAndError,
   id,
-  type,
-  placeholder,
-  required,
-  disabled,
-  onFocus,
-  onBlur,
-  onChange,
-  onMouseOver,
+  isMoney,
+  ...inputProps
 }: InputWithIconProps) => (
-  <ElementWithIcon
-    icon={icon}
-    iconSize={iconSize}
-    error={error}
-    id={id}
-    hoverMsg={hoverMsg}
-  >
+  <ElementWithIcon {...iconAndError} id={id}>
     <>
       {isMoney && "£"}
-      <input
-        className="w-full outline-0"
-        name={name}
-        id={id}
-        placeholder={placeholder}
-        type={type}
-        disabled={disabled}
-        required={required}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={onChange}
-        onMouseOver={onMouseOver}
-      />
+      <input className="w-full outline-0" {...inputProps} id={id} />
     </>
   </ElementWithIcon>
 );
 
 export const SelectWithIcon = ({
-  icon,
-  iconSize = "normal",
-  error,
-  hoverMsg,
-  children,
-  name,
+  iconAndError,
   id,
-  required,
-  disabled,
-  onFocus,
-  onBlur,
-  onChange,
-  onMouseOver,
-}: React.SelectHTMLAttributes<HTMLSelectElement> & IconAndErrorProps) => (
-  <ElementWithIcon
-    icon={icon}
-    iconSize={iconSize}
-    error={error}
-    id={id}
-    hoverMsg={hoverMsg}
-    isSelect
-  >
+  children,
+  ...selectProps
+}: React.SelectHTMLAttributes<HTMLSelectElement> & FormFieldWithIconProps) => (
+  <ElementWithIcon {...iconAndError} id={id} isSelect>
     <select
       className="w-full outline-0 invalid:text-text-dim"
-      name={name}
-      required={required}
-      disabled={disabled}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      onChange={onChange}
-      onMouseOver={onMouseOver}
+      {...selectProps}
+      id={id}
     >
       {children}
     </select>
@@ -177,22 +119,11 @@ export const SelectWithIcon = ({
 );
 
 export const TextareaWithIcon = ({
-  icon,
-  iconSize,
-  error,
-  hoverMsg,
-  name,
+  iconAndError,
   id,
-  placeholder,
-  rows,
   cannotResize = false,
-  required,
-  disabled,
-  onFocus,
-  onBlur,
-  onChange,
-  onMouseOver,
   onInput,
+  ...textareaProps
 }: TextareaWithIconProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
   const handleHeight = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -205,80 +136,27 @@ export const TextareaWithIcon = ({
     if (onInput) onInput(e);
   };
   return (
-    <ElementWithIcon
-      icon={icon}
-      iconSize={iconSize}
-      error={error}
-      id={id}
-      hoverMsg={hoverMsg}
-    >
+    <ElementWithIcon {...iconAndError} id={id}>
       <textarea
         className={`w-full outline-0 leading-snug my-1.5 ${
           cannotResize ? "resize-none" : ""
         }`}
-        name={name}
+        {...textareaProps}
         id={id}
-        placeholder={placeholder}
-        rows={rows}
-        disabled={disabled}
-        required={required}
         ref={ref}
         onInput={handleHeight}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onChange={onChange}
-        onMouseOver={onMouseOver}
       />
     </ElementWithIcon>
   );
 };
 
 export const DatePickerWithIcon = ({
-  icon,
-  iconSize,
-  error,
-  hoverMsg,
-  selected,
-  required = false,
-  onChange,
-  dateFormat,
-  minDate,
-  placeholderText,
-  timeInputLabel,
-  timeCaption,
-  hideYearDropdown = false,
-  showTimeInput = false,
-  showTimeSelect = false,
-  timeIntervals,
-  isClearable = false,
+  iconAndError,
   id,
-  name,
+  ...datePickerProps
 }: DatePickerWithIconProps) => (
-  <ElementWithIcon
-    icon={icon}
-    iconSize={iconSize}
-    error={error}
-    id={id}
-    hoverMsg={hoverMsg}
-  >
-    <DatePicker
-      selected={selected}
-      onChange={onChange}
-      placeholderText={placeholderText}
-      timeInputLabel={timeInputLabel}
-      timeCaption={timeCaption}
-      showYearDropdown={!hideYearDropdown}
-      showTimeInput={showTimeInput}
-      showTimeSelect={showTimeSelect}
-      dateFormat={dateFormat}
-      minDate={minDate}
-      timeIntervals={timeIntervals}
-      required={required}
-      isClearable={isClearable}
-      id={id}
-      name={name}
-      className="w-full outline-none"
-    />
+  <ElementWithIcon {...iconAndError} id={id}>
+    <DatePicker className="w-full outline-none" {...datePickerProps} id={id} />
   </ElementWithIcon>
 );
 

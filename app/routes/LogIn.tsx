@@ -145,23 +145,27 @@ const LogIn = ({ actionData }: Route.ComponentProps) => {
             {fetcher.state === "idle" && errorMsg}
             <div className="flex flex-col gap-5 w-full">
               <InputWithIcon
-                icon={<Email stroke="#044c3b" />}
+                iconAndError={{
+                  icon: <Email stroke="#044c3b" />,
+                  error: clientErrors.email,
+                }}
                 name="email"
                 id="emailInput"
                 type="email"
                 placeholder="Email address"
                 required
-                error={clientErrors.email}
                 disabled={fetcher.state !== "idle"}
               />
               <InputWithIcon
-                icon={<Password stroke="#044c3b" />}
+                iconAndError={{
+                  icon: <Password stroke="#044c3b" />,
+                  error: clientErrors.password,
+                }}
                 name="password"
                 id="passwordInput"
                 type="password"
                 placeholder="Password"
                 required
-                error={clientErrors.password}
                 disabled={fetcher.state !== "idle"}
               />
             </div>

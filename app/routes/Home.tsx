@@ -111,16 +111,22 @@ const WelcomeBack = ({
               className="flex gap-3 text-base"
             >
               <div className="w-max h-10 text-lg">
-                <SelectWithIcon iconSize="large" name="universityId" required>
-                  <option value="" selected disabled>
-                    Select University
-                  </option>
-                  {universities.map((uni) => (
-                    <option key={uni.id} value={uni.id} className="px-2">
-                      {uni.name}
+                <div className="bg-background-light relative rounded-lg w-full shadow-md py-2 px-3 flex items-center input-border transition-all has-[select:disabled]:bg-background-dim has-[select:disabled]:text-text-dim">
+                  <select
+                    className="w-full outline-0 invalid:text-text-dim h-6"
+                    name="universityId"
+                    required
+                  >
+                    <option value="" selected disabled>
+                      Select University
                     </option>
-                  ))}
-                </SelectWithIcon>
+                    {universities.map((uni) => (
+                      <option key={uni.id} value={uni.id} className="px-2">
+                        {uni.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <WideButton
                 type="submit"

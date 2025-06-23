@@ -30,8 +30,11 @@ import { categoriesTable } from "src/db/schema/categories";
 import { eventsTable } from "src/db/schema/events";
 
 interface CreateEventFormErrors {
+  university: string;
+  host: string;
   title: string;
   description: string;
+  category: string;
   startDate: string;
   endDate: string;
   ticketPrice: string;
@@ -141,6 +144,7 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [clientErrors, setClientErrors] = useState<CreateEventFormErrors>({
+    university: "",
     venue: "",
     host: "",
     title: "",
@@ -164,7 +168,10 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           <h2 className="font-bold">Create an Event</h2>
           <SelectWithIcon
             key="universitySelect"
-            icon={<MortarBoard stroke="#044c3b" />}
+            iconAndError={{
+              icon: <MortarBoard stroke="#044c3b" />,
+              error: clientErrors.university,
+            }}
             name="university"
             id="universitySelect"
             required
@@ -183,16 +190,16 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           </SelectWithIcon>
           <SelectWithIcon
             key="venueSelect"
-            icon={<MapPin stroke="#044c3b" />}
+            iconAndError={{
+              icon: <MapPin stroke="#044c3b" />,
+              error: clientErrors.venue,
+              hoverMsg: isUniversitySelected
+                ? ""
+                : "Please select the university to get available venues",
+            }}
             name="venue"
             disabled={!isUniversitySelected}
-            error={clientErrors.venue}
             required
-            hoverMsg={
-              isUniversitySelected
-                ? ""
-                : "Please select the university to get available venues"
-            }
           >
             <option disabled selected={venues.length !== 1} value="">
               Select Venue
@@ -205,9 +212,11 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           </SelectWithIcon>
           <SelectWithIcon
             key="hostSelect"
-            icon={<User stroke="#044c3b" width={20} height={20} />}
+            iconAndError={{
+              icon: <User stroke="#044c3b" width={20} height={20} />,
+              error: clientErrors.host,
+            }}
             name="host"
-            error={clientErrors.host}
             required
           >
             <option disabled selected value="">
@@ -241,27 +250,33 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
           }
           /> */}
           <InputWithIcon
-            icon={<Title stroke="#044c3b" />}
+            iconAndError={{
+              icon: <Title stroke="#044c3b" />,
+              error: clientErrors.title,
+            }}
             name="title"
             id="titleInput"
             placeholder="Title"
             required
-            error={clientErrors.title}
           />
           <TextareaWithIcon
-            icon={<Description stroke="#044c3b" />}
+            iconAndError={{
+              icon: <Description stroke="#044c3b" />,
+              error: clientErrors.description,
+            }}
             name="description"
             id="descriptionTextarea"
             placeholder="Description"
             cannotResize
             rows={3}
-            error={clientErrors.description}
           />
           <SelectWithIcon
             key="categorySelect"
-            icon={<Categories stroke="#044c3b" />}
+            iconAndError={{
+              icon: <Categories stroke="#044c3b" />,
+              error: clientErrors.category,
+            }}
             name="category"
-            error={clientErrors.category}
             required
           >
             <option disabled selected value="">
@@ -274,9 +289,12 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
             ))}
           </SelectWithIcon>
           <DatePickerWithIcon
-            icon={<DateFrom stroke="#044c3b" />}
+            iconAndError={{
+              icon: <DateFrom stroke="#044c3b" />,
+              error: clientErrors.startDate,
+            }}
             selected={startDate}
-            onChange={(date: Date) => setStartDate(date)}
+            onChange={(date) => setStartDate(date)}
             placeholderText="Start date and time"
             minDate={new Date()}
             showTimeSelect
@@ -285,8 +303,7 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
             required
             isClearable
             id="startDatePicker"
-            name="start_date"
-            error={clientErrors.start_date}
+            name="startDate"
           />
           <input
             name="startDate"
@@ -295,9 +312,12 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
             value={startDate ? startDate.toISOString() : ""}
           />
           <DatePickerWithIcon
-            icon={<DateTo stroke="#044c3b" />}
+            iconAndError={{
+              icon: <DateTo stroke="#044c3b" />,
+              error: clientErrors.endDate,
+            }}
             selected={endDate}
-            onChange={(date: Date) => setEndDate(date)}
+            onChange={(date) => setEndDate(date)}
             placeholderText="End date and time"
             minDate={startDate || new Date()}
             showTimeSelect
@@ -305,9 +325,8 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
             timeIntervals={5}
             required
             isClearable
-            name="end_date"
+            name="endDate"
             id="endDatePicker"
-            error={clientErrors.end_date}
           />
           <input
             name="endDate"
@@ -316,14 +335,16 @@ const CreateEvent = ({ loaderData }: Route.ComponentProps) => {
             value={endDate ? endDate.toISOString() : ""}
           />
           <InputWithIcon
-            icon={<CreditCard stroke="#044c3b" />}
+            iconAndError={{
+              icon: <CreditCard stroke="#044c3b" />,
+              error: clientErrors.ticketPrice,
+            }}
             name="ticketPrice"
             id="ticketPriceInput"
             type="number"
             placeholder="Ticket Price"
             isMoney
             required
-            error={clientErrors.ticketPrice}
           />
           <WideButton colour="primary" type="submit">
             Create Event
