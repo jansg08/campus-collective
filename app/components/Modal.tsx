@@ -7,12 +7,19 @@ import { useWindowWidth } from "~/hooks/useWindowWidth";
 
 interface ModalProps {
   children: React.ReactNode;
+  width?: "sm" | "md" | "lg" | "xl";
   closeModal: (...args: any[]) => void;
 }
 
-const Modal = ({ children, closeModal }: ModalProps) => {
+const Modal = ({ children, width = "sm", closeModal }: ModalProps) => {
   const dropdownRef = useRef<HTMLDivElement>(null!);
   const windowWidth = useWindowWidth();
+  const widthClasses = {
+    sm: "xs:w-[26rem]",
+    md: "xs:w-[26rem] md:w-13/24",
+    lg: "xs:w-[26rem] sm:w-13/20",
+    xl: "xs:w-13/16",
+  };
   useOutsideClick({
     ref: dropdownRef,
     handler: closeModal,
@@ -27,7 +34,7 @@ const Modal = ({ children, closeModal }: ModalProps) => {
       transition={{ duration: 0.2, ease: "easeInOut" }}
     >
       <motion.div
-        className="w-full left-1/2 bottom-[env(safe-area-inset-bottom)] xs:bottom-1/2 xs:translate-y-1/2 -translate-x-1/2 box-border absolute xs:w-[26rem] p-5 rounded-t-lg xs:rounded-lg bg-secondary-light flex flex-col gap-4 transition-all"
+        className={`w-full left-1/2 bottom-[env(safe-area-inset-bottom)] xs:bottom-1/2 xs:translate-y-1/2 -translate-x-1/2 box-border absolute ${widthClasses[width]} p-5 rounded-t-lg xs:rounded-lg bg-secondary-light flex flex-col gap-4 transition-all`}
         ref={dropdownRef}
         initial={windowWidth < 512 && { y: "200%" }}
         animate={windowWidth < 512 && { y: 0 }}
