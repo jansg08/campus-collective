@@ -74,7 +74,7 @@ export const SelectWithLabel = ({
 }: SelectWithLabelProps) => (
   <GenericFormFieldWithLabel {...genericProps} id={genericProps.id}>
     <select
-      className="w-full outline-0 invalid:text-text-dim"
+      className="w-full outline-0 invalid:text-text-dim overflow-ellipsis"
       {...selectProps}
       id={genericProps.id}
     >
