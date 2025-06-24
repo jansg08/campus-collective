@@ -8,13 +8,21 @@ interface GenericFormFieldWithLabelProps {
   hoverMsg?: React.ReactNode;
 }
 
+type OmitId<T> = Omit<T, "id">;
+
 interface FormFieldWithLabelProps {
   genericProps: Omit<GenericFormFieldWithLabelProps, "children">;
 }
 
 interface InputWithLabelProps
   extends FormFieldWithLabelProps,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, "id"> {}
+    OmitId<React.InputHTMLAttributes<HTMLInputElement>> {}
+
+interface SelectWithLabelProps
+  extends FormFieldWithLabelProps,
+    OmitId<React.SelectHTMLAttributes<HTMLSelectElement>> {
+  children: React.ReactNode;
+}
 
 const GenericFormFieldWithLabel = ({
   label,
@@ -56,6 +64,22 @@ export const InputWithLabel = ({
 }: InputWithLabelProps) => (
   <GenericFormFieldWithLabel {...genericProps} id={genericProps.id}>
     <input className="w-full outline-0" {...inputProps} id={genericProps.id} />
+  </GenericFormFieldWithLabel>
+);
+
+export const SelectWithLabel = ({
+  genericProps,
+  children,
+  ...selectProps
+}: SelectWithLabelProps) => (
+  <GenericFormFieldWithLabel {...genericProps} id={genericProps.id}>
+    <select
+      className="w-full outline-0 invalid:text-text-dim"
+      {...selectProps}
+      id={genericProps.id}
+    >
+      {children}
+    </select>
   </GenericFormFieldWithLabel>
 );
 
