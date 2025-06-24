@@ -26,6 +26,7 @@ import {
   useMotionValueEvent,
 } from "motion/react";
 import hideOnScroll from "~/utils/hideOnScroll";
+import { SelectWithLabel } from "~/components/InputWithLabel";
 
 interface University {
   id: number;
@@ -220,38 +221,44 @@ const Events = ({ loaderData }: Route.ComponentProps) => {
       <PaddedContainer padding="normal" flexGap="gap-5">
         <AnimatePresence>
           {isOptionsOpen && (
-            <Modal closeModal={() => setIsOptionsOpen(false)}>
+            <Modal closeModal={() => setIsOptionsOpen(false)} width="md">
               <Form
                 className="flex flex-col gap-4"
                 onChange={(e) => submit(e.currentTarget)}
               >
                 <h4>Filter by</h4>
-                <select
+                <SelectWithLabel
+                  genericProps={{ label: "What?", id: "category" }}
                   name="category"
-                  id="category"
-                  className="bg-background-light py-2 rounded-sm"
                 >
-                  <option value="what">What?</option>
-                  {categories.map(({ id, name }) => (
-                    <option value={id}>{name}</option>
+                  <option value="" selected>
+                    Anything
+                  </option>
+                  {categories.map(({ name, id }) => (
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
                   ))}
-                </select>
+                </SelectWithLabel>
                 <input
                   type="date"
                   placeholder="When?"
                   name="date"
                   className="bg-background-light py-2 rounded-sm"
                 />
-                <select
+                <SelectWithLabel
+                  genericProps={{ label: "Where?", id: "venue" }}
                   name="venue"
-                  id="venue"
-                  className=" bg-background-light py-2 rounded-sm"
                 >
-                  <option value="where">Where?</option>
+                  <option value="" selected>
+                    Anywhere
+                  </option>
                   {venues.map(({ name, id }) => (
-                    <option value={id}>{name}</option>
+                    <option key={id} value={id}>
+                      {name}
+                    </option>
                   ))}
-                </select>
+                </SelectWithLabel>
                 <div className="flex items-center justify-between bg-background-light py-2 rounded-sm">
                   <span>Free?</span>
                   <label htmlFor="yes" className="flex items-center gap-1.5">
