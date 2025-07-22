@@ -2,7 +2,7 @@
   <img alt="Logo for Campus Collective" src="./app/svgs/Logo.svg" width="512">
 </p>
 
-### You can view the hosted version [here](https://campus-collective.jack.hansjee.com).
+### You can view the hosted version [here](https://campuscollective-jack.hansjee.com).
 
 # Summary
 
